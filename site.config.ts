@@ -5,4 +5,6 @@ export const siteConfig = {
   language: "en",
   description: "Site description for meta tags",
   crmWebhookUrl: "https://office.silent-box.com/api/pbn/webhook",
+  umamiUrl: "https://umami.silent-box.com",
+  umamiWebsiteId: "",
 }

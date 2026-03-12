@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { siteConfig } from '../../site.config'
 import './globals.css'
 
@@ -18,7 +19,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang={siteConfig.language}>
-      <body>{children}</body>
+      <body>
+        {children}
+        {siteConfig.umamiWebsiteId && (
+          <Script
+            src={`${siteConfig.umamiUrl}/script.js`}
+            data-website-id={siteConfig.umamiWebsiteId}
+            strategy="afterInteractive"
+          />
+        )}
+      </body>
     </html>
   )
 }
