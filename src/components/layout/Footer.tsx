@@ -21,40 +21,42 @@ const companyLinks = [
 
 export default function Footer() {
   return (
-    <footer
-      className="relative"
-      style={{
-        background: '#0e0e0d',
-        borderTop: '1px solid rgba(200,155,90,0.2)',
-      }}
-    >
-      <div className="container mx-auto max-w-[1200px] px-4 py-16">
+    <footer className="relative overflow-hidden" style={{ background: '#1a1a1a' }}>
+      {/* Decorative geometric elements — copper circles */}
+      <div
+        className="absolute top-10 right-10 w-24 h-24 rounded-full opacity-[0.06]"
+        style={{ background: '#c87941' }}
+      />
+      <div
+        className="absolute bottom-20 left-[-20px] w-16 h-16 rounded-full opacity-[0.08]"
+        style={{ background: '#c87941' }}
+      />
+      <div
+        className="absolute top-1/2 right-1/4 w-8 h-8 rounded-full opacity-[0.04]"
+        style={{ background: '#c87941' }}
+      />
+      <div
+        className="absolute bottom-10 right-1/3 w-12 h-12 rounded-full opacity-[0.05]"
+        style={{ background: '#1a5632' }}
+      />
+
+      <div className="relative container mx-auto max-w-[1200px] px-4 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* Col 1: Logo + description */}
           <div>
             <Link href="/" className="inline-flex transition-opacity hover:opacity-80">
               <Logo variant="light" showTagline />
             </Link>
-            <p
-              className="mt-4 text-sm leading-relaxed"
-              style={{
-                color: 'rgba(245,243,238,0.5)',
-                fontFamily: "'DM Sans', sans-serif",
-              }}
-            >
-              Grand — офіційний дилер акустичних кабін SilentBox в Україні.
+            <p className="mt-4 text-sm leading-relaxed text-white/60" style={{ fontFamily: "'Inter', sans-serif" }}>
+              Офіційний дилер акустичних офісних кабін SilentBox в Україні. Звукоізоляція open-space, переговорні кабіни для офісу.
             </p>
           </div>
 
           {/* Col 2: Models */}
           <div>
             <h3
-              className="mb-4"
-              style={{
-                color: '#f5f3ee',
-                fontFamily: "'DM Sans', sans-serif",
-                fontWeight: 500,
-              }}
+              className="text-white mb-4"
+              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
             >
               Моделі
             </h3>
@@ -63,13 +65,8 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm transition-colors duration-200"
-                    style={{
-                      color: 'rgba(245,243,238,0.5)',
-                      fontFamily: "'DM Sans', sans-serif",
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.color = '#c89b5a' }}
-                    onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(245,243,238,0.5)' }}
+                    className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
                   >
                     {link.label}
                   </Link>
@@ -81,12 +78,8 @@ export default function Footer() {
           {/* Col 3: Company */}
           <div>
             <h3
-              className="mb-4"
-              style={{
-                color: '#f5f3ee',
-                fontFamily: "'DM Sans', sans-serif",
-                fontWeight: 500,
-              }}
+              className="text-white mb-4"
+              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
             >
               Компанія
             </h3>
@@ -95,13 +88,8 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm transition-colors duration-200"
-                    style={{
-                      color: 'rgba(245,243,238,0.5)',
-                      fontFamily: "'DM Sans', sans-serif",
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.color = '#c89b5a' }}
-                    onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(245,243,238,0.5)' }}
+                    className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
                   >
                     {link.label}
                   </Link>
@@ -113,22 +101,12 @@ export default function Footer() {
           {/* Col 4: Contacts */}
           <div>
             <h3
-              className="mb-4"
-              style={{
-                color: '#f5f3ee',
-                fontFamily: "'DM Sans', sans-serif",
-                fontWeight: 500,
-              }}
+              className="text-white mb-4"
+              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
             >
               Контакти
             </h3>
-            <ul
-              className="flex flex-col gap-3 text-sm"
-              style={{
-                color: 'rgba(245,243,238,0.5)',
-                fontFamily: "'DM Sans', sans-serif",
-              }}
-            >
+            <ul className="flex flex-col gap-3 text-sm text-white/60" style={{ fontFamily: "'Inter', sans-serif" }}>
               <li className="flex items-center gap-2.5">
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
@@ -142,16 +120,13 @@ export default function Footer() {
                 {siteConfig.workingHours}
               </li>
             </ul>
-            {/* Gold CTA link */}
+            {/* Copper CTA link */}
             <Link
               href="/zviazatysya/"
               className="inline-flex items-center gap-2 mt-5 text-sm font-semibold transition-colors duration-200"
-              style={{
-                fontFamily: "'DM Sans', sans-serif",
-                color: '#c89b5a',
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#d4a96a' }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = '#c89b5a' }}
+              style={{ fontFamily: "'Inter', sans-serif", color: '#c87941' }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#e09060' }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = '#c87941' }}
             >
               Зв&apos;язатися з нами
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
@@ -163,31 +138,15 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div style={{ borderTop: '1px solid rgba(245,243,238,0.08)' }}>
-        <div
-          className="container mx-auto max-w-[1200px] px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs"
-          style={{
-            color: 'rgba(245,243,238,0.3)',
-            fontFamily: "'DM Sans', sans-serif",
-          }}
-        >
+      <div className="relative border-t border-white/10">
+        <div className="container mx-auto max-w-[1200px] px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40" style={{ fontFamily: "'Inter', sans-serif" }}>
           <span>&copy; 2024&ndash;2026 {siteConfig.domain}</span>
           <div className="flex items-center gap-4">
-            <Link
-              href="/polityka-konfidencijnosti/"
-              className="transition-colors duration-200"
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#c89b5a' }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(245,243,238,0.3)' }}
-            >
+            <Link href="/polityka-konfidencijnosti/" className="hover:text-white/70 transition-colors duration-200">
               Політика конфіденційності
             </Link>
-            <span style={{ color: 'rgba(245,243,238,0.15)' }}>|</span>
-            <Link
-              href="/umovy-vykorystannya/"
-              className="transition-colors duration-200"
-              onMouseEnter={(e) => { e.currentTarget.style.color = '#c89b5a' }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(245,243,238,0.3)' }}
-            >
+            <span className="text-white/20">|</span>
+            <Link href="/umovy-vykorystannya/" className="hover:text-white/70 transition-colors duration-200">
               Умови використання
             </Link>
           </div>

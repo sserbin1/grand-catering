@@ -39,7 +39,7 @@ export default async function StattiPostPage({ params }: PageProps) {
   const jsonLd = generateArticleJsonLd(post)
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-16" style={{ background: '#0e0e0d' }}>
+    <main className="max-w-3xl mx-auto px-4 py-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -47,12 +47,12 @@ export default async function StattiPostPage({ params }: PageProps) {
       <article>
         <header className="mb-8">
           {post.category && (
-            <span className="text-sm uppercase tracking-wide" style={{ color: '#c89b5a' }}>
+            <span className="text-sm uppercase tracking-wide" style={{ color: '#1a5632' }}>
               {post.category}
             </span>
           )}
-          <h1 className="text-4xl font-bold mt-2" style={{ fontFamily: "'Cormorant Garamond', serif", color: '#f5f3ee' }}>{post.title}</h1>
-          <time className="mt-2 block" style={{ color: 'rgba(245,243,238,0.5)' }} dateTime={post.publishedAt}>
+          <h1 className="text-4xl font-bold mt-2" style={{ fontFamily: "'Playfair Display', serif", color: 'var(--color-primary)' }}>{post.title}</h1>
+          <time className="mt-2 block" style={{ color: 'var(--color-text-light)' }} dateTime={post.publishedAt}>
             {new Date(post.publishedAt).toLocaleDateString('uk-UA', {
               year: 'numeric',
               month: 'long',
@@ -61,7 +61,7 @@ export default async function StattiPostPage({ params }: PageProps) {
           </time>
         </header>
         {blogImages[post.slug] && (
-          <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden mb-10" style={{ border: '1px solid rgba(245,243,238,0.08)' }}>
+          <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden mb-10">
             <Image
               src={blogImages[post.slug].src}
               alt={blogImages[post.slug].alt}
