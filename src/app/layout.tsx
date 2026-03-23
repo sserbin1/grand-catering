@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import { siteConfig } from '../../site.config'
+import Header from '../components/layout/Header'
+import Footer from '../components/layout/Footer'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -20,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang={siteConfig.language}>
       <body>
-        {children}
+        <Header />
+        <main>{children}</main>
+        <Footer />
         {siteConfig.umamiWebsiteId && (
           <Script
             src={`${siteConfig.umamiUrl}/script.js`}

@@ -1,7 +1,16 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { getAllPosts, getPostBySlug, getPostBySlugWithHtml } from '@/lib/blog'
 import { generatePageMetadata, generateArticleJsonLd } from '@/lib/seo'
 import PostContent from '@/components/blog/PostContent'
+
+const blogImages: Record<string, { src: string; alt: string }> = {
+  'akustyka-v-restorani': { src: '/images/blog/akustyka-v-restorani.jpg', alt: 'Акустика в ресторані — як створити комфорт для гостей' },
+  'vip-zony-v-restoranakh': { src: '/images/blog/vip-zony-v-restoranakh.jpg', alt: 'VIP-зони в ресторанах — приватність для ділових зустрічей' },
+  'oglyad-kabin-silentbox-restorany': { src: '/images/blog/oglyad-kabin-silentbox-restorany.jpg', alt: 'Огляд кабін SilentBox для ресторанів: Solo, Duet, Quartet' },
+  'shum-u-restorani-problemy': { src: '/images/blog/shum-u-restorani-problemy.jpg', alt: 'Шум у ресторані — проблеми та рішення' },
+  'zvukoizolyatsiya-restoran-5-sposobiv': { src: '/images/blog/zvukoizolyatsiya-restoran-5-sposobiv.jpg', alt: 'Звукоізоляція ресторану: 5 способів знизити шум' },
+}
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -44,13 +53,25 @@ export default async function BlogPostPage({ params }: PageProps) {
           )}
           <h1 className="text-4xl font-bold mt-2">{post.title}</h1>
           <time className="text-gray-500 mt-2 block" dateTime={post.publishedAt}>
-            {new Date(post.publishedAt).toLocaleDateString('en-US', {
+            {new Date(post.publishedAt).toLocaleDateString('uk-UA', {
               year: 'numeric',
               month: 'long',
               day: 'numeric',
             })}
           </time>
         </header>
+        {blogImages[post.slug] && (
+          <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden mb-10">
+            <Image
+              src={blogImages[post.slug].src}
+              alt={blogImages[post.slug].alt}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 768px"
+              priority
+            />
+          </div>
+        )}
         {post.htmlContent && <PostContent htmlContent={post.htmlContent} />}
       </article>
     </main>
