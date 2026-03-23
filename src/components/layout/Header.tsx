@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '../Logo'
-import { siteConfig } from '../../../site.config'
 
 const navItems = [
   { label: 'Головна', href: '/' },
@@ -16,19 +15,12 @@ const navItems = [
 ]
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(true)
+  const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [isHomePage, setIsHomePage] = useState(false)
 
   useEffect(() => {
-    const home = window.location.pathname === '/'
-    setIsHomePage(home)
     const onScroll = () => {
-      if (home) {
-        setScrolled(window.scrollY > 20)
-      } else {
-        setScrolled(true)
-      }
+      setScrolled(window.scrollY > 20)
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
@@ -46,50 +38,20 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
-      {/* Thin top bar with phone and working hours */}
-      <div
-        className="hidden lg:block transition-all duration-300"
-        style={{
-          background: scrolled ? '#1a1a1a' : 'rgba(0,0,0,0.3)',
-        }}
-      >
-        <div className="container mx-auto max-w-[1200px] px-4 flex items-center justify-between h-8">
-          <div className="flex items-center gap-4 text-xs" style={{ color: 'rgba(255,255,255,0.7)', fontFamily: "'Inter', sans-serif" }}>
-            <span className="flex items-center gap-1.5">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3" viewBox="0 0 20 20" fill="#c87941">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.828a1 1 0 101.415-1.414L11 9.586V6z" clipRule="evenodd" />
-              </svg>
-              {siteConfig.workingHours}
-            </span>
-          </div>
-          <a
-            href={`tel:${siteConfig.phone?.replace(/[^+\d]/g, '') || ''}`}
-            className="flex items-center gap-1.5 text-xs font-medium transition-colors"
-            style={{ color: '#c87941', fontFamily: "'Inter', sans-serif" }}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-            </svg>
-            {siteConfig.phone || '+380 (XX) XXX-XX-XX'}
-          </a>
-        </div>
-      </div>
-
       {/* Main nav */}
       <nav
-        className={`transition-all duration-300 ${
-          scrolled
-            ? 'shadow-md'
-            : ''
-        }`}
+        className="transition-all duration-300"
         style={{
-          background: scrolled ? 'var(--color-bg, #fffcf8)' : 'transparent',
+          background: scrolled ? 'rgba(14,14,13,0.85)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(16px)' : 'none',
+          WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
+          borderBottom: scrolled ? '1px solid rgba(245,243,238,0.06)' : '1px solid transparent',
         }}
       >
         <div className="container mx-auto max-w-[1200px] px-4 flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center transition-opacity hover:opacity-80">
-            <Logo variant={scrolled ? 'dark' : 'light'} />
+            <Logo variant="light" />
           </Link>
 
           {/* Desktop menu */}
@@ -100,16 +62,14 @@ export default function Header() {
                   href={item.href}
                   className="px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                   style={{
-                    color: scrolled ? 'var(--color-text, #1a1a1a)' : 'rgba(255,255,255,0.9)',
-                    fontFamily: "'Inter', sans-serif",
+                    color: '#f5f3ee',
+                    fontFamily: "'DM Sans', sans-serif",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.color = scrolled ? '#1a5632' : '#ffffff'
-                    e.currentTarget.style.background = scrolled ? '#e8f5ee' : 'rgba(255,255,255,0.1)'
+                    e.currentTarget.style.color = '#c89b5a'
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.color = scrolled ? 'var(--color-text, #1a1a1a)' : 'rgba(255,255,255,0.9)'
-                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.color = '#f5f3ee'
                   }}
                 >
                   {item.label}
@@ -118,24 +78,25 @@ export default function Header() {
             ))}
           </ul>
 
-          {/* Desktop CTA - copper button */}
+          {/* Desktop CTA - gold button */}
           <Link
             href="/zviazatysya/"
-            className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition-all"
+            className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all"
             style={{
-              background: 'var(--color-cta, #c87941)',
-              fontFamily: "'Inter', sans-serif",
+              background: '#c89b5a',
+              color: '#0e0e0d',
+              fontFamily: "'DM Sans', sans-serif",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'var(--color-cta-hover, #b5693a)'
+              e.currentTarget.style.background = '#d4a96a'
               e.currentTarget.style.transform = 'translateY(-1px)'
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'var(--color-cta, #c87941)'
+              e.currentTarget.style.background = '#c89b5a'
               e.currentTarget.style.transform = 'translateY(0)'
             }}
           >
-            Замовити консультацію
+            Замовити аудит
           </Link>
 
           {/* Mobile hamburger */}
@@ -147,21 +108,21 @@ export default function Header() {
             <span
               className="block w-6 h-0.5 rounded transition-all duration-300"
               style={{
-                background: scrolled ? 'var(--color-accent, #1a5632)' : '#ffffff',
+                background: '#c89b5a',
                 transform: mobileOpen ? 'translateY(4px) rotate(45deg)' : 'none',
               }}
             />
             <span
               className="block w-6 h-0.5 rounded transition-all duration-300"
               style={{
-                background: scrolled ? 'var(--color-accent, #1a5632)' : '#ffffff',
+                background: '#c89b5a',
                 opacity: mobileOpen ? 0 : 1,
               }}
             />
             <span
               className="block w-6 h-0.5 rounded transition-all duration-300"
               style={{
-                background: scrolled ? 'var(--color-accent, #1a5632)' : '#ffffff',
+                background: '#c89b5a',
                 transform: mobileOpen ? 'translateY(-4px) rotate(-45deg)' : 'none',
               }}
             />
@@ -175,17 +136,20 @@ export default function Header() {
           mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
-        <div className="absolute inset-0 bg-black/40" onClick={() => setMobileOpen(false)} />
+        <div className="absolute inset-0 bg-black/60" onClick={() => setMobileOpen(false)} />
         <div
           className={`relative shadow-xl mx-4 mt-2 rounded-xl p-6 transition-transform duration-300 ${
             mobileOpen ? 'translate-y-0' : '-translate-y-4'
           }`}
-          style={{ background: 'var(--color-bg, #fffcf8)' }}
+          style={{
+            background: '#1c1c1a',
+            border: '1px solid rgba(245,243,238,0.08)',
+          }}
         >
-          {/* Decorative accent line at top — green to copper gradient */}
+          {/* Decorative accent line at top — gold */}
           <div
             className="absolute top-0 left-6 right-6 h-0.5 rounded-full"
-            style={{ background: 'linear-gradient(90deg, #1a5632, #c87941)' }}
+            style={{ background: 'linear-gradient(90deg, #c89b5a, rgba(200,155,90,0.2))' }}
           />
           <ul className="flex flex-col gap-1">
             {navItems.map((item) => (
@@ -195,16 +159,16 @@ export default function Header() {
                   onClick={() => setMobileOpen(false)}
                   className="block px-4 py-3 rounded-lg text-base font-medium transition-colors"
                   style={{
-                    color: 'var(--color-text, #1a1a1a)',
-                    fontFamily: "'Inter', sans-serif",
+                    color: '#f5f3ee',
+                    fontFamily: "'DM Sans', sans-serif",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = '#e8f5ee'
-                    e.currentTarget.style.color = '#1a5632'
+                    e.currentTarget.style.background = 'rgba(200,155,90,0.1)'
+                    e.currentTarget.style.color = '#c89b5a'
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = 'transparent'
-                    e.currentTarget.style.color = 'var(--color-text, #1a1a1a)'
+                    e.currentTarget.style.color = '#f5f3ee'
                   }}
                 >
                   {item.label}
@@ -212,17 +176,18 @@ export default function Header() {
               </li>
             ))}
           </ul>
-          <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--color-border, #e8e2db)' }}>
+          <div className="mt-4 pt-4" style={{ borderTop: '1px solid rgba(245,243,238,0.08)' }}>
             <Link
               href="/zviazatysya/"
               onClick={() => setMobileOpen(false)}
-              className="flex items-center justify-center w-full px-5 py-3 rounded-lg text-base font-semibold text-white transition-all"
+              className="flex items-center justify-center w-full px-5 py-3 rounded-lg text-base font-semibold transition-all"
               style={{
-                background: 'var(--color-cta, #c87941)',
-                fontFamily: "'Inter', sans-serif",
+                background: '#c89b5a',
+                color: '#0e0e0d',
+                fontFamily: "'DM Sans', sans-serif",
               }}
             >
-              Замовити консультацію
+              Замовити аудит
             </Link>
           </div>
         </div>

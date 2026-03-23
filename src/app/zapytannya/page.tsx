@@ -9,19 +9,14 @@ const faqItems = [
       'Кабіни Premium лінійки (Solo, Duet, Quartet) забезпечують звукоізоляцію до 35 дБ за стандартом ISO 23351-1. Це різниця між гучним open-space (~65 дБ) та тихою бібліотекою (~30 дБ). Кабіни Lite лінійки (Solo Lite, Duet Lite, Quartet Lite) забезпечують 15-20 дБ зниження шуму -- достатньо для комфортних дзвінків та зосередженої роботи.',
   },
   {
-    question: 'Як створити переговорну зону в open-space за допомогою SilentBox?',
-    answer:
-      'Моделі Duet та Quartet ідеально підходять для створення переговорних зон в open-space офісі. Панорамні скляні стіни зберігають візуальний зв\'язок з офісним простором, а звукоізоляція 35 дБ забезпечує повну конфіденційність для зустрічей з клієнтами та командних нарад. Кабіна встановлюється без перебудови приміщення.',
-  },
-  {
-    question: 'Чи підійде акустична кабіна для невеликого офісу?',
-    answer:
-      'Так, найкомпактніша модель Solo займає лише 1.2 м\u00b2. Модульна конструкція дозволяє встановити акустичну кабіну навіть у невеликому офісі або коворкінгу. Кабіну можна переміщувати за потреби без будівельних робіт.',
-  },
-  {
     question: 'Скільки часу займає монтаж звукоізоляційної кабіни в офісі?',
     answer:
       'SilentBox Solo збирається за 60 хвилин без жодних інструментів завдяки модульній конструкції з патентованим дизайном. Duet збирається за 2-4 години, Quartet -- за 4 години. Не потрібні будівельні роботи, пил чи спеціальне обладнання. Ваш офіс працює у звичному режимі під час монтажу.',
+  },
+  {
+    question: 'Які ціни на акустичні кабіни SilentBox?',
+    answer:
+      'Premium лінійка: Solo -- \u20ac5 690, Duet -- \u20ac10 190, Quartet -- \u20ac11 290. Lite лінійка: Solo Lite -- ~\u20ac4 200, Duet Lite -- \u20ac7 190, Quartet Lite -- \u20ac8 590. Pro: WorkPod -- \u20ac5 990. Ціни вказані без ПДВ та доставки. Діють пакетні пропозиції зі знижкою 10% до 31 травня 2026.',
   },
   {
     question: 'Як працює вентиляція в акустичній кабіні?',
@@ -34,19 +29,14 @@ const faqItems = [
       'Гарантія на конструкцію кабіни -- до 10 років. Окрема гарантія надається на електроніку (Smart Electronics, датчики) та систему вентиляції. Сервісне обслуговування доступне по всій Україні.',
   },
   {
-    question: 'Чи можна орендувати акустичну кабіну для офісу?',
-    answer:
-      'Так, ми пропонуємо оренду акустичних кабін від 3 місяців. Це зручне рішення для компаній, які хочуть протестувати кабіну перед покупкою, мають тимчасовий проект або офіс на час ремонту основного приміщення.',
-  },
-  {
     question: 'Чим відрізняються лінійки Premium та Lite?',
     answer:
       'Premium лінійка (Solo, Duet, Quartet) забезпечує максимальну звукоізоляцію 35 дБ завдяки сендвіч-панелям та триплекс скло. Lite лінійка забезпечує 15-20 дБ з м\'якими акустичними панелями та SMART керуванням -- оптимальне рішення для стартапів та невеликих офісів.',
   },
   {
-    question: 'Яке рішення підходить для коворкінгу?',
+    question: 'Чи можна орендувати акустичну кабіну для офісу?',
     answer:
-      'Для коворкінгів рекомендуємо комбінацію Solo (телефонні кабіни для дзвінків) та Duet Lite (переговорні зони для зустрічей). Lite лінійка (15-20 дБ) з SMART керуванням та 10+ варіантами дизайну оптимально поєднує ціну та функціональність для простору спільного користування.',
+      'Так, ми пропонуємо оренду акустичних кабін від 3 місяців. Це зручне рішення для компаній, які хочуть протестувати кабіну перед покупкою, мають тимчасовий проект або офіс на час ремонту основного приміщення.',
   },
 ]
 
@@ -65,8 +55,8 @@ function AccordionItem({
     <div
       className="rounded-xl overflow-hidden transition-all"
       style={{
-        border: '1px solid var(--color-border)',
-        background: isOpen ? 'var(--color-bg-alt)' : 'var(--color-bg)',
+        border: isOpen ? '1px solid rgba(200, 155, 90, 0.3)' : '1px solid rgba(245,243,238,0.08)',
+        background: isOpen ? '#1c1c1a' : '#0e0e0d',
       }}
     >
       <button
@@ -75,13 +65,13 @@ function AccordionItem({
         style={{ background: 'transparent', border: 'none', font: 'inherit' }}
         aria-expanded={isOpen}
       >
-        <span className="text-base font-semibold" style={{ color: 'var(--color-primary)', fontFamily: "'Playfair Display', serif" }}>
+        <span className="text-base font-semibold" style={{ color: '#f5f3ee', fontFamily: "'Cormorant Garamond', serif" }}>
           {question}
         </span>
         <span
           className="text-xl font-light shrink-0 transition-transform"
           style={{
-            color: '#1a5632',
+            color: '#c89b5a',
             transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
             transition: 'transform 0.2s ease',
           }}
@@ -91,7 +81,7 @@ function AccordionItem({
       </button>
       {isOpen && (
         <div className="px-6 pb-5">
-          <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-light)' }}>
+          <p className="text-sm leading-relaxed" style={{ color: 'rgba(245,243,238,0.65)' }}>
             {answer}
           </p>
         </div>
@@ -105,7 +95,7 @@ export default function ZapytannyaPage() {
 
   return (
     <main>
-      <section className="section">
+      <section className="section" style={{ background: '#0e0e0d' }}>
         <div className="container" style={{ maxWidth: '800px' }}>
           <h1 className="section-title" style={{ marginBottom: '1rem' }}>
             Часті запитання
