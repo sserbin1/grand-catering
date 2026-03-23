@@ -163,6 +163,17 @@ export default function HomePage() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Grand Catering \u2014 \u041e\u0444\u0456\u0446\u0456\u0439\u043d\u0438\u0439 \u0434\u0438\u043b\u0435\u0440 SilentBox",
+        "url": "https://grand-catering.com.ua",
+        "description": "\u041e\u0444\u0456\u0446\u0456\u0439\u043d\u0438\u0439 \u0434\u0438\u043b\u0435\u0440 \u0430\u043a\u0443\u0441\u0442\u0438\u0447\u043d\u0438\u0445 \u043a\u0430\u0431\u0456\u043d SilentBox \u0432 \u0423\u043a\u0440\u0430\u0457\u043d\u0456. \u0417\u0432\u0443\u043a\u043e\u0456\u0437\u043e\u043b\u044f\u0446\u0456\u044f \u043e\u0444\u0456\u0441\u0456\u0432 \u0442\u0430 open-space.",
+        "address": { "@type": "PostalAddress", "addressLocality": "\u041a\u0438\u0457\u0432", "addressCountry": "UA" },
+        "telephone": "+380443219876",
+        "sameAs": []
+      }) }} />
+
       {/* ===== 1. HERO ===== */}
       <section style={{ background: '#1a1a1a', color: '#fff', position: 'relative', overflow: 'hidden' }}>
         <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'center', minHeight: '85vh', paddingTop: '4rem', paddingBottom: '4rem' }}>
@@ -203,10 +214,14 @@ export default function HomePage() {
             </p>
 
             {/* Trust badges */}
-            <div style={{ display: 'flex', gap: '1.25rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
-              {['\u2713 ISO 23351-1', '\u2713 10 \u0440\u043e\u043a\u0456\u0432 \u0433\u0430\u0440\u0430\u043d\u0442\u0456\u044f', '\u2713 30+ \u043a\u0440\u0430\u0457\u043d'].map((badge) => (
-                <span key={badge} style={{ fontSize: '0.8125rem', color: '#8fbc8f', fontWeight: 500 }}>
-                  {badge}
+            <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
+              {[
+                { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8fbc8f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>, text: 'ISO 23351-1' },
+                { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8fbc8f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>, text: '10 \u0440\u043e\u043a\u0456\u0432 \u0433\u0430\u0440\u0430\u043d\u0442\u0456\u044f' },
+                { icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8fbc8f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>, text: '30+ \u043a\u0440\u0430\u0457\u043d' },
+              ].map((badge) => (
+                <span key={badge.text} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem', fontSize: '0.8125rem', color: '#8fbc8f', fontWeight: 500, background: 'rgba(143,188,143,0.1)', padding: '0.375rem 0.75rem', borderRadius: '999px', border: '1px solid rgba(143,188,143,0.2)' }}>
+                  {badge.icon} {badge.text}
                 </span>
               ))}
             </div>
@@ -239,9 +254,9 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right — decorative placeholder */}
+          {/* Right — animated gradient pattern */}
           <div style={{
-            background: 'linear-gradient(135deg, rgba(26,86,50,0.3) 0%, rgba(200,121,65,0.15) 100%)',
+            background: 'linear-gradient(135deg, rgba(26,86,50,0.3) 0%, rgba(200,121,65,0.15) 50%, rgba(26,86,50,0.2) 100%)',
             borderRadius: '1.5rem',
             minHeight: '450px',
             display: 'flex',
@@ -250,23 +265,57 @@ export default function HomePage() {
             position: 'relative',
             overflow: 'hidden',
           }}>
+            {/* Animated pulse ring */}
             <div style={{
-              width: '200px',
-              height: '300px',
-              border: '2px solid rgba(255,255,255,0.15)',
-              borderRadius: '1rem',
+              width: '180px',
+              height: '180px',
+              borderRadius: '50%',
+              border: '2px solid rgba(143,188,143,0.3)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              flexDirection: 'column',
-              gap: '0.5rem',
+              animation: 'pulse 3s ease-in-out infinite',
             }}>
-              <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(26,86,50,0.5)' }} />
-              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.875rem', fontWeight: 500 }}>SilentBox</span>
+              <div style={{
+                width: '120px',
+                height: '120px',
+                borderRadius: '50%',
+                border: '2px solid rgba(143,188,143,0.2)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+                <div style={{
+                  width: '60px',
+                  height: '60px',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, rgba(26,86,50,0.6), rgba(200,121,65,0.4))',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6l4.72-4.72a.75.75 0 011.28.531V19.94a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.506-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.395C2.806 8.757 3.63 8.25 4.51 8.25H6.75z" />
+                  </svg>
+                </div>
+              </div>
             </div>
-            {/* decorative circles */}
-            <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '200px', height: '200px', borderRadius: '50%', background: 'rgba(26,86,50,0.15)' }} />
-            <div style={{ position: 'absolute', bottom: '-30px', left: '-30px', width: '150px', height: '150px', borderRadius: '50%', background: 'rgba(200,121,65,0.1)' }} />
+            {/* Sound wave lines */}
+            <div style={{ position: 'absolute', top: '20%', left: '10%', width: '60px', height: '80px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              {[30, 50, 70, 40, 60].map((h, i) => (
+                <div key={i} style={{ width: '4px', height: `${h}%`, background: 'rgba(143,188,143,0.2)', borderRadius: '2px' }} />
+              ))}
+            </div>
+            <div style={{ position: 'absolute', bottom: '20%', right: '10%', width: '60px', height: '80px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              {[40, 60, 80, 50, 30].map((h, i) => (
+                <div key={i} style={{ width: '4px', height: `${h}%`, background: 'rgba(200,121,65,0.2)', borderRadius: '2px' }} />
+              ))}
+            </div>
+            {/* Decorative circles */}
+            <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '200px', height: '200px', borderRadius: '50%', background: 'rgba(26,86,50,0.12)' }} />
+            <div style={{ position: 'absolute', bottom: '-30px', left: '-30px', width: '150px', height: '150px', borderRadius: '50%', background: 'rgba(200,121,65,0.08)' }} />
+            {/* Grid pattern */}
+            <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
           </div>
         </div>
 
@@ -402,15 +451,27 @@ export default function HomePage() {
                   ))}
                 </div>
 
-                {activeModel.price && (
-                  <div style={{ fontSize: '1.5rem', fontWeight: 700, color: lineColors[activeModel.line], marginBottom: '1.5rem' }}>
-                    {activeModel.price}
-                  </div>
-                )}
-
-                <Link href={`/kataloh/${activeModel.slug}/`} className="btn-primary" style={{ display: 'inline-flex' }}>
-                  \u0414\u0435\u0442\u0430\u043b\u044c\u043d\u0456\u0448\u0435
-                </Link>
+                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                  <Link href={`/kataloh/${activeModel.slug}/`} className="btn-primary" style={{ display: 'inline-flex' }}>
+                    Детальніше
+                  </Link>
+                  <Link href="/zviazatysya/" style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.375rem',
+                    padding: '0.75rem 1.5rem',
+                    background: 'transparent',
+                    color: lineColors[activeModel.line],
+                    fontFamily: "'Inter', sans-serif",
+                    fontWeight: 600,
+                    borderRadius: '0.375rem',
+                    border: `1.5px solid ${lineColors[activeModel.line]}`,
+                    textDecoration: 'none',
+                    fontSize: '0.875rem',
+                  }}>
+                    Дізнатися ціну
+                  </Link>
+                </div>
               </div>
 
               {/* Right — decorative placeholder */}
@@ -461,7 +522,11 @@ export default function HomePage() {
                 borderRadius: '0.75rem',
                 padding: '2rem',
                 border: '1px solid rgba(255,255,255,0.08)',
-              }}>
+                transition: 'border-color 0.3s ease',
+              }}
+              onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(143,188,143,0.4)' }}
+              onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.08)' }}
+              >
                 <div style={{ color: 'var(--color-accent)', marginBottom: '1rem' }}>{p.icon}</div>
                 <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-cta)', marginBottom: '0.5rem', fontFamily: "'Playfair Display', serif" }}>
                   {p.stat}
@@ -485,13 +550,27 @@ export default function HomePage() {
           <p className="section-subtitle">\u041a\u043e\u0436\u043d\u0430 \u043a\u0430\u0431\u0456\u043d\u0430 \u2014 \u0446\u0435 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442 \u0456\u043d\u0436\u0435\u043d\u0435\u0440\u043d\u0438\u0445 \u0440\u0456\u0448\u0435\u043d\u044c \u0442\u0430 \u043f\u0430\u0442\u0435\u043d\u0442\u043e\u0432\u0430\u043d\u0438\u0445 \u0442\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0456\u0439</p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
-            {techFeatures.map((f) => (
+            {techFeatures.map((f, idx) => (
               <div key={f.title} style={{
                 background: '#fff',
                 borderRadius: '0.75rem',
                 padding: '2rem',
                 border: '1px solid var(--color-border)',
+                position: 'relative',
               }}>
+                {/* Number indicator */}
+                <span style={{
+                  position: 'absolute',
+                  top: '1rem',
+                  right: '1rem',
+                  fontSize: '2rem',
+                  fontWeight: 800,
+                  color: 'rgba(26,86,50,0.08)',
+                  fontFamily: "'Playfair Display', serif",
+                  lineHeight: 1,
+                }}>
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
                 <div style={{
                   width: '48px',
                   height: '48px',
@@ -546,7 +625,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== 6. LOGO CLOUD ===== */}
-      <section style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', padding: '2.5rem 1rem', background: 'var(--color-bg)' }}>
+      <section style={{ borderTop: '2px solid var(--color-border)', borderBottom: '2px solid var(--color-border)', padding: '3rem 1rem', background: 'var(--color-bg-alt)' }}>
         <div className="container">
           <p style={{ textAlign: 'center', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--color-text-light)', marginBottom: '1.25rem', fontWeight: 600 }}>
             \u041d\u0430\u043c \u0434\u043e\u0432\u0456\u0440\u044f\u044e\u0442\u044c
@@ -639,92 +718,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== 9. PACKAGE DEALS ===== */}
-      <section className="section" style={{ background: 'var(--color-bg)' }}>
-        <div className="container">
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '1rem' }}>
-            <h2 className="section-title" style={{ marginBottom: 0 }}>\u041f\u0430\u043a\u0435\u0442\u043d\u0456 \u043f\u0440\u043e\u043f\u043e\u0437\u0438\u0446\u0456\u0457</h2>
-            <span style={{
-              background: 'var(--color-cta)',
-              color: '#fff',
-              padding: '0.25rem 0.75rem',
-              borderRadius: '999px',
-              fontSize: '0.75rem',
-              fontWeight: 700,
-              whiteSpace: 'nowrap',
-            }}>
-              \u0417\u043d\u0438\u0436\u043a\u0430 10%
-            </span>
-          </div>
-          <p className="section-subtitle">\u0417\u0430\u043c\u043e\u0432\u0442\u0435 \u043a\u043e\u043c\u043f\u043b\u0435\u043a\u0442 \u0442\u0430 \u0437\u0435\u043a\u043e\u043d\u043e\u043c\u0442\u0435</p>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>
-            {/* Hybrid Set */}
-            <div style={{
-              background: '#fff',
-              borderRadius: '0.75rem',
-              padding: '2.5rem',
-              border: '2px solid var(--color-cta)',
-              position: 'relative',
-            }}>
-              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--color-text)' }}>
-                Hybrid Set
-              </h3>
-              <p style={{ color: 'var(--color-text-light)', fontSize: '0.9375rem', marginBottom: '1.5rem' }}>
-                Solo + Duet \u2014 \u0456\u0434\u0435\u0430\u043b\u044c\u043d\u0438\u0439 \u0441\u0442\u0430\u0440\u0442\u043e\u0432\u0438\u0439 \u043a\u043e\u043c\u043f\u043b\u0435\u043a\u0442
-              </p>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem', marginBottom: '0.5rem' }}>
-                <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-accent)', fontFamily: "'Playfair Display', serif" }}>
-                  &euro;14,290
-                </span>
-                <span style={{ fontSize: '1rem', color: '#999', textDecoration: 'line-through' }}>
-                  &euro;15,880
-                </span>
-              </div>
-              <p style={{ fontSize: '0.8125rem', color: 'var(--color-cta)', fontWeight: 600, marginBottom: '1.5rem' }}>
-                \u0415\u043a\u043e\u043d\u043e\u043c\u0456\u044f: &euro;1,590
-              </p>
-              <Link href="/zviazatysya/" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
-                \u0417\u0430\u043c\u043e\u0432\u0438\u0442\u0438
-              </Link>
-            </div>
-
-            {/* Team Hub */}
-            <div style={{
-              background: '#fff',
-              borderRadius: '0.75rem',
-              padding: '2.5rem',
-              border: '2px solid var(--color-accent)',
-              position: 'relative',
-            }}>
-              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--color-text)' }}>
-                Team Hub
-              </h3>
-              <p style={{ color: 'var(--color-text-light)', fontSize: '0.9375rem', marginBottom: '1.5rem' }}>
-                Duet + WorkPod \u2014 \u043f\u0435\u0440\u0435\u0433\u043e\u0432\u043e\u0440\u043d\u0430 + \u0440\u043e\u0431\u043e\u0447\u0435 \u043c\u0456\u0441\u0446\u0435
-              </p>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem', marginBottom: '0.5rem' }}>
-                <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-accent)', fontFamily: "'Playfair Display', serif" }}>
-                  ~&euro;14,560
-                </span>
-                <span style={{ fontSize: '1rem', color: '#999', textDecoration: 'line-through' }}>
-                  ~&euro;16,180
-                </span>
-              </div>
-              <p style={{ fontSize: '0.8125rem', color: 'var(--color-cta)', fontWeight: 600, marginBottom: '1.5rem' }}>
-                \u0415\u043a\u043e\u043d\u043e\u043c\u0456\u044f: ~&euro;1,620
-              </p>
-              <Link href="/zviazatysya/" className="btn-green" style={{ width: '100%', justifyContent: 'center' }}>
-                \u0417\u0430\u043c\u043e\u0432\u0438\u0442\u0438
-              </Link>
-            </div>
-          </div>
-
-          <p style={{ textAlign: 'center', fontSize: '0.8125rem', color: 'var(--color-text-light)', marginTop: '1.5rem' }}>
-            \u0414\u0456\u0454 \u0434\u043e 31 \u0442\u0440\u0430\u0432\u043d\u044f 2026. \u0426\u0456\u043d\u0438 \u0431\u0435\u0437 \u041f\u0414\u0412 \u0442\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0438.
-          </p>
-        </div>
-      </section>
 
       {/* ===== 10. FAQ ===== */}
       <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
@@ -832,6 +825,10 @@ export default function HomePage() {
 
       {/* Responsive overrides */}
       <style>{`
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.08); opacity: 0.85; }
+        }
         @media (max-width: 768px) {
           section > div[class="container"] > div[style*="gridTemplateColumns: repeat(4"] {
             grid-template-columns: repeat(2, 1fr) !important;

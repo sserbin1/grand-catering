@@ -101,7 +101,7 @@ const trustedBy = [
 ]
 
 const comparisonRows = [
-  { criteria: 'Вартість', silentbox: 'від \u20ac5,690 (фіксована)', renovation: 'від \u20ac15,000 (непередбачувана)' },
+  { criteria: 'Вартість', silentbox: 'Фіксована та прозора', renovation: 'Непередбачувана (приховані витрати)' },
   { criteria: 'Строки', silentbox: '3-5 днів доставка + 60 хв збірка', renovation: '2-4 тижні ремонту' },
   { criteria: 'Мобільність', silentbox: 'Переміщується при переїзді', renovation: 'Стаціонарно -- залишається у приміщенні' },
   { criteria: 'Звукоізоляція', silentbox: '35 дБ (сертифіковано ISO)', renovation: '20-25 дБ (залежить від підрядника)' },
@@ -178,7 +178,7 @@ export default function PerevahyPage() {
                 style={{ background: 'var(--color-bg)', border: '1px solid var(--color-border)' }}
               >
                 <div
-                  className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-lg font-extrabold"
+                  className="w-16 h-16 mx-auto mb-4 rounded-full flex flex-col items-center justify-center text-lg font-extrabold"
                   style={{
                     background: 'linear-gradient(135deg, #1a5632, #134425)',
                     color: '#ffffff',
@@ -187,6 +187,9 @@ export default function PerevahyPage() {
                     letterSpacing: '0.02em',
                   }}
                 >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '2px' }}>
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
                   {cert.badge}
                 </div>
                 <h3 className="text-base font-bold mb-2" style={{ color: 'var(--color-primary)', fontFamily: "'Playfair Display', serif" }}>
@@ -279,7 +282,10 @@ export default function PerevahyPage() {
                       {row.criteria}
                     </td>
                     <td className="py-3.5 px-5 text-sm font-medium" style={{ color: '#1a5632' }}>
-                      {row.silentbox}
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem' }}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1a5632" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                        {row.silentbox}
+                      </span>
                     </td>
                     <td className="py-3.5 px-5 text-sm" style={{ color: 'var(--color-text-light)' }}>
                       {row.renovation}

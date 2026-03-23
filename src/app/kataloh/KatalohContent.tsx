@@ -68,17 +68,23 @@ function ModelCard({ model }: { model: CabinModel }) {
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement
-        el.style.transform = 'translateY(-4px)'
+        el.style.transform = 'translateY(-4px) scale(1.02)'
         el.style.boxShadow = '0 20px 40px rgba(26, 86, 50, 0.12), 0 8px 16px rgba(0,0,0,0.06)'
         el.style.borderColor = config.accent
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLElement
-        el.style.transform = 'translateY(0)'
+        el.style.transform = 'translateY(0) scale(1)'
         el.style.boxShadow = 'none'
         el.style.borderColor = 'var(--color-border, #e8e2db)'
       }}
     >
+      {/* Popular badge for Solo */}
+      {model.slug === 'solo' && (
+        <div className="absolute top-3 right-3 z-10 text-xs font-bold px-3 py-1.5 rounded-full" style={{ background: '#c87941', color: '#ffffff', fontFamily: "'Inter', sans-serif" }}>
+          \u041f\u043e\u043f\u0443\u043b\u044f\u0440\u043d\u0435
+        </div>
+      )}
       {/* Product image */}
       {modelImages[model.slug] && (
         <div className="relative w-full aspect-[4/3]" style={{ background: 'var(--color-bg-alt, #f7f3ee)' }}>
@@ -184,7 +190,7 @@ function ModelCard({ model }: { model: CabinModel }) {
               e.currentTarget.style.color = '#1a5632'
             }}
           >
-            Замовити
+            Запитати ціну
           </span>
         </div>
       </div>
@@ -325,7 +331,6 @@ export default function KatalohContent() {
                   { label: 'Звукоізоляція', values: ['35 дБ', '35 дБ', '35 дБ', '15-20', '15-20', '15-20', '~25'] },
                   { label: 'Розміри (Ш\u00d7Г)', values: ['105\u00d7110', '210\u00d7110', '210\u00d7138', '105\u00d7107', '213\u00d7105', '213\u00d7123', '153\u00d7113'] },
                   { label: 'Вага', values: ['350 кг', '520 кг', '680 кг', '220 кг', '380 кг', '480 кг', '450 кг'] },
-                  { label: 'Ціна', values: ['\u20ac5,690', '\u20ac10,190', '\u20ac11,290', '~\u20ac4,200', '\u20ac7,190', '\u20ac8,590', '\u20ac5,990'] },
                 ].map((row, rowIdx) => (
                   <tr
                     key={row.label}
@@ -342,8 +347,8 @@ export default function KatalohContent() {
                         key={i}
                         className="text-center py-3 px-3 text-sm"
                         style={{
-                          color: row.label === 'Ціна' ? '#c87941' : 'var(--color-text, #1a1a1a)',
-                          fontWeight: row.label === 'Ціна' ? 700 : 400,
+                          color: 'var(--color-text, #1a1a1a)',
+                          fontWeight: 400,
                         }}
                       >
                         {val}
@@ -355,7 +360,7 @@ export default function KatalohContent() {
             </table>
           </div>
           <p className="text-center mt-3 text-xs" style={{ color: 'var(--color-text-light, #6b6560)', fontFamily: "'Inter', sans-serif" }}>
-            * Ціни вказані без ПДВ та доставки. Розміри у сантиметрах.
+            * Розміри у сантиметрах.
           </p>
         </section>
 

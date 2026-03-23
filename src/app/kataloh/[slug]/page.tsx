@@ -140,29 +140,24 @@ export default async function ModelPage({ params }: PageProps) {
             ))}
           </div>
 
-          {/* Price + CTA */}
-          <div className="flex flex-wrap items-center gap-6">
-            {model.price && (
-              <div>
-                <div className="text-2xl font-extrabold" style={{ color: '#ffffff', fontFamily: "'Inter', sans-serif" }}>
-                  {model.price}
-                </div>
-                {model.priceNote && (
-                  <div className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: "'Inter', sans-serif" }}>
-                    {model.priceNote}
-                  </div>
-                )}
-              </div>
-            )}
+          {/* CTA */}
+          <div className="flex flex-wrap items-center gap-4">
             <Link
               href="/zviazatysya/"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-bold text-white transition-all"
               style={{ background: '#c87941', fontFamily: "'Inter', sans-serif" }}
             >
-              Замовити {model.name}
+              Дізнатися ціну
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>
+            </Link>
+            <Link
+              href="/zviazatysya/"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-bold transition-all"
+              style={{ background: 'transparent', border: '1.5px solid rgba(255,255,255,0.3)', color: '#ffffff', fontFamily: "'Inter', sans-serif" }}
+            >
+              Замовити {model.name}
             </Link>
           </div>
         </div>

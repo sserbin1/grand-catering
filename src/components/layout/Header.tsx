@@ -84,6 +84,8 @@ export default function Header() {
         }`}
         style={{
           background: scrolled ? 'var(--color-bg, #fffcf8)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(12px)' : 'none',
+          WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
         }}
       >
         <div className="container mx-auto max-w-[1200px] px-4 flex items-center justify-between h-16">
@@ -129,10 +131,12 @@ export default function Header() {
             onMouseEnter={(e) => {
               e.currentTarget.style.background = 'var(--color-cta-hover, #b5693a)'
               e.currentTarget.style.transform = 'translateY(-1px)'
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(200, 121, 65, 0.35)'
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = 'var(--color-cta, #c87941)'
               e.currentTarget.style.transform = 'translateY(0)'
+              e.currentTarget.style.boxShadow = 'none'
             }}
           >
             Замовити консультацію
