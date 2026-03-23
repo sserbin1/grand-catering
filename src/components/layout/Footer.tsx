@@ -5,18 +5,18 @@ import { siteConfig } from '../../../site.config'
 import Logo from '../Logo'
 
 const modelLinks = [
-  { label: 'Solo', href: '/modeli/solo/' },
-  { label: 'Duet', href: '/modeli/duet/' },
-  { label: 'Quartet', href: '/modeli/quartet/' },
-  { label: 'Lite', href: '/modeli/lite/' },
-  { label: 'WorkPod', href: '/modeli/workpod/' },
+  { label: 'Solo', href: '/kataloh/solo/' },
+  { label: 'Duet', href: '/kataloh/duet/' },
+  { label: 'Quartet', href: '/kataloh/quartet/' },
+  { label: 'Lite', href: '/kataloh/lite/' },
+  { label: 'WorkPod', href: '/kataloh/workpod/' },
 ]
 
 const companyLinks = [
-  { label: 'Про нас', href: '/pro-nas/' },
-  { label: 'Контакти', href: '/kontakty/' },
-  { label: 'FAQ', href: '/#faq' },
-  { label: 'Відгуки', href: '/#vidguky' },
+  { label: 'Про компанію', href: '/pro-kompaniyu/' },
+  { label: "Зв'язатися", href: '/zviazatysya/' },
+  { label: 'FAQ', href: '/zapytannya/' },
+  { label: 'Статті', href: '/statti/' },
 ]
 
 export default function Footer() {
@@ -48,7 +48,7 @@ export default function Footer() {
               <Logo variant="light" showTagline />
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-white/60" style={{ fontFamily: "'Inter', sans-serif" }}>
-              Офіційний дистриб&apos;ютор акустичних кабін Silentbox для ресторанів, готелів та кейтерингу в Україні.
+              Офіційний дилер акустичних офісних кабін SilentBox в Україні. Звукоізоляція open-space, переговорні кабіни для офісу.
             </p>
           </div>
 
@@ -122,7 +122,7 @@ export default function Footer() {
             </ul>
             {/* Copper CTA link */}
             <Link
-              href="/kontakty/"
+              href="/zviazatysya/"
               className="inline-flex items-center gap-2 mt-5 text-sm font-semibold transition-colors duration-200"
               style={{ fontFamily: "'Inter', sans-serif", color: '#c87941' }}
               onMouseEnter={(e) => { e.currentTarget.style.color = '#e09060' }}

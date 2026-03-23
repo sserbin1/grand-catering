@@ -17,7 +17,7 @@ export interface BlogPost {
   language?: string
 }
 
-const BLOG_DIR = path.join(process.cwd(), 'content', 'blog')
+const BLOG_DIR = path.join(process.cwd(), 'content', 'statti')
 
 export function getAllPosts(): BlogPost[] {
   const files = fs.readdirSync(BLOG_DIR).filter((f) => f.endsWith('.md'))

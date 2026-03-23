@@ -3,7 +3,7 @@ export const siteConfig = {
   domain: "grand-catering.com.ua",
   url: "https://grand-catering.com.ua",
   language: "uk",
-  description: "Акустичні кабіни Silentbox для ресторанів, готелів та кейтерингу. Приватні VIP-зони, звукоізоляція до 35 дБ, вентиляція, LED-освітлення. Доставка та монтаж по всій Україні.",
+  description: "Акустичні офісні кабіни SilentBox — дилер в Україні. Звукоізоляція open-space до 35 дБ, вентиляція, LED-освітлення. Доставка та монтаж по всій Україні.",
   crmWebhookUrl: "https://office.silent-box.com/api/pbn/webhook",
   umamiUrl: "/umami",
   umamiWebsiteId: "",

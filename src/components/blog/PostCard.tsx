@@ -5,11 +5,11 @@ import Link from 'next/link'
 import type { BlogPost } from '@/lib/blog'
 
 const blogImages: Record<string, string> = {
-  'akustyka-v-restorani': '/images/blog/akustyka-v-restorani.jpg',
-  'vip-zony-v-restoranakh': '/images/blog/vip-zony-v-restoranakh.jpg',
-  'oglyad-kabin-silentbox-restorany': '/images/blog/oglyad-kabin-silentbox-restorany.jpg',
-  'shum-u-restorani-problemy': '/images/blog/shum-u-restorani-problemy.jpg',
-  'zvukoizolyatsiya-restoran-5-sposobiv': '/images/blog/zvukoizolyatsiya-restoran-5-sposobiv.jpg',
+  'shum-v-ofisi-yak-vplyvaie': '/images/blog/akustyka-v-restorani.jpg',
+  'open-space-chy-kabinety': '/images/blog/vip-zony-v-restoranakh.jpg',
+  'oglyad-modelej-silentbox': '/images/blog/oglyad-kabin-silentbox-restorany.jpg',
+  'yak-obraty-akustychnu-kabinu': '/images/blog/shum-u-restorani-problemy.jpg',
+  'zvukoizolyatsiya-ofisu-7-sposobiv': '/images/blog/zvukoizolyatsiya-restoran-5-sposobiv.jpg',
 }
 
 interface PostCardProps {
@@ -33,7 +33,7 @@ export default function PostCard({ post }: PostCardProps) {
       }}
     >
       {imgSrc && (
-        <Link href={`/blog/${post.slug}/`} className="block relative w-full aspect-[16/9]">
+        <Link href={`/statti/${post.slug}/`} className="block relative w-full aspect-[16/9]">
           <Image
             src={imgSrc}
             alt={post.title}
@@ -54,7 +54,7 @@ export default function PostCard({ post }: PostCardProps) {
         )}
         <h2 className="text-xl font-semibold mt-1" style={{ fontFamily: "'Playfair Display', serif" }}>
           <Link
-            href={`/blog/${post.slug}/`}
+            href={`/statti/${post.slug}/`}
             className="transition-colors"
             style={{ color: 'var(--color-text, #1a1a1a)' }}
             onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-accent, #1a5632)' }}

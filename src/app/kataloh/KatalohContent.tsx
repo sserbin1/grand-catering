@@ -45,7 +45,7 @@ const lineConfig = {
     tagBg: 'linear-gradient(135deg, #8b4513, #6b3410)',
     tagColor: '#ffffff',
     accent: '#8b4513',
-    description: 'Окремі робочі місця з ергономічними столами для повноцінної роботи.',
+    description: 'Окремі робочі місця з ергономічними столами для зосередженої роботи.',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
@@ -59,7 +59,7 @@ function ModelCard({ model }: { model: CabinModel }) {
 
   return (
     <Link
-      href={`/modeli/${model.slug}/`}
+      href={`/kataloh/${model.slug}/`}
       className="group relative flex flex-col rounded-lg overflow-hidden cursor-pointer"
       style={{
         background: 'var(--color-bg, #fffcf8)',
@@ -173,7 +173,7 @@ function ModelCard({ model }: { model: CabinModel }) {
             onClick={(e) => {
               e.preventDefault()
               e.stopPropagation()
-              window.location.href = '/kontakty/'
+              window.location.href = '/zviazatysya/'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = '#1a5632'
@@ -235,7 +235,7 @@ function LineSection({
   )
 }
 
-export default function ModeliContent() {
+export default function KatalohContent() {
   const premiumModels = getModelsByLine('premium')
   const liteModels = getModelsByLine('lite')
   const proModels = getModelsByLine('pro')
@@ -259,7 +259,7 @@ export default function ModeliContent() {
             <span style={{ color: '#1a5632' }}>SilentBox</span>
           </h1>
           <p className="text-lg max-w-2xl mx-auto mb-10" style={{ color: 'var(--color-text-light, #6b6560)', lineHeight: 1.7, fontFamily: "'Inter', sans-serif" }}>
-            Від компактної телефонної кабіни до повноцінної VIP-кімнати.
+            Від компактної телефонної кабіни до повноцінної переговорної кімнати.
             Доставка по Україні та Європі за 3-5 робочих днів. Гарантія до 10 років.
           </p>
 
@@ -299,10 +299,10 @@ export default function ModeliContent() {
             Не знаєте, яка модель підійде?
           </h2>
           <p className="text-base max-w-xl mx-auto mb-8" style={{ color: 'rgba(255,255,255,0.75)', fontFamily: "'Inter', sans-serif" }}>
-            Залиште заявку — наші спеціалісти проаналізують ваш заклад та запропонують оптимальне рішення. Безкоштовна консультація.
+            Залиште заявку — наші спеціалісти проаналізують ваш офіс та запропонують оптимальне рішення. Безкоштовна консультація.
           </p>
           <Link
-            href="/kontakty/"
+            href="/zviazatysya/"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-lg text-lg font-bold text-white transition-all cursor-pointer"
             style={{
               background: '#c87941',

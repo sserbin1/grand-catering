@@ -9,15 +9,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts()
   const models = getAllModels()
 
-  const blogEntries: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${siteConfig.url}/blog/${post.slug}/`,
+  const articleEntries: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${siteConfig.url}/statti/${post.slug}/`,
     lastModified: new Date(post.publishedAt),
     changeFrequency: 'monthly',
     priority: 0.7,
   }))
 
   const modelEntries: MetadataRoute.Sitemap = models.map((model) => ({
-    url: `${siteConfig.url}/modeli/${model.slug}/`,
+    url: `${siteConfig.url}/kataloh/${model.slug}/`,
     lastModified: new Date(),
     changeFrequency: 'monthly',
     priority: 0.8,
@@ -31,18 +31,42 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
-      url: `${siteConfig.url}/modeli/`,
+      url: `${siteConfig.url}/kataloh/`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
+    {
+      url: `${siteConfig.url}/perevahy/`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${siteConfig.url}/pro-kompaniyu/`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${siteConfig.url}/zapytannya/`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${siteConfig.url}/zviazatysya/`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
     ...modelEntries,
     {
-      url: `${siteConfig.url}/blog/`,
+      url: `${siteConfig.url}/statti/`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
-    ...blogEntries,
+    ...articleEntries,
   ]
 }

@@ -7,12 +7,12 @@ import { siteConfig } from '../../../site.config'
 
 const navItems = [
   { label: 'Головна', href: '/' },
-  { label: 'Моделі', href: '/modeli/' },
-  { label: 'Переваги', href: '/#perevagy' },
-  { label: 'Про нас', href: '/pro-nas/' },
-  { label: 'FAQ', href: '/#faq' },
-  { label: 'Блог', href: '/blog/' },
-  { label: 'Контакти', href: '/kontakty/' },
+  { label: 'Каталог', href: '/kataloh/' },
+  { label: 'Переваги', href: '/perevahy/' },
+  { label: 'Про компанію', href: '/pro-kompaniyu/' },
+  { label: 'FAQ', href: '/zapytannya/' },
+  { label: 'Статті', href: '/statti/' },
+  { label: "Зв'язатися", href: '/zviazatysya/' },
 ]
 
 export default function Header() {
@@ -120,7 +120,7 @@ export default function Header() {
 
           {/* Desktop CTA - copper button */}
           <Link
-            href="/kontakty/"
+            href="/zviazatysya/"
             className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white transition-all"
             style={{
               background: 'var(--color-cta, #c87941)',
@@ -214,7 +214,7 @@ export default function Header() {
           </ul>
           <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--color-border, #e8e2db)' }}>
             <Link
-              href="/kontakty/"
+              href="/zviazatysya/"
               onClick={() => setMobileOpen(false)}
               className="flex items-center justify-center w-full px-5 py-3 rounded-lg text-base font-semibold text-white transition-all"
               style={{

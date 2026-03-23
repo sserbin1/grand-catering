@@ -6,13 +6,13 @@ import { getAllModels, getModelBySlug } from '@/lib/models'
 import { generatePageMetadata } from '@/lib/seo'
 
 const modelImages: Record<string, { src: string; alt: string }> = {
-  solo: { src: '/images/cabins/solo.png', alt: 'Акустична кабіна SilentBox Solo для ресторану на 1 особу' },
-  duet: { src: '/images/cabins/duet.png', alt: 'VIP кабіна SilentBox Duet для ресторану на 2 особи' },
-  quartet: { src: '/images/cabins/quartet.png', alt: 'Переговорна кабіна SilentBox Quartet для готелю на 4 особи' },
-  lite: { src: '/images/cabins/solo-lite.png', alt: 'Акустична кабіна SilentBox Solo Lite для персоналу ресторану' },
-  'duet-lite': { src: '/images/cabins/duet-lite.png', alt: 'Приватна зона SilentBox Duet Lite для готелю' },
-  'quartet-lite': { src: '/images/cabins/quartet-lite.png', alt: 'Звукоізоляційна кабіна SilentBox Quartet Lite для кейтерингу' },
-  workpod: { src: '/images/cabins/workpod.png', alt: 'Робоче місце SilentBox WorkPod для адміністрації ресторану' },
+  solo: { src: '/images/cabins/solo.png', alt: 'Акустична кабіна SilentBox Solo для офісу на 1 особу' },
+  duet: { src: '/images/cabins/duet.png', alt: 'Переговорна кабіна SilentBox Duet для офісу на 2 особи' },
+  quartet: { src: '/images/cabins/quartet.png', alt: 'Міні-конференц-зал SilentBox Quartet для офісу на 4 особи' },
+  lite: { src: '/images/cabins/solo-lite.png', alt: 'Телефонна кабіна SilentBox Solo Lite для open-space' },
+  'duet-lite': { src: '/images/cabins/duet-lite.png', alt: 'Переговорна кабіна SilentBox Duet Lite для офісу' },
+  'quartet-lite': { src: '/images/cabins/quartet-lite.png', alt: 'Переговорна кімната SilentBox Quartet Lite для офісу' },
+  workpod: { src: '/images/cabins/workpod.png', alt: 'Робоче місце SilentBox WorkPod для зосередженої роботи' },
 }
 
 interface PageProps {
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return generatePageMetadata({
     title: model.metaTitle,
     description: model.metaDescription,
-    path: `/modeli/${model.slug}/`,
+    path: `/kataloh/${model.slug}/`,
   })
 }
 
@@ -86,8 +86,8 @@ export default async function ModelPage({ params }: PageProps) {
       />
 
       <nav className="mb-8 text-sm" style={{ color: 'var(--color-text-light)' }}>
-        <Link href="/modeli/" className="hover:underline" style={{ color: 'var(--color-text-light)' }}>
-          Каталог моделей
+        <Link href="/kataloh/" className="hover:underline" style={{ color: 'var(--color-text-light)' }}>
+          Каталог кабін
         </Link>
         <span className="mx-2">/</span>
         <span style={{ color: 'var(--color-primary)' }}>{model.fullName}</span>
@@ -176,16 +176,16 @@ export default async function ModelPage({ params }: PageProps) {
 
       <div className="flex gap-4 mb-16">
         <Link
-          href="/kontakty/"
+          href="/zviazatysya/"
           className="btn-primary text-lg"
         >
           Замовити {model.fullName}
         </Link>
         <Link
-          href="/kontakty/"
+          href="/zviazatysya/"
           className="btn-green text-lg"
         >
-          Безкоштовний аудит
+          Безкоштовний аудит офісу
         </Link>
       </div>
 
@@ -195,7 +195,7 @@ export default async function ModelPage({ params }: PageProps) {
           {otherModels.map((other) => (
             <Link
               key={other.slug}
-              href={`/modeli/${other.slug}/`}
+              href={`/kataloh/${other.slug}/`}
               className="block rounded-lg p-4 transition-colors no-underline"
               style={{ border: '1px solid var(--color-border)', background: 'var(--color-bg)' }}
             >

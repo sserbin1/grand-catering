@@ -47,7 +47,7 @@ export function generateArticleJsonLd(post: BlogPost): Record<string, unknown> {
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `${siteConfig.url}/blog/${post.slug}/`,
+      '@id': `${siteConfig.url}/statti/${post.slug}/`,
     },
     keywords: post.keywords?.join(', '),
   }

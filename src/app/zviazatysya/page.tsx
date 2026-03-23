@@ -2,18 +2,18 @@ import type { Metadata } from 'next'
 import ContactForm from '../../components/forms/ContactForm'
 
 export const metadata: Metadata = {
-  title: 'Контакти — Grand Catering | Акустичні кабіни SilentBox для ресторанів та готелів',
+  title: "Зв'язатися — Grand Catering | Акустичні кабіни SilentBox для офісу",
   description:
-    "Зв'яжіться з Grand Catering для безкоштовного аудиту ресторану. Акустичні кабіни SilentBox для ресторанів, готелів та кейтерингу. Звукоізоляція, VIP кабіни, приватні зони.",
+    "Зв'яжіться з Grand Catering для безкоштовного аудиту офісу. Акустичні кабіни SilentBox для open-space, переговорні кімнати, телефонні кабіни. Звукоізоляція офісу до 35 дБ.",
 }
 
-export default function KontaktyPage() {
+export default function ZviazatysyaPage() {
   return (
     <main>
       <section className="section">
         <div className="container">
           <h1 className="section-title" style={{ textAlign: 'left', marginBottom: '3rem' }}>
-            Контакти
+            Зв&apos;язатися з нами
           </h1>
 
           <div
@@ -50,7 +50,7 @@ export default function KontaktyPage() {
                 <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text)' }}>
                   Запрошуємо вас відвідати наш шоу-рум, щоб особисто оцінити якість
                   звукоізоляції акустичних кабін SilentBox. Також ми можемо організувати аудит рівня шуму
-                  та тестовий період безпосередньо у вашому ресторані чи готелі. Залиште заявку -- ми все
+                  та тестовий період безпосередньо у вашому офісі. Залиште заявку -- ми все
                   організуємо.
                 </p>
               </div>
