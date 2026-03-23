@@ -18,9 +18,9 @@ const modelImages: Record<string, string> = {
 const lineConfig = {
   premium: {
     label: 'Premium',
-    tagBg: 'linear-gradient(135deg, #823494, #6b2a7a)',
+    tagBg: 'linear-gradient(135deg, #1a5632, #134425)',
     tagColor: '#ffffff',
-    accent: '#823494',
+    accent: '#1a5632',
     description: 'Максимальна звукоізоляція 35 дБ (ISO 23351-1). Сендвіч-панелі, триплекс скло, Smart Electronics.',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -30,9 +30,9 @@ const lineConfig = {
   },
   lite: {
     label: 'Lite',
-    tagBg: 'linear-gradient(135deg, #2e7d32, #1b5e20)',
+    tagBg: 'linear-gradient(135deg, #b8860b, #8b6914)',
     tagColor: '#ffffff',
-    accent: '#2e7d32',
+    accent: '#b8860b',
     description: 'Шумоізоляція 15-20 дБ. SMART сенсорне керування, 10+ дизайнерських варіантів оздоблення.',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -42,9 +42,9 @@ const lineConfig = {
   },
   pro: {
     label: 'Pro',
-    tagBg: 'linear-gradient(135deg, #e65100, #bf360c)',
+    tagBg: 'linear-gradient(135deg, #8b4513, #6b3410)',
     tagColor: '#ffffff',
-    accent: '#e65100',
+    accent: '#8b4513',
     description: 'Окремі робочі місця з ергономічними столами для повноцінної роботи.',
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -60,28 +60,28 @@ function ModelCard({ model }: { model: CabinModel }) {
   return (
     <Link
       href={`/modeli/${model.slug}/`}
-      className="group relative flex flex-col rounded-2xl overflow-hidden cursor-pointer"
+      className="group relative flex flex-col rounded-lg overflow-hidden cursor-pointer"
       style={{
-        background: '#ffffff',
-        border: '1px solid #e5e7eb',
+        background: 'var(--color-bg, #fffcf8)',
+        border: '1px solid var(--color-border, #e8e2db)',
         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement
         el.style.transform = 'translateY(-4px)'
-        el.style.boxShadow = '0 20px 40px rgba(130, 52, 148, 0.12), 0 8px 16px rgba(0,0,0,0.06)'
+        el.style.boxShadow = '0 20px 40px rgba(26, 86, 50, 0.12), 0 8px 16px rgba(0,0,0,0.06)'
         el.style.borderColor = config.accent
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLElement
         el.style.transform = 'translateY(0)'
         el.style.boxShadow = 'none'
-        el.style.borderColor = '#e5e7eb'
+        el.style.borderColor = 'var(--color-border, #e8e2db)'
       }}
     >
       {/* Product image */}
       {modelImages[model.slug] && (
-        <div className="relative w-full aspect-[4/3] bg-gray-100">
+        <div className="relative w-full aspect-[4/3]" style={{ background: 'var(--color-bg-alt, #f7f3ee)' }}>
           <Image
             src={modelImages[model.slug]}
             alt={model.fullName}
@@ -94,7 +94,7 @@ function ModelCard({ model }: { model: CabinModel }) {
             style={{
               background: config.tagBg,
               color: config.tagColor,
-              fontFamily: "'Montserrat', sans-serif",
+              fontFamily: "'Inter', sans-serif",
             }}
           >
             {config.label}
@@ -108,11 +108,11 @@ function ModelCard({ model }: { model: CabinModel }) {
           <div>
             <h3
               className="text-xl font-bold mb-1"
-              style={{ color: '#2c2f38', fontFamily: "'Montserrat', sans-serif" }}
+              style={{ color: 'var(--color-text, #1a1a1a)', fontFamily: "'Playfair Display', serif" }}
             >
               {model.fullName}
             </h3>
-            <p className="text-sm" style={{ color: '#6b7280' }}>
+            <p className="text-sm" style={{ color: 'var(--color-text-light, #6b6560)', fontFamily: "'Inter', sans-serif" }}>
               {model.feature}
             </p>
           </div>
@@ -120,21 +120,21 @@ function ModelCard({ model }: { model: CabinModel }) {
 
         {/* Key specs grid */}
         <div className="grid grid-cols-2 gap-3 mb-5">
-          <div className="rounded-xl p-3" style={{ background: '#f9fafb' }}>
-            <div className="text-xs font-medium mb-0.5" style={{ color: '#9ca3af' }}>Місткість</div>
-            <div className="text-sm font-bold" style={{ color: '#2c2f38' }}>{model.capacity}</div>
+          <div className="rounded-lg p-3" style={{ background: 'var(--color-bg-alt, #f7f3ee)' }}>
+            <div className="text-xs font-medium mb-0.5" style={{ color: 'var(--color-text-light, #6b6560)', fontFamily: "'Inter', sans-serif" }}>Місткість</div>
+            <div className="text-sm font-bold" style={{ color: 'var(--color-text, #1a1a1a)', fontFamily: "'Inter', sans-serif" }}>{model.capacity}</div>
           </div>
-          <div className="rounded-xl p-3" style={{ background: '#f9fafb' }}>
-            <div className="text-xs font-medium mb-0.5" style={{ color: '#9ca3af' }}>Звукоізоляція</div>
-            <div className="text-sm font-bold" style={{ color: config.accent }}>{model.soundInsulation}</div>
+          <div className="rounded-lg p-3" style={{ background: 'var(--color-bg-alt, #f7f3ee)' }}>
+            <div className="text-xs font-medium mb-0.5" style={{ color: 'var(--color-text-light, #6b6560)', fontFamily: "'Inter', sans-serif" }}>Звукоізоляція</div>
+            <div className="text-sm font-bold" style={{ color: config.accent, fontFamily: "'Inter', sans-serif" }}>{model.soundInsulation}</div>
           </div>
-          <div className="rounded-xl p-3" style={{ background: '#f9fafb' }}>
-            <div className="text-xs font-medium mb-0.5" style={{ color: '#9ca3af' }}>Розміри</div>
-            <div className="text-sm font-bold" style={{ color: '#2c2f38' }}>{model.dimensions}</div>
+          <div className="rounded-lg p-3" style={{ background: 'var(--color-bg-alt, #f7f3ee)' }}>
+            <div className="text-xs font-medium mb-0.5" style={{ color: 'var(--color-text-light, #6b6560)', fontFamily: "'Inter', sans-serif" }}>Розміри</div>
+            <div className="text-sm font-bold" style={{ color: 'var(--color-text, #1a1a1a)', fontFamily: "'Inter', sans-serif" }}>{model.dimensions}</div>
           </div>
-          <div className="rounded-xl p-3" style={{ background: '#f9fafb' }}>
-            <div className="text-xs font-medium mb-0.5" style={{ color: '#9ca3af' }}>Вага</div>
-            <div className="text-sm font-bold" style={{ color: '#2c2f38' }}>{model.weight}</div>
+          <div className="rounded-lg p-3" style={{ background: 'var(--color-bg-alt, #f7f3ee)' }}>
+            <div className="text-xs font-medium mb-0.5" style={{ color: 'var(--color-text-light, #6b6560)', fontFamily: "'Inter', sans-serif" }}>Вага</div>
+            <div className="text-sm font-bold" style={{ color: 'var(--color-text, #1a1a1a)', fontFamily: "'Inter', sans-serif" }}>{model.weight}</div>
           </div>
         </div>
 
@@ -144,7 +144,7 @@ function ModelCard({ model }: { model: CabinModel }) {
             <span
               key={feat}
               className="text-xs font-medium px-2.5 py-1 rounded-lg"
-              style={{ background: '#f3e8f7', color: '#823494' }}
+              style={{ background: '#e8f5ee', color: '#1a5632', fontFamily: "'Inter', sans-serif" }}
             >
               {feat}
             </span>
@@ -154,22 +154,21 @@ function ModelCard({ model }: { model: CabinModel }) {
         {/* CTA */}
         <div className="mt-auto flex gap-3">
           <span
-            className="flex-1 text-center py-2.5 rounded-xl text-sm font-bold"
+            className="flex-1 text-center py-2.5 rounded-lg text-sm font-bold text-white"
             style={{
-              background: '#ffdc52',
-              color: '#2c2f38',
-              fontFamily: "'Montserrat', sans-serif",
+              background: '#c87941',
+              fontFamily: "'Inter', sans-serif",
             }}
           >
             Детальніше
           </span>
           <span
-            className="flex-1 text-center py-2.5 rounded-xl text-sm font-bold cursor-pointer transition-colors"
+            className="flex-1 text-center py-2.5 rounded-lg text-sm font-bold cursor-pointer transition-colors"
             style={{
               background: 'transparent',
-              color: '#823494',
-              border: '2px solid #823494',
-              fontFamily: "'Montserrat', sans-serif",
+              color: '#1a5632',
+              border: '2px solid #1a5632',
+              fontFamily: "'Inter', sans-serif",
             }}
             onClick={(e) => {
               e.preventDefault()
@@ -177,12 +176,12 @@ function ModelCard({ model }: { model: CabinModel }) {
               window.location.href = '/kontakty/'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#823494'
+              e.currentTarget.style.background = '#1a5632'
               e.currentTarget.style.color = '#ffffff'
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.background = 'transparent'
-              e.currentTarget.style.color = '#823494'
+              e.currentTarget.style.color = '#1a5632'
             }}
           >
             Замовити
@@ -208,19 +207,19 @@ function LineSection({
       {/* Line header */}
       <div className="flex items-center gap-4 mb-8">
         <div
-          className="w-12 h-12 rounded-xl flex items-center justify-center"
+          className="w-12 h-12 rounded-lg flex items-center justify-center"
           style={{ background: config.tagBg, color: '#ffffff' }}
         >
           {config.icon}
         </div>
         <div>
           <h2
-            className="text-2xl font-extrabold"
-            style={{ color: '#2c2f38', fontFamily: "'Montserrat', sans-serif" }}
+            className="text-2xl font-bold"
+            style={{ color: 'var(--color-text, #1a1a1a)', fontFamily: "'Playfair Display', serif" }}
           >
             {config.label}
           </h2>
-          <p className="text-sm mt-0.5" style={{ color: '#6b7280' }}>
+          <p className="text-sm mt-0.5" style={{ color: 'var(--color-text-light, #6b6560)', fontFamily: "'Inter', sans-serif" }}>
             {config.description}
           </p>
         </div>
@@ -242,24 +241,24 @@ export default function ModeliContent() {
   const proModels = getModelsByLine('pro')
 
   return (
-    <main style={{ background: '#fafafa' }}>
+    <main style={{ background: 'var(--color-bg-alt, #f7f3ee)' }}>
       {/* Hero */}
-      <section className="pt-28 pb-16 text-center" style={{ background: 'linear-gradient(180deg, #ffffff 0%, #fafafa 100%)' }}>
+      <section className="pt-28 pb-16 text-center" style={{ background: 'linear-gradient(180deg, var(--color-bg, #fffcf8) 0%, var(--color-bg-alt, #f7f3ee) 100%)' }}>
         <div className="max-w-4xl mx-auto px-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" style={{ background: '#f3e8f7', color: '#823494' }}>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" style={{ background: '#e8f5ee', color: '#1a5632' }}>
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
             </svg>
-            <span className="text-sm font-semibold" style={{ fontFamily: "'Montserrat', sans-serif" }}>7 моделей у 3 лінійках</span>
+            <span className="text-sm font-semibold" style={{ fontFamily: "'Inter', sans-serif" }}>7 моделей у 3 лінійках</span>
           </div>
           <h1
-            className="text-4xl md:text-5xl font-extrabold mb-5"
-            style={{ color: '#2c2f38', fontFamily: "'Montserrat', sans-serif", lineHeight: 1.15 }}
+            className="text-4xl md:text-5xl font-bold mb-5"
+            style={{ color: 'var(--color-text, #1a1a1a)', fontFamily: "'Playfair Display', serif", lineHeight: 1.15 }}
           >
             Каталог акустичних кабін{' '}
-            <span style={{ color: '#823494' }}>SilentBox</span>
+            <span style={{ color: '#1a5632' }}>SilentBox</span>
           </h1>
-          <p className="text-lg max-w-2xl mx-auto mb-10" style={{ color: '#6b7280', lineHeight: 1.7 }}>
+          <p className="text-lg max-w-2xl mx-auto mb-10" style={{ color: 'var(--color-text-light, #6b6560)', lineHeight: 1.7, fontFamily: "'Inter', sans-serif" }}>
             Від компактної телефонної кабіни до повноцінної VIP-кімнати.
             Доставка по Україні та Європі за 3-5 робочих днів. Гарантія до 10 років.
           </p>
@@ -273,10 +272,10 @@ export default function ModeliContent() {
               { value: '10 років', label: 'Гарантія' },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="text-2xl font-extrabold" style={{ color: '#823494', fontFamily: "'Montserrat', sans-serif" }}>
+                <div className="text-2xl font-bold" style={{ color: '#1a5632', fontFamily: "'Playfair Display', serif" }}>
                   {stat.value}
                 </div>
-                <div className="text-xs font-medium mt-0.5" style={{ color: '#9ca3af' }}>
+                <div className="text-xs font-medium mt-0.5" style={{ color: 'var(--color-text-light, #6b6560)', fontFamily: "'Inter', sans-serif" }}>
                   {stat.label}
                 </div>
               </div>
@@ -292,27 +291,26 @@ export default function ModeliContent() {
         <LineSection line="pro" models={proModels} />
 
         {/* Bottom CTA */}
-        <section className="text-center rounded-2xl p-10 md:p-16" style={{ background: 'linear-gradient(135deg, #823494, #5a2f99)', color: '#ffffff' }}>
+        <section className="text-center rounded-lg p-10 md:p-16" style={{ background: 'linear-gradient(135deg, #1a5632, #0d3b1f)', color: '#ffffff' }}>
           <h2
-            className="text-2xl md:text-3xl font-extrabold mb-4"
-            style={{ fontFamily: "'Montserrat', sans-serif" }}
+            className="text-2xl md:text-3xl font-bold mb-4"
+            style={{ fontFamily: "'Playfair Display', serif" }}
           >
             Не знаєте, яка модель підійде?
           </h2>
-          <p className="text-base max-w-xl mx-auto mb-8" style={{ color: 'rgba(255,255,255,0.75)' }}>
+          <p className="text-base max-w-xl mx-auto mb-8" style={{ color: 'rgba(255,255,255,0.75)', fontFamily: "'Inter', sans-serif" }}>
             Залиште заявку — наші спеціалісти проаналізують ваш заклад та запропонують оптимальне рішення. Безкоштовна консультація.
           </p>
           <Link
             href="/kontakty/"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-lg font-bold transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-lg text-lg font-bold text-white transition-all cursor-pointer"
             style={{
-              background: '#ffdc52',
-              color: '#2c2f38',
-              fontFamily: "'Montserrat', sans-serif",
+              background: '#c87941',
+              fontFamily: "'Inter', sans-serif",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)'
-              e.currentTarget.style.boxShadow = '0 8px 24px rgba(255, 220, 82, 0.4)'
+              e.currentTarget.style.boxShadow = '0 8px 24px rgba(200, 121, 65, 0.4)'
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)'

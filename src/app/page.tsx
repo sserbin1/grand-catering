@@ -101,8 +101,8 @@ const problems = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
       </svg>
     ),
-    title: 'Шум кухні та залу',
-    text: 'Звуки кухонного обладнання, брязкіт посуду, голосні розмови гостей та фонова музика створюють шум до 75 дБ. SilentBox знижує його до рівня тихої бібліотеки (30 дБ).',
+    title: 'Шум кухні заважає гостям',
+    text: 'Звуки кухонного обладнання, брязкіт посуду та голосні розмови створюють шум до 75 дБ. Акустична кабіна для ресторану знижує його до рівня тихої бібліотеки (30 дБ), забезпечуючи комфорт VIP-гостей.',
   },
   {
     icon: (
@@ -110,8 +110,8 @@ const problems = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
       </svg>
     ),
-    title: 'Брак приватності для VIP-гостей',
-    text: 'VIP-гості потребують приватного простору для ділових розмов та конфіденційних зустрічей. Звукоізоляційна кабіна створює ексклюзивну зону прямо у залі ресторану.',
+    title: 'Відсутність приватних VIP-зон',
+    text: 'VIP-гості потребують приватного простору для ділових переговорів та конфіденційних зустрічей. Звукоізоляційна кабіна HoReCa створює ексклюзивну приватну зону прямо у залі ресторану без перебудови.',
   },
   {
     icon: (
@@ -119,17 +119,17 @@ const problems = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
       </svg>
     ),
-    title: 'Стрес персоналу',
-    text: 'Постійний шум ресторану виснажує персонал: адміністраторів, менеджерів з бронювань, координаторів заходів. Тиха кабіна дозволяє зосередитись та відпочити від шуму.',
+    title: 'Стрес та вигорання персоналу',
+    text: 'Постійний шум ресторану виснажує адміністраторів, менеджерів з бронювань та координаторів заходів. Тиха кабіна для персоналу дозволяє зосередитись, прийняти дзвінок та відпочити від шуму.',
   },
   {
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
       </svg>
     ),
-    title: 'Погана якість телефонних дзвінків',
-    text: 'Бронювання столиків, координація постачальників, зв\'язок із кейтеринг-клієнтами — все це потребує чистого звуку. У шумному ресторані якість дзвінків неприйнятна.',
+    title: 'Погані відгуки на Google',
+    text: 'Гості скаржаться на шум у відгуках, що знижує рейтинг закладу. Звукоізоляція ресторану за допомогою акустичних кабін покращує враження гостей та збільшує кількість повторних візитів.',
   },
 ]
 
@@ -141,7 +141,7 @@ const advantages = [
       </svg>
     ),
     title: 'Звукоізоляція до 35 дБ',
-    text: 'Різниця між гучним рестораном (~75 дБ) та тихою бібліотекою (~30 дБ). Сертифіковано за стандартом ISO 23351-1.',
+    text: 'Перетворює гучний зал ресторану (~75 дБ) на тишу бібліотеки (~30 дБ). Сертифіковано за ISO 23351-1 -- ваші VIP-гості отримують повну конфіденційність.',
   },
   {
     icon: (
@@ -150,7 +150,7 @@ const advantages = [
       </svg>
     ),
     title: 'Сендвіч-панелі та триплекс',
-    text: 'Багатошарові стіни: композит + фанера + мінвата + перфорований MDF + фетр. Двері з триплекс ударостійкого скла.',
+    text: 'Багатошарові стіни (композит + фанера + мінвата + перфорований MDF + фетр) та триплекс ударостійке скло. Естетичний дизайн для преміальних ресторанів.',
   },
   {
     icon: (
@@ -159,7 +159,7 @@ const advantages = [
       </svg>
     ),
     title: 'Smart Electronics',
-    text: 'Сенсорна панель керування, датчик присутності з автоввімкненням LED 450 lx (3500-4500K), датчик CO2.',
+    text: 'Сенсорна панель керування, датчик присутності з автоввімкненням LED, датчик CO2. Гості та персонал керують кабіною одним дотиком.',
   },
   {
     icon: (
@@ -167,8 +167,8 @@ const advantages = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.384 3.18A1.106 1.106 0 014.5 17.28V6.72a1.106 1.106 0 011.536-1.07l5.384 3.18m0 0L16.92 5.65a1.106 1.106 0 011.536 1.07v10.56a1.106 1.106 0 01-1.536 1.07l-5.5-3.18z" />
       </svg>
     ),
-    title: 'Збірка від 60 хвилин',
-    text: 'Модульна конструкція з патентованим дизайном. Solo збирається за 60 хвилин без інструментів. Без будівельних робіт.',
+    title: 'Монтаж від 60 хвилин',
+    text: 'Модульна конструкція з патентованим дизайном. Збірка без будівельних робіт, пилу та інструментів. Жодних незручностей для гостей ресторану.',
   },
   {
     icon: (
@@ -177,7 +177,7 @@ const advantages = [
       </svg>
     ),
     title: 'Вентиляція до 600 м\u00b3/год',
-    text: 'Повне оновлення повітря кожні 2-3 хвилини. Рівень шуму вентилятора <30 дБ. Фільтрація повітря.',
+    text: 'Повне оновлення повітря кожні 2-3 хвилини. Шум вентилятора менше 30 дБ. Ваші гості дихають свіжим повітрям навіть у повністю закритій кабіні.',
   },
   {
     icon: (
@@ -186,96 +186,96 @@ const advantages = [
       </svg>
     ),
     title: '21 колір та патентований дизайн',
-    text: '21 варіант кольорів зовнішніх панелей. 10+ дизайнерських варіантів інтер\u2019єру. Органічно вписується у будь-який інтер\u2019єр ресторану.',
+    text: '21 варіант кольорів зовнішніх панелей та 10+ дизайнерських варіантів інтер\'єру. Кабіна органічно впишеться у стиль будь-якого ресторану чи готелю.',
   },
 ]
 
 const steps = [
   {
     num: '01',
-    title: 'Консультація',
-    text: 'Зв\u2019яжіться з нами для безкоштовної консультації. Підберемо оптимальну модель для вашого ресторану чи готелю.',
+    title: 'Аудит ресторану',
+    text: 'Безкоштовний аудит вашого закладу: оцінюємо рівень шуму, плануємо розміщення акустичної кабіни та підбираємо оптимальну модель.',
   },
   {
     num: '02',
-    title: 'Тестування',
-    text: 'Безкоштовно протестуйте кабіну у шоу-румі або замовте демонстрацію безпосередньо у вашому закладі.',
+    title: 'Тестування на місці',
+    text: 'Організуємо демонстрацію кабіни у вашому ресторані чи готелі. Або запрошуємо до шоу-руму для особистого тестування.',
   },
   {
     num: '03',
-    title: 'Замовлення',
-    text: 'Оформіть замовлення. Доставка 3-5 робочих днів по Україні та Європі (30+ країн).',
+    title: 'Замовлення та доставка',
+    text: 'Оформіть замовлення. Доставка 3-5 робочих днів по Україні та Європі (30+ країн). Кабіни застраховані на час транспортування.',
   },
   {
     num: '04',
-    title: 'Встановлення',
-    text: 'Збірка від 60 хвилин (Solo) до 4 годин (Quartet) без будівельних робіт. Гарантія до 10 років.',
+    title: 'Встановлення у закладі',
+    text: 'Збірка від 60 хвилин (Solo) до 4 годин (Quartet) без будівельних робіт. Гарантія до 10 років. Ваші гості навіть не помітять монтажу.',
   },
 ]
 
 const reviews = [
   {
+    name: 'Андрій К.',
+    position: 'Власник ресторану',
+    company: '',
+    city: '',
+    text: 'Встановили SilentBox Duet як VIP-зону для бізнес-обідів. Гості в захваті від приватності -- тепер конфіденційні переговори проходять прямо в залі, а не в окремій кімнаті.',
+    stars: 5,
+  },
+  {
+    name: 'Олена М.',
+    position: 'Менеджер готелю',
+    company: '',
+    city: '',
+    text: 'Дві кабіни Solo у лобі готелю -- найкраща інвестиція року. Гості постійно використовують їх для робочих дзвінків та онлайн-зустрічей. Рейтинг обслуговування зріс.',
+    stars: 5,
+  },
+  {
     name: 'Ігор П.',
     position: 'Шеф-кухар',
     company: '',
     city: '',
-    text: 'Нарешті можу спокійно приймати дзвінки від постачальників, не виходячи з ресторану. Кабіна повністю ізолює від шуму кухні.',
-    stars: 5,
-  },
-  {
-    name: 'Наталія В.',
-    position: 'Управляюча рестораном',
-    company: '',
-    city: '',
-    text: 'VIP-гості в захваті від приватної зони. Тепер бізнес-обіди проходять у повній конфіденційності, а бронювання приймаються без перешкод.',
-    stars: 5,
-  },
-  {
-    name: 'Олексій Д.',
-    position: 'Менеджер готелю',
-    company: '',
-    city: '',
-    text: 'Встановили дві кабіни у лобі готелю. Гості використовують їх для дзвінків та онлайн-зустрічей. Це підвищило рейтинг нашого сервісу.',
+    text: 'Нарешті можу спокійно спілкуватись з постачальниками, не виходячи з ресторану. Кабіна повністю ізолює від шуму кухні. Збірка зайняла годину.',
     stars: 5,
   },
 ]
 
 const faqItems = [
   {
-    q: 'Який рівень звукоізоляції забезпечують кабіни SilentBox?',
+    q: 'Який рівень звукоізоляції забезпечують кабіни SilentBox у ресторані?',
     a: 'Кабіни Premium лінійки (Solo, Duet, Quartet) забезпечують звукоізоляцію до 35 дБ за стандартом ISO 23351-1. Це різниця між гучним рестораном (~75 дБ) та тихою бібліотекою (~30 дБ). Кабіни Lite лінійки забезпечують 15-20 дБ зниження шуму.',
   },
   {
-    q: 'Чи підійде кабіна для ресторану з обмеженим простором?',
+    q: 'Як створити приватну зону в ресторані за допомогою SilentBox?',
+    a: 'Моделі Duet та Quartet ідеально підходять для VIP-зон у ресторанах. Панорамні скляні стіни зберігають візуальний зв\'язок із залом, а звукоізоляція 35 дБ забезпечує повну конфіденційність для ділових зустрічей.',
+  },
+  {
+    q: 'Чи підійде акустична кабіна для ресторану з обмеженим простором?',
     a: 'Так, найкомпактніша модель Solo займає лише 1.2 м\u00b2. Модульна конструкція дозволяє встановити кабіну навіть у невеликому ресторані. Кабіну можна переміщувати за потреби без будівельних робіт.',
   },
   {
-    q: 'Як працює вентиляція в кабіні?',
-    a: 'Кабіни оснащені примусовою вентиляцією з фільтрацією повітря. Premium модель Solo має продуктивність 250-300 м\u00b3/год з повним оновленням повітря кожні 2-3 хвилини. Рівень шуму вентилятора <30 дБ. Керування через сенсорну панель Smart Electronics.',
+    q: 'Як працює вентиляція в акустичній кабіні для готелю?',
+    a: 'Кабіни оснащені примусовою вентиляцією з фільтрацією повітря. Premium модель Solo має продуктивність 250-300 м\u00b3/год з повним оновленням повітря кожні 2-3 хвилини. Рівень шуму вентилятора менше 30 дБ.',
   },
   {
-    q: 'Скільки часу займає збірка кабіни?',
-    a: 'SilentBox Solo збирається за 60 хвилин без жодних інструментів завдяки модульній конструкції з патентованим дизайном. Duet та Quartet збираються за 2-4 години. Не потрібні будівельні роботи, пил чи спеціальне обладнання.',
+    q: 'Скільки часу займає монтаж кабіни у ресторані?',
+    a: 'SilentBox Solo збирається за 60 хвилин без жодних інструментів. Duet та Quartet збираються за 2-4 години. Не потрібні будівельні роботи, пил чи спеціальне обладнання -- ваш заклад працює у звичному режимі.',
   },
   {
-    q: 'Яка гарантія на кабіни?',
-    a: 'Гарантія на конструкцію кабіни — до 10 років. Окрема гарантія на електроніку та вентиляцію. Сервісне обслуговування по всій Україні.',
+    q: 'Яка гарантія на звукоізоляційні кабіни для HoReCa?',
+    a: 'Гарантія на конструкцію кабіни -- до 10 років. Окрема гарантія на електроніку та вентиляцію. Сервісне обслуговування по всій Україні.',
   },
   {
-    q: 'Чи можна використовувати кабіну як VIP-зону для гостей?',
-    a: 'Так, моделі Duet та Quartet ідеально підходять для створення приватних VIP-зон у ресторані. Панорамні скляні стіни зберігають візуальний зв\'язок із залом, а звукоізоляція 35 дБ забезпечує повну конфіденційність.',
+    q: 'Чи можна орендувати акустичну кабіну для готелю?',
+    a: 'Так, ми пропонуємо оренду акустичних кабін від 3 місяців. Це зручне рішення для готелів та ресторанів, які хочуть протестувати кабіну перед покупкою або мають сезонну потребу в додаткових приватних зонах.',
   },
   {
-    q: 'Куди здійснюється доставка?',
-    a: 'Доставка по всій Україні та Європі (30+ країн) за 3-5 робочих днів. Кабіни надійно упаковані та застраховані на час транспортування.',
+    q: 'Чим відрізняються лінійки Premium та Lite для ресторанного бізнесу?',
+    a: 'Premium лінійка (Solo, Duet, Quartet) забезпечує максимальну звукоізоляцію 35 дБ завдяки сендвіч-панелям та триплекс скло. Lite лінійка забезпечує 15-20 дБ з м\'якими акустичними панелями та SMART керуванням -- оптимальне рішення для кейтерингових компаній та невеликих закладів.',
   },
   {
-    q: 'Чи можна орендувати кабіну?',
-    a: 'Так, ми пропонуємо оренду акустичних кабін від 3 місяців. Це зручне рішення для ресторанів, які хочуть протестувати кабіну перед покупкою або мають сезонну потребу.',
-  },
-  {
-    q: 'Чим відрізняються лінійки Premium та Lite?',
-    a: 'Premium лінійка (Solo, Duet, Quartet) забезпечує максимальну звукоізоляцію 35 дБ завдяки сендвіч-панелям та триплекс скло. Lite лінійка (Solo Lite, Duet Lite, Quartet Lite) забезпечує 15-20 дБ з м\'якими акустичними панелями, SMART керуванням та 10+ варіантами дизайну.',
+    q: 'Яке акустичне рішення підходить для кейтерингу?',
+    a: 'Для кейтерингових компаній рекомендуємо SilentBox Solo Lite або WorkPod -- компактні кабіни для менеджерів, які координують замовлення та спілкуються з клієнтами. Модульна конструкція дозволяє переміщувати кабіну між локаціями.',
   },
 ]
 
@@ -295,18 +295,18 @@ const faqJsonLd = {
 function FAQItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = useState(false)
   return (
-    <div className="border-b border-[var(--color-border)]">
+    <div className="border-b" style={{ borderColor: 'var(--color-border)' }}>
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between py-5 text-left cursor-pointer bg-transparent border-none"
       >
-        <span className="text-lg font-semibold text-[var(--color-primary)] pr-4">{question}</span>
+        <span className="text-lg font-semibold pr-4" style={{ color: 'var(--color-primary)', fontFamily: "'Playfair Display', serif" }}>{question}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className={`w-5 h-5 flex-shrink-0 text-[var(--color-accent)] transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          className={`w-5 h-5 flex-shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
           fill="none"
           viewBox="0 0 24 24"
-          stroke="currentColor"
+          stroke="#1a5632"
           strokeWidth={2}
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
@@ -315,7 +315,7 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
       <div
         className={`overflow-hidden transition-all duration-300 ${open ? 'max-h-96 pb-5' : 'max-h-0'}`}
       >
-        <p className="text-[var(--color-text-light)] leading-relaxed">{answer}</p>
+        <p className="leading-relaxed" style={{ color: 'var(--color-text-light)' }}>{answer}</p>
       </div>
     </div>
   )
@@ -331,15 +331,15 @@ export default function HomePage() {
       />
 
       {/* ===== HERO ===== */}
-      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 50%, #4a1a5e 100%)' }}>
-        {/* Geometric pattern overlay */}
-        <div className="absolute inset-0 opacity-10" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+      <section className="relative overflow-hidden" style={{ background: '#1a1a1a' }}>
+        {/* Subtle geometric pattern */}
+        <div className="absolute inset-0 opacity-5" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c87941' fill-opacity='0.3'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         }} />
         <div className="container relative z-10 py-20 md:py-28">
           {/* Badge */}
           <div className="flex justify-center mb-6">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium" style={{ background: 'rgba(255, 220, 82, 0.15)', color: '#ffdc52' }}>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium" style={{ background: 'rgba(200, 121, 65, 0.15)', color: '#c87941' }}>
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
               </svg>
@@ -348,13 +348,13 @@ export default function HomePage() {
           </div>
 
           {/* Heading */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white text-center leading-tight mb-6">
-            Акустичні кабіни для<br />ресторанів та готелів
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-center leading-tight mb-6" style={{ color: '#fffcf8', fontFamily: "'Playfair Display', serif" }}>
+            Тиша для ваших гостей
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-center max-w-3xl mx-auto mb-10" style={{ color: 'rgba(255,255,255,0.75)' }}>
-            Приватні VIP-зони, тихі кабіни для персоналу, конфіденційні переговорні. 7 моделей SilentBox, доставка 3-5 днів, гарантія до 10 років.
+          <p className="text-lg md:text-xl text-center max-w-3xl mx-auto mb-10" style={{ color: 'rgba(255, 252, 248, 0.7)', fontFamily: "'Inter', sans-serif" }}>
+            Акустичні кабіни SilentBox для ресторанів, готелів та кейтерингу. Приватні VIP-зони, звукоізоляція до 35 дБ, монтаж від 60 хвилин без будівельних робіт.
           </p>
 
           {/* CTA Buttons */}
@@ -365,8 +365,8 @@ export default function HomePage() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>
             </Link>
-            <Link href="/kontakty/" className="inline-flex items-center gap-2 px-8 py-4 rounded-lg text-lg font-semibold text-white border-2 border-white/30 hover:bg-white/10 transition-all no-underline">
-              Безкоштовна консультація
+            <Link href="/kontakty/" className="inline-flex items-center gap-2 px-8 py-4 rounded-lg text-lg font-semibold border-2 transition-all no-underline" style={{ color: '#fffcf8', borderColor: 'rgba(255, 252, 248, 0.3)' }}>
+              Безкоштовний аудит закладу
             </Link>
           </div>
 
@@ -377,9 +377,9 @@ export default function HomePage() {
               { value: 'від 60 хв', label: 'монтаж без інструментів' },
               { value: '10 років', label: 'гарантія на конструкцію' },
             ].map((stat) => (
-              <div key={stat.label} className="text-center rounded-xl py-6 px-4" style={{ background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(10px)' }}>
-                <div className="text-3xl font-extrabold text-white mb-1">{stat.value}</div>
-                <div className="text-sm uppercase tracking-wider" style={{ color: 'rgba(255,255,255,0.6)' }}>{stat.label}</div>
+              <div key={stat.label} className="text-center rounded-xl py-6 px-4" style={{ background: 'rgba(26, 86, 50, 0.15)', backdropFilter: 'blur(10px)' }}>
+                <div className="text-3xl font-extrabold mb-1" style={{ color: '#c87941', fontFamily: "'Playfair Display', serif" }}>{stat.value}</div>
+                <div className="text-sm uppercase tracking-wider" style={{ color: 'rgba(255, 252, 248, 0.6)' }}>{stat.label}</div>
               </div>
             ))}
           </div>
@@ -387,34 +387,34 @@ export default function HomePage() {
           {/* Photos gallery */}
           <div className="grid grid-cols-3 gap-4 mt-14 max-w-4xl mx-auto">
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
-              <Image src="/images/cabins/office-solo.jpg" alt="Кабіна SilentBox у ресторані" fill className="object-cover" sizes="33vw" />
+              <Image src="/images/cabins/office-solo.jpg" alt="Акустична кабіна SilentBox у ресторані" fill className="object-cover" sizes="33vw" />
             </div>
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
-              <Image src="/images/cabins/office-duet.jpg" alt="Акустична кабіна SilentBox у готелі" fill className="object-cover" sizes="33vw" />
+              <Image src="/images/cabins/office-duet.jpg" alt="Звукоізоляційна кабіна SilentBox у готелі" fill className="object-cover" sizes="33vw" />
             </div>
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
-              <Image src="/images/cabins/office-quartet.jpg" alt="SilentBox кабіна встановлена у ресторанному залі" fill className="object-cover" sizes="33vw" />
+              <Image src="/images/cabins/office-quartet.jpg" alt="VIP кабіна SilentBox у ресторанному залі" fill className="object-cover" sizes="33vw" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== PROBLEMS ===== */}
+      {/* ===== WHY RESTAURANTS NEED SOUND INSULATION ===== */}
       <section id="problemy" className="section">
         <div className="container">
-          <h2 className="section-title">Чому ресторану потрібна акустична кабіна</h2>
+          <h2 className="section-title">Чому ресторанам потрібна звукоізоляція</h2>
           <p className="section-subtitle">
-            Шум ресторану заважає персоналу працювати, а VIP-гостям — насолоджуватись приватністю.
+            Шум у ресторані -- головна причина скарг гостей та вигорання персоналу. Акустична кабіна вирішує обидві проблеми.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {problems.map((p) => (
-              <div key={p.title} className="flex gap-5 p-6 rounded-xl border border-[var(--color-border)] hover:shadow-lg transition-shadow">
-                <div className="flex-shrink-0 w-14 h-14 rounded-lg flex items-center justify-center" style={{ background: 'var(--color-accent-light)', color: 'var(--color-accent)' }}>
+              <div key={p.title} className="flex gap-5 p-6 rounded-xl hover:shadow-lg transition-shadow" style={{ border: '1px solid var(--color-border)', background: 'var(--color-bg)' }}>
+                <div className="flex-shrink-0 w-14 h-14 rounded-lg flex items-center justify-center" style={{ background: '#e8f5ee', color: '#1a5632' }}>
                   {p.icon}
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-[var(--color-primary)] mb-2">{p.title}</h3>
-                  <p className="text-[var(--color-text-light)] leading-relaxed">{p.text}</p>
+                  <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--color-primary)', fontFamily: "'Playfair Display', serif" }}>{p.title}</h3>
+                  <p className="leading-relaxed" style={{ color: 'var(--color-text-light)' }}>{p.text}</p>
                 </div>
               </div>
             ))}
@@ -425,18 +425,18 @@ export default function HomePage() {
       {/* ===== ADVANTAGES ===== */}
       <section id="perevagy" className="section-alt">
         <div className="container">
-          <h2 className="section-title">Чому обирають SilentBox</h2>
+          <h2 className="section-title">Переваги SilentBox для HoReCa</h2>
           <p className="section-subtitle">
-            Патентована технологія сендвіч-панелей, сертифікація ISO 23351-1 та Smart Electronics у кожній кабіні.
+            Патентована технологія сендвіч-панелей, сертифікація ISO 23351-1 та Smart Electronics -- все для комфорту ваших гостей.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {advantages.map((adv) => (
-              <div key={adv.title} className="text-center p-8 rounded-xl border border-[var(--color-border)] hover:shadow-lg transition-shadow bg-white">
-                <div className="w-14 h-14 mx-auto mb-5 rounded-xl flex items-center justify-center" style={{ background: 'var(--color-accent-light)', color: 'var(--color-accent)' }}>
+              <div key={adv.title} className="text-center p-8 rounded-xl hover:shadow-lg transition-shadow" style={{ border: '1px solid var(--color-border)', background: '#fffcf8' }}>
+                <div className="w-14 h-14 mx-auto mb-5 rounded-xl flex items-center justify-center" style={{ background: '#e8f5ee', color: '#1a5632' }}>
                   {adv.icon}
                 </div>
-                <h3 className="text-lg font-bold text-[var(--color-primary)] mb-3">{adv.title}</h3>
-                <p className="text-[var(--color-text-light)] leading-relaxed">{adv.text}</p>
+                <h3 className="text-lg font-bold mb-3" style={{ color: 'var(--color-primary)', fontFamily: "'Playfair Display', serif" }}>{adv.title}</h3>
+                <p className="leading-relaxed" style={{ color: 'var(--color-text-light)' }}>{adv.text}</p>
               </div>
             ))}
           </div>
@@ -446,59 +446,68 @@ export default function HomePage() {
       {/* ===== MODELS ===== */}
       <section id="modeli" className="section">
         <div className="container">
-          <h2 className="section-title">Оберіть кабіну SilentBox для вашого закладу</h2>
+          <h2 className="section-title">Оберіть акустичну кабіну для вашого закладу</h2>
           <p className="section-subtitle">
-            7 моделей у трьох лінійках: Premium (35 дБ), Lite (15-20 дБ) та Pro.
+            7 моделей у трьох лінійках: Premium (35 дБ), Lite (15-20 дБ) та Pro. Від компактної кабіни для персоналу до повноцінної VIP-зони.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {models.map((model) => (
-              <div key={model.slug} className="bg-white rounded-xl border border-[var(--color-border)] overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1 flex flex-col">
-                {/* Product render */}
-                {modelImages[model.slug] && (
-                  <div className="relative w-full aspect-[4/3] bg-gray-50">
-                    <Image
-                      src={modelImages[model.slug]}
-                      alt={`SilentBox ${model.name}`}
-                      fill
-                      className="object-contain p-4"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                  </div>
-                )}
-                {/* Card header */}
-                <div className="p-6 pb-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-xl font-bold text-[var(--color-primary)]">SilentBox {model.name}</h3>
-                    <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ background: 'var(--color-accent-light)', color: 'var(--color-accent)' }}>
-                      {model.line}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-3 mb-1">
-                    <span className="text-sm text-[var(--color-text-light)]">{model.capacity}</span>
-                  </div>
-                  <p className="text-sm text-[var(--color-text-light)] mb-1">{model.size}</p>
-                  <p className="text-[var(--color-text)] mt-3 leading-relaxed">{model.description}</p>
-                </div>
-                {/* Specs */}
-                <div className="px-6 pb-4 mt-auto">
-                  <div className="flex flex-wrap gap-2 mb-5">
-                    {model.specs.map((spec) => (
-                      <span key={spec} className="text-xs font-medium px-3 py-1.5 rounded-full bg-[var(--color-bg-alt)] text-[var(--color-text-light)]">
-                        {spec}
+            {models.map((model) => {
+              const lineBadgeColors: Record<string, { bg: string; text: string }> = {
+                Premium: { bg: '#e8f5ee', text: '#1a5632' },
+                Lite: { bg: '#fdf6e3', text: '#9a7b2e' },
+                Pro: { bg: '#fbeee5', text: '#8b4513' },
+              }
+              const badge = lineBadgeColors[model.line] || lineBadgeColors.Premium
+
+              return (
+                <div key={model.slug} className="rounded-xl overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1 flex flex-col" style={{ background: '#fffcf8', border: '1px solid var(--color-border)' }}>
+                  {/* Product render */}
+                  {modelImages[model.slug] && (
+                    <div className="relative w-full aspect-[4/3]" style={{ background: '#f7f3ee' }}>
+                      <Image
+                        src={modelImages[model.slug]}
+                        alt={`Акустична кабіна SilentBox ${model.name} для ресторану`}
+                        fill
+                        className="object-contain p-4"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    </div>
+                  )}
+                  {/* Card header */}
+                  <div className="p-6 pb-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-xl font-bold" style={{ color: 'var(--color-primary)', fontFamily: "'Playfair Display', serif" }}>SilentBox {model.name}</h3>
+                      <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ background: badge.bg, color: badge.text }}>
+                        {model.line}
                       </span>
-                    ))}
+                    </div>
+                    <div className="flex items-center gap-3 mb-1">
+                      <span className="text-sm" style={{ color: 'var(--color-text-light)' }}>{model.capacity}</span>
+                    </div>
+                    <p className="text-sm mb-1" style={{ color: 'var(--color-text-light)' }}>{model.size}</p>
+                    <p className="mt-3 leading-relaxed" style={{ color: 'var(--color-text)' }}>{model.description}</p>
                   </div>
-                  <div className="flex gap-3">
-                    <Link href="/kontakty/" className="btn-primary text-sm px-4 py-2.5 flex-1 justify-center">
-                      Замовити
-                    </Link>
-                    <Link href={`/modeli/${model.slug}/`} className="btn-outline text-sm px-4 py-2.5">
-                      Детальніше
-                    </Link>
+                  {/* Specs */}
+                  <div className="px-6 pb-4 mt-auto">
+                    <div className="flex flex-wrap gap-2 mb-5">
+                      {model.specs.map((spec) => (
+                        <span key={spec} className="text-xs font-medium px-3 py-1.5 rounded-full" style={{ background: 'var(--color-bg-alt)', color: 'var(--color-text-light)' }}>
+                          {spec}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex gap-3">
+                      <Link href="/kontakty/" className="btn-primary text-sm px-4 py-2.5 flex-1 justify-center">
+                        Замовити
+                      </Link>
+                      <Link href={`/modeli/${model.slug}/`} className="btn-outline text-sm px-4 py-2.5">
+                        Детальніше
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
@@ -506,9 +515,9 @@ export default function HomePage() {
       {/* ===== PROCESS ===== */}
       <section id="process" className="section-alt">
         <div className="container">
-          <h2 className="section-title">Як замовити акустичну кабіну SilentBox</h2>
+          <h2 className="section-title">Як замовити звукоізоляцію для ресторану</h2>
           <p className="section-subtitle">
-            Чотири простих кроки від першого контакту до готової кабіни у вашому ресторані.
+            Чотири простих кроки від аудиту вашого закладу до готової акустичної кабіни у залі.
           </p>
           <div className="relative max-w-4xl mx-auto">
             {/* Connecting line (desktop) */}
@@ -516,11 +525,11 @@ export default function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               {steps.map((step) => (
                 <div key={step.num} className="relative text-center">
-                  <div className="w-14 h-14 mx-auto mb-5 rounded-full flex items-center justify-center text-white font-bold text-lg relative z-10" style={{ background: 'var(--color-accent)' }}>
+                  <div className="w-14 h-14 mx-auto mb-5 rounded-full flex items-center justify-center text-white font-bold text-lg relative z-10" style={{ background: '#1a5632' }}>
                     {step.num}
                   </div>
-                  <h3 className="text-lg font-bold text-[var(--color-primary)] mb-2">{step.title}</h3>
-                  <p className="text-sm text-[var(--color-text-light)] leading-relaxed">{step.text}</p>
+                  <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--color-primary)', fontFamily: "'Playfair Display', serif" }}>{step.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-light)' }}>{step.text}</p>
                 </div>
               ))}
             </div>
@@ -531,27 +540,27 @@ export default function HomePage() {
       {/* ===== REVIEWS ===== */}
       <section className="section">
         <div className="container">
-          <h2 className="section-title">Що кажуть наші клієнти</h2>
+          <h2 className="section-title">Що кажуть ресторани та готелі</h2>
           <p className="section-subtitle">
-            Реальні відгуки ресторанів та готелів, які вже обрали SilentBox.
+            Реальні відгуки власників закладів, які обрали акустичні кабіни SilentBox для своїх гостей.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {reviews.map((review) => (
-              <div key={review.name} className="p-8 rounded-xl border border-[var(--color-border)] bg-white hover:shadow-lg transition-shadow flex flex-col">
+              <div key={review.name} className="p-8 rounded-xl hover:shadow-lg transition-shadow flex flex-col" style={{ border: '1px solid var(--color-border)', background: '#fffcf8' }}>
                 {/* Stars */}
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: review.stars }).map((_, i) => (
-                    <svg key={i} xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="var(--color-gold)" stroke="none">
+                    <svg key={i} xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="#c87941" stroke="none">
                       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                     </svg>
                   ))}
                 </div>
                 {/* Text */}
-                <p className="text-[var(--color-text)] leading-relaxed mb-6 flex-1">&laquo;{review.text}&raquo;</p>
+                <p className="leading-relaxed mb-6 flex-1" style={{ color: 'var(--color-text)' }}>&laquo;{review.text}&raquo;</p>
                 {/* Author */}
-                <div className="border-t border-[var(--color-border)] pt-4">
-                  <div className="font-semibold text-[var(--color-primary)]">{review.name}</div>
-                  <div className="text-sm text-[var(--color-text-light)]">{review.position}</div>
+                <div className="pt-4" style={{ borderTop: '1px solid var(--color-border)' }}>
+                  <div className="font-semibold" style={{ color: 'var(--color-primary)' }}>{review.name}</div>
+                  <div className="text-sm" style={{ color: 'var(--color-text-light)' }}>{review.position}</div>
                 </div>
               </div>
             ))}
@@ -564,7 +573,7 @@ export default function HomePage() {
         <div className="container">
           <h2 className="section-title">Часті запитання</h2>
           <p className="section-subtitle">
-            Відповіді на найпоширеніші питання про акустичні кабіни SilentBox для ресторанів та готелів.
+            Відповіді на найпоширеніші питання про акустичні кабіни SilentBox для ресторанів, готелів та кейтерингу.
           </p>
           <div className="max-w-3xl mx-auto">
             {faqItems.map((item) => (
@@ -575,20 +584,20 @@ export default function HomePage() {
       </section>
 
       {/* ===== CTA BLOCK ===== */}
-      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, var(--color-primary) 0%, #4a1a5e 100%)' }}>
+      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #1a5632 0%, #0d3a1f 100%)' }}>
         <div className="absolute inset-0 opacity-5" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E")`,
         }} />
         <div className="container relative z-10 py-20 text-center">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-6">
-            Замовте безкоштовну консультацію сьогодні
+          <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+            Замовте безкоштовний аудит вашого закладу
           </h2>
           <p className="text-lg max-w-2xl mx-auto mb-10" style={{ color: 'rgba(255,255,255,0.7)' }}>
-            Наші спеціалісти допоможуть обрати оптимальну модель для вашого ресторану чи готелю та організують безкоштовне тестування. Доставка 3-5 робочих днів.
+            Наші спеціалісти оцінять рівень шуму, запропонують оптимальну модель акустичної кабіни для вашого ресторану чи готелю та організують безкоштовне тестування.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/kontakty/" className="btn-primary text-lg px-8 py-4">
-              Безкоштовна консультація
+              Безкоштовний аудит
               <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>

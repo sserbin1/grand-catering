@@ -5,10 +5,10 @@ import { generatePageMetadata, generateArticleJsonLd } from '@/lib/seo'
 import PostContent from '@/components/blog/PostContent'
 
 const blogImages: Record<string, { src: string; alt: string }> = {
-  'akustyka-v-restorani': { src: '/images/blog/akustyka-v-restorani.jpg', alt: 'Акустика в ресторані — як створити комфорт для гостей' },
-  'vip-zony-v-restoranakh': { src: '/images/blog/vip-zony-v-restoranakh.jpg', alt: 'VIP-зони в ресторанах — приватність для ділових зустрічей' },
-  'oglyad-kabin-silentbox-restorany': { src: '/images/blog/oglyad-kabin-silentbox-restorany.jpg', alt: 'Огляд кабін SilentBox для ресторанів: Solo, Duet, Quartet' },
-  'shum-u-restorani-problemy': { src: '/images/blog/shum-u-restorani-problemy.jpg', alt: 'Шум у ресторані — проблеми та рішення' },
+  'akustyka-v-restorani': { src: '/images/blog/akustyka-v-restorani.jpg', alt: 'Акустика в ресторані -- як створити комфорт для гостей' },
+  'vip-zony-v-restoranakh': { src: '/images/blog/vip-zony-v-restoranakh.jpg', alt: 'VIP-зони в ресторанах -- приватність для ділових зустрічей' },
+  'oglyad-kabin-silentbox-restorany': { src: '/images/blog/oglyad-kabin-silentbox-restorany.jpg', alt: 'Огляд акустичних кабін SilentBox для ресторанів: Solo, Duet, Quartet' },
+  'shum-u-restorani-problemy': { src: '/images/blog/shum-u-restorani-problemy.jpg', alt: 'Шум у ресторані -- проблеми та рішення звукоізоляції' },
   'zvukoizolyatsiya-restoran-5-sposobiv': { src: '/images/blog/zvukoizolyatsiya-restoran-5-sposobiv.jpg', alt: 'Звукоізоляція ресторану: 5 способів знизити шум' },
 }
 
@@ -47,12 +47,12 @@ export default async function BlogPostPage({ params }: PageProps) {
       <article>
         <header className="mb-8">
           {post.category && (
-            <span className="text-sm text-gray-500 uppercase tracking-wide">
+            <span className="text-sm uppercase tracking-wide" style={{ color: '#1a5632' }}>
               {post.category}
             </span>
           )}
-          <h1 className="text-4xl font-bold mt-2">{post.title}</h1>
-          <time className="text-gray-500 mt-2 block" dateTime={post.publishedAt}>
+          <h1 className="text-4xl font-bold mt-2" style={{ fontFamily: "'Playfair Display', serif", color: 'var(--color-primary)' }}>{post.title}</h1>
+          <time className="mt-2 block" style={{ color: 'var(--color-text-light)' }} dateTime={post.publishedAt}>
             {new Date(post.publishedAt).toLocaleDateString('uk-UA', {
               year: 'numeric',
               month: 'long',

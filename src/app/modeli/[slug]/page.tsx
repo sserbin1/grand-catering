@@ -6,13 +6,13 @@ import { getAllModels, getModelBySlug } from '@/lib/models'
 import { generatePageMetadata } from '@/lib/seo'
 
 const modelImages: Record<string, { src: string; alt: string }> = {
-  solo: { src: '/images/cabins/solo.png', alt: 'Акустична кабіна SilentBox Solo на 1 особу' },
-  duet: { src: '/images/cabins/duet.png', alt: 'Акустична кабіна SilentBox Duet на 2 особи' },
-  quartet: { src: '/images/cabins/quartet.png', alt: 'Акустична кабіна SilentBox Quartet на 4 особи' },
-  lite: { src: '/images/cabins/solo-lite.png', alt: 'Акустична кабіна SilentBox Solo Lite' },
-  'duet-lite': { src: '/images/cabins/duet-lite.png', alt: 'Акустична кабіна SilentBox Duet Lite' },
-  'quartet-lite': { src: '/images/cabins/quartet-lite.png', alt: 'Акустична кабіна SilentBox Quartet Lite на 4 особи' },
-  workpod: { src: '/images/cabins/workpod.png', alt: 'Робоче місце SilentBox WorkPod' },
+  solo: { src: '/images/cabins/solo.png', alt: 'Акустична кабіна SilentBox Solo для ресторану на 1 особу' },
+  duet: { src: '/images/cabins/duet.png', alt: 'VIP кабіна SilentBox Duet для ресторану на 2 особи' },
+  quartet: { src: '/images/cabins/quartet.png', alt: 'Переговорна кабіна SilentBox Quartet для готелю на 4 особи' },
+  lite: { src: '/images/cabins/solo-lite.png', alt: 'Акустична кабіна SilentBox Solo Lite для персоналу ресторану' },
+  'duet-lite': { src: '/images/cabins/duet-lite.png', alt: 'Приватна зона SilentBox Duet Lite для готелю' },
+  'quartet-lite': { src: '/images/cabins/quartet-lite.png', alt: 'Звукоізоляційна кабіна SilentBox Quartet Lite для кейтерингу' },
+  workpod: { src: '/images/cabins/workpod.png', alt: 'Робоче місце SilentBox WorkPod для адміністрації ресторану' },
 }
 
 interface PageProps {
@@ -62,9 +62,9 @@ export default async function ModelPage({ params }: PageProps) {
   ]
 
   const lineBadgeStyles = {
-    premium: { background: 'var(--color-accent-light)', color: 'var(--color-accent)' },
-    lite: { background: '#e8f5e9', color: '#2e7d32' },
-    pro: { background: '#fff3e0', color: '#e65100' },
+    premium: { background: '#e8f5ee', color: '#1a5632' },
+    lite: { background: '#fdf6e3', color: '#9a7b2e' },
+    pro: { background: '#fbeee5', color: '#8b4513' },
   }
 
   const productJsonLd = {
@@ -79,22 +79,22 @@ export default async function ModelPage({ params }: PageProps) {
   }
 
   return (
-    <main className="max-w-4xl mx-auto px-4 py-16">
+    <main className="max-w-4xl mx-auto px-4 py-16" style={{ background: 'var(--color-bg)' }}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
       />
 
-      <nav className="mb-8 text-sm text-gray-500">
-        <Link href="/modeli/" className="hover:text-gray-900">
+      <nav className="mb-8 text-sm" style={{ color: 'var(--color-text-light)' }}>
+        <Link href="/modeli/" className="hover:underline" style={{ color: 'var(--color-text-light)' }}>
           Каталог моделей
         </Link>
         <span className="mx-2">/</span>
-        <span className="text-gray-900">{model.fullName}</span>
+        <span style={{ color: 'var(--color-primary)' }}>{model.fullName}</span>
       </nav>
 
       <div className="flex items-center gap-3 mb-2">
-        <h1 className="text-3xl font-bold">{model.fullName}</h1>
+        <h1 className="text-3xl font-bold" style={{ fontFamily: "'Playfair Display', serif", color: 'var(--color-primary)' }}>{model.fullName}</h1>
         <span
           className="text-xs font-semibold px-3 py-1 rounded-full"
           style={lineBadgeStyles[model.line]}
@@ -103,8 +103,7 @@ export default async function ModelPage({ params }: PageProps) {
         </span>
       </div>
 
-
-      <p className="text-lg text-gray-600 mb-8">{model.feature}</p>
+      <p className="text-lg mb-8" style={{ color: 'var(--color-text-light)' }}>{model.feature}</p>
 
       {/* Product photo */}
       {modelImages[model.slug] && (
@@ -121,12 +120,12 @@ export default async function ModelPage({ params }: PageProps) {
       )}
 
       <div className="prose max-w-none mb-10">
-        <p className="text-gray-700 leading-relaxed">{model.description}</p>
+        <p className="leading-relaxed" style={{ color: 'var(--color-text)' }}>{model.description}</p>
       </div>
 
       {/* Features list */}
       <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-4">Ключові особливості</h2>
+        <h2 className="text-2xl font-semibold mb-4" style={{ fontFamily: "'Playfair Display', serif", color: 'var(--color-primary)' }}>Ключові особливості</h2>
         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {model.features.map((feature) => (
             <li key={feature} className="flex items-start gap-2">
@@ -135,27 +134,27 @@ export default async function ModelPage({ params }: PageProps) {
                 className="w-5 h-5 flex-shrink-0 mt-0.5"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="var(--color-accent)"
+                stroke="#1a5632"
                 strokeWidth={2}
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
-              <span className="text-gray-700">{feature}</span>
+              <span style={{ color: 'var(--color-text)' }}>{feature}</span>
             </li>
           ))}
         </ul>
       </section>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-4">Технічні характеристики</h2>
+        <h2 className="text-2xl font-semibold mb-4" style={{ fontFamily: "'Playfair Display', serif", color: 'var(--color-primary)' }}>Технічні характеристики</h2>
         <table className="w-full border-collapse">
           <tbody>
             {specs.map((spec) => (
-              <tr key={spec.label} className="border-b border-gray-200">
-                <td className="py-3 pr-4 text-gray-500 font-medium w-1/3">
+              <tr key={spec.label} style={{ borderBottom: '1px solid var(--color-border)' }}>
+                <td className="py-3 pr-4 font-medium w-1/3" style={{ color: 'var(--color-text-light)' }}>
                   {spec.label}
                 </td>
-                <td className="py-3 text-gray-900">{spec.value}</td>
+                <td className="py-3" style={{ color: 'var(--color-primary)' }}>{spec.value}</td>
               </tr>
             ))}
           </tbody>
@@ -164,8 +163,8 @@ export default async function ModelPage({ params }: PageProps) {
 
       {/* Shared specs */}
       <section className="mb-12 p-6 rounded-xl" style={{ background: 'var(--color-bg-alt)', border: '1px solid var(--color-border)' }}>
-        <h3 className="text-lg font-semibold mb-3">Спільне для всіх моделей</h3>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-700">
+        <h3 className="text-lg font-semibold mb-3" style={{ fontFamily: "'Playfair Display', serif", color: 'var(--color-primary)' }}>Спільне для всіх моделей</h3>
+        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm" style={{ color: 'var(--color-text)' }}>
           <li>Доставка: 3-5 робочих днів (Україна та Європа)</li>
           <li>Гарантія: до 10 років на конструкцію</li>
           <li>Патентований дизайн</li>
@@ -178,32 +177,33 @@ export default async function ModelPage({ params }: PageProps) {
       <div className="flex gap-4 mb-16">
         <Link
           href="/kontakty/"
-          className="inline-block px-8 py-3 bg-gray-900 text-white rounded hover:bg-gray-800 transition-colors text-lg"
+          className="btn-primary text-lg"
         >
           Замовити {model.fullName}
         </Link>
         <Link
           href="/kontakty/"
-          className="inline-block px-8 py-3 border border-gray-900 text-gray-900 rounded hover:bg-gray-50 transition-colors text-lg"
+          className="btn-green text-lg"
         >
-          Безкоштовна консультація
+          Безкоштовний аудит
         </Link>
       </div>
 
       <section>
-        <h2 className="text-2xl font-semibold mb-6">Дивіться також</h2>
+        <h2 className="text-2xl font-semibold mb-6" style={{ fontFamily: "'Playfair Display', serif", color: 'var(--color-primary)' }}>Дивіться також</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {otherModels.map((other) => (
             <Link
               key={other.slug}
               href={`/modeli/${other.slug}/`}
-              className="block border border-gray-200 rounded-lg p-4 hover:border-gray-400 transition-colors"
+              className="block rounded-lg p-4 transition-colors no-underline"
+              style={{ border: '1px solid var(--color-border)', background: 'var(--color-bg)' }}
             >
               <div className="flex items-center justify-between mb-1">
-                <h3 className="font-semibold">{other.fullName}</h3>
-                <span className="text-xs font-medium text-gray-500">{other.lineLabel}</span>
+                <h3 className="font-semibold" style={{ color: 'var(--color-primary)' }}>{other.fullName}</h3>
+                <span className="text-xs font-medium" style={{ color: 'var(--color-text-light)' }}>{other.lineLabel}</span>
               </div>
-              <p className="text-sm text-gray-500">{other.capacity}</p>
+              <p className="text-sm" style={{ color: 'var(--color-text-light)' }}>{other.capacity}</p>
             </Link>
           ))}
         </div>

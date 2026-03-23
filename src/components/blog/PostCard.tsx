@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import type { BlogPost } from '@/lib/blog'
@@ -18,7 +20,18 @@ export default function PostCard({ post }: PostCardProps) {
   const imgSrc = blogImages[post.slug]
 
   return (
-    <article className="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-shadow">
+    <article
+      className="rounded-lg overflow-hidden transition-shadow"
+      style={{
+        border: '1px solid var(--color-border, #e8e2db)',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = '0 8px 24px rgba(26, 86, 50, 0.08)'
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = 'none'
+      }}
+    >
       {imgSrc && (
         <Link href={`/blog/${post.slug}/`} className="block relative w-full aspect-[16/9]">
           <Image
@@ -32,17 +45,32 @@ export default function PostCard({ post }: PostCardProps) {
       )}
       <div className="p-6">
         {post.category && (
-          <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: '#823494' }}>
+          <span
+            className="text-xs font-semibold uppercase tracking-wide"
+            style={{ color: 'var(--color-accent, #1a5632)', fontFamily: "'Inter', sans-serif" }}
+          >
             {post.category}
           </span>
         )}
-        <h2 className="text-xl font-semibold mt-1">
-          <Link href={`/blog/${post.slug}/`} className="hover:underline" style={{ color: '#2c2f38' }}>
+        <h2 className="text-xl font-semibold mt-1" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <Link
+            href={`/blog/${post.slug}/`}
+            className="transition-colors"
+            style={{ color: 'var(--color-text, #1a1a1a)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-accent, #1a5632)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-text, #1a1a1a)' }}
+          >
             {post.title}
           </Link>
         </h2>
-        <p className="text-gray-600 mt-2 text-sm line-clamp-2">{post.excerpt}</p>
-        <time className="text-xs text-gray-400 mt-3 block" dateTime={post.publishedAt}>
+        <p className="mt-2 text-sm line-clamp-2" style={{ color: 'var(--color-text-light, #6b6560)', fontFamily: "'Inter', sans-serif" }}>
+          {post.excerpt}
+        </p>
+        <time
+          className="text-xs mt-3 block"
+          dateTime={post.publishedAt}
+          style={{ color: 'var(--color-text-light, #6b6560)', fontFamily: "'Inter', sans-serif" }}
+        >
           {new Date(post.publishedAt).toLocaleDateString('uk-UA', {
             year: 'numeric',
             month: 'long',

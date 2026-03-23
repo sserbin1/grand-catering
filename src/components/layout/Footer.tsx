@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { siteConfig } from '../../../site.config'
 import Logo from '../Logo'
@@ -19,23 +21,23 @@ const companyLinks = [
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(90,47,153,1) 0%, rgba(130,52,148,1) 50%, rgba(90,47,153,1) 100%)' }}>
-      {/* Decorative geometric elements */}
+    <footer className="relative overflow-hidden" style={{ background: '#1a1a1a' }}>
+      {/* Decorative geometric elements — copper circles */}
       <div
-        className="absolute top-10 right-10 w-24 h-24 rounded-sm opacity-10"
-        style={{ background: '#ffffff', transform: 'rotate(45deg)' }}
+        className="absolute top-10 right-10 w-24 h-24 rounded-full opacity-[0.06]"
+        style={{ background: '#c87941' }}
       />
       <div
-        className="absolute bottom-20 left-[-20px] w-16 h-16 rounded-full opacity-10"
-        style={{ background: '#ffdc52' }}
+        className="absolute bottom-20 left-[-20px] w-16 h-16 rounded-full opacity-[0.08]"
+        style={{ background: '#c87941' }}
       />
       <div
-        className="absolute top-1/2 right-1/4 w-8 h-8 rounded-sm opacity-5"
-        style={{ background: '#ffffff', transform: 'rotate(45deg)' }}
+        className="absolute top-1/2 right-1/4 w-8 h-8 rounded-full opacity-[0.04]"
+        style={{ background: '#c87941' }}
       />
       <div
-        className="absolute bottom-10 right-1/3 w-12 h-12 rounded-full opacity-5"
-        style={{ background: '#ffffff' }}
+        className="absolute bottom-10 right-1/3 w-12 h-12 rounded-full opacity-[0.05]"
+        style={{ background: '#1a5632' }}
       />
 
       <div className="relative container mx-auto max-w-[1200px] px-4 py-16">
@@ -45,7 +47,7 @@ export default function Footer() {
             <Link href="/" className="inline-flex transition-opacity hover:opacity-80">
               <Logo variant="light" showTagline />
             </Link>
-            <p className="mt-4 text-sm leading-relaxed text-white/60">
+            <p className="mt-4 text-sm leading-relaxed text-white/60" style={{ fontFamily: "'Inter', sans-serif" }}>
               Офіційний дистриб&apos;ютор акустичних кабін Silentbox для ресторанів, готелів та кейтерингу в Україні.
             </p>
           </div>
@@ -53,8 +55,8 @@ export default function Footer() {
           {/* Col 2: Models */}
           <div>
             <h3
-              className="text-white font-semibold mb-4"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
+              className="text-white mb-4"
+              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
             >
               Моделі
             </h3>
@@ -64,6 +66,7 @@ export default function Footer() {
                   <Link
                     href={link.href}
                     className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
                   >
                     {link.label}
                   </Link>
@@ -75,8 +78,8 @@ export default function Footer() {
           {/* Col 3: Company */}
           <div>
             <h3
-              className="text-white font-semibold mb-4"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
+              className="text-white mb-4"
+              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
             >
               Компанія
             </h3>
@@ -86,6 +89,7 @@ export default function Footer() {
                   <Link
                     href={link.href}
                     className="text-sm text-white/60 hover:text-white transition-colors duration-200"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
                   >
                     {link.label}
                   </Link>
@@ -97,12 +101,12 @@ export default function Footer() {
           {/* Col 4: Contacts */}
           <div>
             <h3
-              className="text-white font-semibold mb-4"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
+              className="text-white mb-4"
+              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600 }}
             >
               Контакти
             </h3>
-            <ul className="flex flex-col gap-3 text-sm text-white/60">
+            <ul className="flex flex-col gap-3 text-sm text-white/60" style={{ fontFamily: "'Inter', sans-serif" }}>
               <li className="flex items-center gap-2.5">
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
@@ -116,11 +120,13 @@ export default function Footer() {
                 {siteConfig.workingHours}
               </li>
             </ul>
-            {/* Yellow CTA link */}
+            {/* Copper CTA link */}
             <Link
               href="/kontakty/"
-              className="footer-cta-link inline-flex items-center gap-2 mt-5 text-sm font-semibold transition-colors duration-200"
-              style={{ fontFamily: "'Montserrat', sans-serif" }}
+              className="inline-flex items-center gap-2 mt-5 text-sm font-semibold transition-colors duration-200"
+              style={{ fontFamily: "'Inter', sans-serif", color: '#c87941' }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = '#e09060' }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = '#c87941' }}
             >
               Зв&apos;язатися з нами
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
@@ -133,7 +139,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="relative border-t border-white/10">
-        <div className="container mx-auto max-w-[1200px] px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
+        <div className="container mx-auto max-w-[1200px] px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40" style={{ fontFamily: "'Inter', sans-serif" }}>
           <span>&copy; 2024&ndash;2026 {siteConfig.domain}</span>
           <div className="flex items-center gap-4">
             <Link href="/polityka-konfidencijnosti/" className="hover:text-white/70 transition-colors duration-200">

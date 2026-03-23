@@ -7,15 +7,15 @@ interface LogoProps {
 }
 
 export default function Logo({ variant = 'dark', showTagline = false, className = '' }: LogoProps) {
-  const purple = '#823494'
-  const yellow = '#ffdc52'
-  const textColor = variant === 'dark' ? '#2c2f38' : '#ffffff'
-  const taglineColor = variant === 'dark' ? '#6b7280' : 'rgba(255,255,255,0.6)'
+  const green = '#1a5632'
+  const copper = '#c87941'
+  const textColor = variant === 'dark' ? '#1a1a1a' : '#ffffff'
+  const taglineColor = variant === 'dark' ? '#6b6560' : 'rgba(255,255,255,0.6)'
 
   return (
     <span className={`inline-flex flex-col ${className}`}>
       <span className="inline-flex items-center gap-2">
-        {/* Animated soundwave icon */}
+        {/* Stylized shield/leaf shape with sound waves */}
         <svg
           width="32"
           height="32"
@@ -25,29 +25,21 @@ export default function Logo({ variant = 'dark', showTagline = false, className 
           className="flex-shrink-0"
           aria-hidden="true"
         >
-          {/* Outer booth shape — rounded rectangle */}
-          <rect
-            x="4"
-            y="2"
-            width="24"
-            height="28"
-            rx="4"
-            fill={purple}
+          {/* Shield/leaf outer shape */}
+          <path
+            d="M16 2C10 2 5 6 5 12c0 8 11 18 11 18s11-10 11-18c0-6-5-10-11-10z"
+            fill={green}
             opacity="0.12"
           />
-          {/* Glass door slit */}
-          <rect
-            x="13"
-            y="4"
-            width="6"
-            height="24"
-            rx="3"
-            fill={purple}
-            opacity="0.18"
+          {/* Inner leaf vein */}
+          <path
+            d="M16 6c-3.5 0-7 2.5-7 7 0 5.5 7 13 7 13s7-7.5 7-13c0-4.5-3.5-7-7-7z"
+            fill={green}
+            opacity="0.08"
           />
 
-          {/* Soundwave bars — animated */}
-          <rect x="8" y="11" width="2.5" height="10" rx="1.25" fill={purple}>
+          {/* Sound wave bars inside shield */}
+          <rect x="10" y="11" width="2.2" height="10" rx="1.1" fill={green}>
             <animate
               attributeName="height"
               values="10;6;10"
@@ -63,7 +55,7 @@ export default function Logo({ variant = 'dark', showTagline = false, className 
               begin="0s"
             />
           </rect>
-          <rect x="12.5" y="8" width="2.5" height="16" rx="1.25" fill={yellow}>
+          <rect x="13.5" y="8" width="2.2" height="16" rx="1.1" fill={copper}>
             <animate
               attributeName="height"
               values="16;10;16"
@@ -79,33 +71,33 @@ export default function Logo({ variant = 'dark', showTagline = false, className 
               begin="0.15s"
             />
           </rect>
-          <rect x="17" y="6" width="2.5" height="20" rx="1.25" fill={purple}>
+          <rect x="17" y="9" width="2.2" height="14" rx="1.1" fill={green}>
             <animate
               attributeName="height"
-              values="20;12;20"
+              values="14;8;14"
               dur="1.2s"
               repeatCount="indefinite"
               begin="0.3s"
             />
             <animate
               attributeName="y"
-              values="6;10;6"
+              values="9;12;9"
               dur="1.2s"
               repeatCount="indefinite"
               begin="0.3s"
             />
           </rect>
-          <rect x="21.5" y="9" width="2.5" height="14" rx="1.25" fill={yellow}>
+          <rect x="20.5" y="10.5" width="2.2" height="11" rx="1.1" fill={copper}>
             <animate
               attributeName="height"
-              values="14;8;14"
+              values="11;6;11"
               dur="1.2s"
               repeatCount="indefinite"
               begin="0.45s"
             />
             <animate
               attributeName="y"
-              values="9;12;9"
+              values="10.5;13;10.5"
               dur="1.2s"
               repeatCount="indefinite"
               begin="0.45s"
@@ -116,15 +108,15 @@ export default function Logo({ variant = 'dark', showTagline = false, className 
         {/* Text */}
         <span
           style={{
-            fontFamily: "'Montserrat', sans-serif",
-            fontWeight: 800,
+            fontFamily: "'Playfair Display', serif",
+            fontWeight: 700,
             fontSize: '1.25rem',
-            letterSpacing: '-0.02em',
+            letterSpacing: '-0.01em',
             lineHeight: 1,
             color: textColor,
           }}
         >
-          grand<span style={{ color: purple }}>catering</span>
+          Grand<span style={{ color: green }}>Catering</span>
         </span>
       </span>
 
@@ -132,7 +124,7 @@ export default function Logo({ variant = 'dark', showTagline = false, className 
       {showTagline && (
         <span
           style={{
-            fontFamily: "'Montserrat', sans-serif",
+            fontFamily: "'Inter', sans-serif",
             fontWeight: 500,
             fontSize: '0.625rem',
             letterSpacing: '0.08em',
@@ -142,7 +134,7 @@ export default function Logo({ variant = 'dark', showTagline = false, className 
             paddingLeft: '42px',
           }}
         >
-          Акустика для ресторанного бізнесу
+          Акустичні рішення для HoReCa
         </span>
       )}
     </span>

@@ -15,6 +15,14 @@ const modelOptions = [
   { value: 'consultation', label: 'Потрібна консультація' },
 ]
 
+const inputStyle = {
+  borderColor: 'var(--color-border, #e8e2db)',
+  background: 'var(--color-bg, #fffcf8)',
+  fontFamily: "'Inter', sans-serif",
+}
+
+const focusRingClass = 'w-full rounded-lg border px-4 py-3 text-sm transition-colors outline-none focus:ring-2 focus:ring-[#1a5632] focus:border-[#1a5632]'
+
 export default function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
 
@@ -52,9 +60,9 @@ export default function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="rounded-xl bg-green-50 border border-green-200 p-8 text-center">
-        <div className="text-4xl mb-4">&#10003;</div>
-        <p className="text-green-700 font-semibold text-lg">
+      <div className="rounded-lg border p-8 text-center" style={{ background: '#e8f5ee', borderColor: '#1a5632' }}>
+        <div className="text-4xl mb-4" style={{ color: '#1a5632' }}>&#10003;</div>
+        <p className="font-semibold text-lg" style={{ color: '#1a5632', fontFamily: "'Inter', sans-serif" }}>
           Дякуємо! Ми зв&#39;яжемось з вами найближчим часом.
         </p>
       </div>
@@ -62,10 +70,10 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 max-w-lg">
+    <form onSubmit={handleSubmit} className="space-y-5 max-w-lg" style={{ fontFamily: "'Inter', sans-serif" }}>
       <div>
-        <label htmlFor="name" className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--color-primary)' }}>
-          Ім&#39;я <span style={{ color: 'var(--color-accent)' }}>*</span>
+        <label htmlFor="name" className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--color-text, #1a1a1a)' }}>
+          Ім&#39;я <span style={{ color: 'var(--color-cta, #c87941)' }}>*</span>
         </label>
         <input
           type="text"
@@ -73,17 +81,14 @@ export default function ContactForm() {
           name="name"
           required
           placeholder="Ваше ім'я"
-          className="w-full rounded-lg border px-4 py-3 text-sm transition-colors outline-none focus:ring-2"
-          style={{
-            borderColor: 'var(--color-border)',
-            background: 'var(--color-bg)',
-          }}
+          className={focusRingClass}
+          style={inputStyle}
         />
       </div>
 
       <div>
-        <label htmlFor="phone" className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--color-primary)' }}>
-          Телефон <span style={{ color: 'var(--color-accent)' }}>*</span>
+        <label htmlFor="phone" className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--color-text, #1a1a1a)' }}>
+          Телефон <span style={{ color: 'var(--color-cta, #c87941)' }}>*</span>
         </label>
         <input
           type="tel"
@@ -91,16 +96,13 @@ export default function ContactForm() {
           name="phone"
           required
           placeholder="+380 (__) ___-__-__"
-          className="w-full rounded-lg border px-4 py-3 text-sm transition-colors outline-none focus:ring-2"
-          style={{
-            borderColor: 'var(--color-border)',
-            background: 'var(--color-bg)',
-          }}
+          className={focusRingClass}
+          style={inputStyle}
         />
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--color-primary)' }}>
+        <label htmlFor="email" className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--color-text, #1a1a1a)' }}>
           Email
         </label>
         <input
@@ -108,16 +110,13 @@ export default function ContactForm() {
           id="email"
           name="email"
           placeholder="email@example.com"
-          className="w-full rounded-lg border px-4 py-3 text-sm transition-colors outline-none focus:ring-2"
-          style={{
-            borderColor: 'var(--color-border)',
-            background: 'var(--color-bg)',
-          }}
+          className={focusRingClass}
+          style={inputStyle}
         />
       </div>
 
       <div>
-        <label htmlFor="company" className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--color-primary)' }}>
+        <label htmlFor="company" className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--color-text, #1a1a1a)' }}>
           Компанія
         </label>
         <input
@@ -125,26 +124,22 @@ export default function ContactForm() {
           id="company"
           name="company"
           placeholder="Назва компанії"
-          className="w-full rounded-lg border px-4 py-3 text-sm transition-colors outline-none focus:ring-2"
-          style={{
-            borderColor: 'var(--color-border)',
-            background: 'var(--color-bg)',
-          }}
+          className={focusRingClass}
+          style={inputStyle}
         />
       </div>
 
       <div>
-        <label htmlFor="model" className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--color-primary)' }}>
+        <label htmlFor="model" className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--color-text, #1a1a1a)' }}>
           Модель
         </label>
         <select
           id="model"
           name="model"
-          className="w-full rounded-lg border px-4 py-3 text-sm transition-colors outline-none focus:ring-2 appearance-none bg-no-repeat bg-right"
+          className={`${focusRingClass} appearance-none bg-no-repeat bg-right`}
           style={{
-            borderColor: 'var(--color-border)',
-            background: 'var(--color-bg)',
-            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 8L1 3h10z'/%3E%3C/svg%3E")`,
+            ...inputStyle,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b6560' d='M6 8L1 3h10z'/%3E%3C/svg%3E")`,
             backgroundPosition: 'right 1rem center',
           }}
         >
@@ -157,7 +152,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--color-primary)' }}>
+        <label htmlFor="message" className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--color-text, #1a1a1a)' }}>
           Повідомлення
         </label>
         <textarea
@@ -165,18 +160,21 @@ export default function ContactForm() {
           name="message"
           rows={4}
           placeholder="Розкажіть про ваші потреби..."
-          className="w-full rounded-lg border px-4 py-3 text-sm transition-colors outline-none focus:ring-2 resize-y"
-          style={{
-            borderColor: 'var(--color-border)',
-            background: 'var(--color-bg)',
-          }}
+          className={`${focusRingClass} resize-y`}
+          style={inputStyle}
         />
       </div>
 
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="btn-primary w-full justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full justify-center px-6 py-3 rounded-lg text-base font-semibold text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        style={{
+          background: 'var(--color-cta, #c87941)',
+          fontFamily: "'Inter', sans-serif",
+        }}
+        onMouseEnter={(e) => { if (status !== 'submitting') e.currentTarget.style.background = 'var(--color-cta-hover, #b5693a)' }}
+        onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-cta, #c87941)' }}
       >
         {status === 'submitting' ? 'Відправляємо...' : 'Відправити заявку'}
       </button>
