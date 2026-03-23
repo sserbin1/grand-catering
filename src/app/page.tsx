@@ -1,20 +1,6 @@
-'use client'
-
 import Link from 'next/link'
-import { useState } from 'react'
-import { models, getModelsByLine, type ModelLine, type CabinModel } from '@/lib/models'
-
-const lineColors: Record<ModelLine, string> = {
-  premium: '#1a5632',
-  lite: '#c87941',
-  pro: '#4a6fa5',
-}
-
-const lineTabs: { key: ModelLine; label: string }[] = [
-  { key: 'premium', label: 'Premium \u00b7 35 \u0434\u0411' },
-  { key: 'lite', label: 'Lite \u00b7 15-20 \u0434\u0411' },
-  { key: 'pro', label: 'Pro' },
-]
+import HomeProductShowcase from './HomeProductShowcase'
+import HomeFAQ from './HomeFAQ'
 
 const painPoints = [
   {
@@ -115,52 +101,9 @@ const testimonials = [
   },
 ]
 
-const faqItems = [
-  {
-    q: '\u042f\u043a\u0438\u0439 \u0440\u0456\u0432\u0435\u043d\u044c \u0437\u0432\u0443\u043a\u043e\u0456\u0437\u043e\u043b\u044f\u0446\u0456\u0457?',
-    a: '\u041b\u0456\u043d\u0456\u044f Premium \u0437\u0430\u0431\u0435\u0437\u043f\u0435\u0447\u0443\u0454 35 \u0434\u0411 \u0437\u0432\u0443\u043a\u043e\u0456\u0437\u043e\u043b\u044f\u0446\u0456\u0457 (\u0441\u0435\u0440\u0442\u0438\u0444\u0456\u043a\u043e\u0432\u0430\u043d\u043e ISO 23351-1), \u043b\u0456\u043d\u0456\u044f Lite \u2014 15\u201320 \u0434\u0411. \u0426\u0435 \u043f\u0435\u0440\u0435\u0442\u0432\u043e\u0440\u044e\u0454 \u0433\u0443\u0447\u043d\u0438\u0439 open-space (~65 \u0434\u0411) \u043d\u0430 \u0442\u0438\u0445\u0443 \u0437\u043e\u043d\u0443 (~30 \u0434\u0411).',
-  },
-  {
-    q: '\u042f\u043a \u0441\u0442\u0432\u043e\u0440\u0438\u0442\u0438 \u043f\u0435\u0440\u0435\u0433\u043e\u0432\u043e\u0440\u043d\u0443 \u0432 open-space?',
-    a: '\u041c\u043e\u0434\u0435\u043b\u0456 Duet (\u043d\u0430 2 \u043e\u0441\u043e\u0431\u0438) \u0442\u0430 Quartet (\u043d\u0430 4 \u043e\u0441\u043e\u0431\u0438) \u0437\u0430\u043c\u0456\u043d\u044e\u044e\u0442\u044c \u043f\u043e\u0432\u043d\u043e\u0446\u0456\u043d\u043d\u0443 \u043f\u0435\u0440\u0435\u0433\u043e\u0432\u043e\u0440\u043d\u0443 \u043a\u0456\u043c\u043d\u0430\u0442\u0443 \u0431\u0435\u0437 \u043f\u0435\u0440\u0435\u043f\u043b\u0430\u043d\u0443\u0432\u0430\u043d\u043d\u044f. \u0412\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u044e\u044e\u0442\u044c\u0441\u044f \u0437\u0430 \u043a\u0456\u043b\u044c\u043a\u0430 \u0433\u043e\u0434\u0438\u043d.',
-  },
-  {
-    q: '\u0427\u0438 \u043f\u0456\u0434\u0456\u0439\u0434\u0435 \u0434\u043b\u044f \u043c\u0430\u043b\u043e\u0433\u043e \u043e\u0444\u0456\u0441\u0443?',
-    a: 'SilentBox Solo \u0437\u0430\u0439\u043c\u0430\u0454 \u043b\u0438\u0448\u0435 1.2 \u043c\u00b2 \u2014 \u043c\u0435\u043d\u0448\u0435 \u0437\u0430 \u043e\u0434\u043d\u0435 \u0440\u043e\u0431\u043e\u0447\u0435 \u043c\u0456\u0441\u0446\u0435. \u0406\u0434\u0435\u0430\u043b\u044c\u043d\u043e \u043d\u0430\u0432\u0456\u0442\u044c \u0434\u043b\u044f \u043a\u043e\u043c\u043f\u0430\u043a\u0442\u043d\u0438\u0445 \u043e\u0444\u0456\u0441\u0456\u0432.',
-  },
-  {
-    q: '\u042f\u043a \u043f\u0440\u0430\u0446\u044e\u0454 \u0432\u0435\u043d\u0442\u0438\u043b\u044f\u0446\u0456\u044f?',
-    a: '\u041f\u0440\u0438\u043c\u0443\u0441\u043e\u0432\u0430 \u0432\u0435\u043d\u0442\u0438\u043b\u044f\u0446\u0456\u044f 250\u2013600 \u043c\u00b3/\u0433\u043e\u0434 (\u0437\u0430\u043b\u0435\u0436\u043d\u043e \u0432\u0456\u0434 \u043c\u043e\u0434\u0435\u043b\u0456), \u0440\u0456\u0432\u0435\u043d\u044c \u0448\u0443\u043c\u0443 <30 \u0434\u0411. \u041f\u043e\u0432\u043d\u0435 \u043e\u043d\u043e\u0432\u043b\u0435\u043d\u043d\u044f \u043f\u043e\u0432\u0456\u0442\u0440\u044f \u043a\u043e\u0436\u043d\u0456 2\u20133 \u0445\u0432\u0438\u043b\u0438\u043d\u0438.',
-  },
-  {
-    q: '\u0421\u043a\u0456\u043b\u044c\u043a\u0438 \u0447\u0430\u0441\u0443 \u0437\u0430\u0439\u043c\u0430\u0454 \u043c\u043e\u043d\u0442\u0430\u0436?',
-    a: 'Solo \u2014 60 \u0445\u0432\u0438\u043b\u0438\u043d, Duet \u2014 2\u20134 \u0433\u043e\u0434\u0438\u043d\u0438, Quartet \u2014 \u0434\u043e 4 \u0433\u043e\u0434\u0438\u043d. \u0411\u0435\u0437 \u0456\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u0456\u0432, \u0431\u0435\u0437 \u043f\u0438\u043b\u0443 \u0442\u0430 \u0431\u0440\u0443\u0434\u0443.',
-  },
-  {
-    q: '\u042f\u043a\u0430 \u0433\u0430\u0440\u0430\u043d\u0442\u0456\u044f?',
-    a: '\u0414\u043e 10 \u0440\u043e\u043a\u0456\u0432 \u0433\u0430\u0440\u0430\u043d\u0442\u0456\u0457 \u043d\u0430 \u043a\u043e\u043d\u0441\u0442\u0440\u0443\u043a\u0446\u0456\u044e. \u0421\u0435\u0440\u0432\u0456\u0441\u043d\u0435 \u043e\u0431\u0441\u043b\u0443\u0433\u043e\u0432\u0443\u0432\u0430\u043d\u043d\u044f \u043f\u043e \u0432\u0441\u0456\u0439 \u0423\u043a\u0440\u0430\u0457\u043d\u0456.',
-  },
-  {
-    q: '\u0427\u0438\u043c \u0432\u0456\u0434\u0440\u0456\u0437\u043d\u044f\u044e\u0442\u044c\u0441\u044f Premium \u0442\u0430 Lite?',
-    a: 'Premium \u2014 35 \u0434\u0411 \u0456\u0437\u043e\u043b\u044f\u0446\u0456\u0457, \u0441\u0435\u043d\u0434\u0432\u0456\u0447-\u043f\u0430\u043d\u0435\u043b\u0456, Smart Electronics. Lite \u2014 15\u201320 \u0434\u0411, \u0430\u043a\u0443\u0441\u0442\u0438\u0447\u043d\u0456 \u043f\u0430\u043d\u0435\u043b\u0456, SMART \u0435\u043a\u0440\u0430\u043d. Lite \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u0456\u0448\u0430 \u0437\u0430 \u0446\u0456\u043d\u043e\u044e \u043f\u0440\u0438 \u0433\u0430\u0440\u043d\u0456\u0439 \u044f\u043a\u043e\u0441\u0442\u0456.',
-  },
-]
-
 const logoCloud = ['Monobank', 'MHP', "L'Or\u00e9al", 'Siemens', 'PwC', 'MARS', '\u041d\u043e\u0432\u0430 \u041f\u043e\u0448\u0442\u0430', 'UN']
 
 export default function HomePage() {
-  const [activeLine, setActiveLine] = useState<ModelLine>('premium')
-  const [activeModelIndex, setActiveModelIndex] = useState(0)
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
-
-  const lineModels = getModelsByLine(activeLine)
-  const activeModel: CabinModel | undefined = lineModels[activeModelIndex]
-
-  function handleLineChange(line: ModelLine) {
-    setActiveLine(line)
-    setActiveModelIndex(0)
-  }
-
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -190,7 +133,7 @@ export default function HomePage() {
               marginBottom: '1.5rem',
               letterSpacing: '0.02em',
             }}>
-              \u041e\u0444\u0456\u0446\u0456\u0439\u043d\u0438\u0439 \u0434\u0438\u043b\u0435\u0440 SilentBox \u0432 \u0423\u043a\u0440\u0430\u0457\u043d\u0456
+              {'\u041e\u0444\u0456\u0446\u0456\u0439\u043d\u0438\u0439 \u0434\u0438\u043b\u0435\u0440 SilentBox \u0432 \u0423\u043a\u0440\u0430\u0457\u043d\u0456'}
             </span>
 
             <h1 style={{
@@ -200,7 +143,7 @@ export default function HomePage() {
               marginBottom: '1.25rem',
               letterSpacing: '-0.02em',
             }}>
-              \u0422\u0438\u0448\u0430 \u0443 \u0432\u0430\u0448\u043e\u043c\u0443 \u043e\u0444\u0456\u0441\u0456
+              {'\u0422\u0438\u0448\u0430 \u0443 \u0432\u0430\u0448\u043e\u043c\u0443 \u043e\u0444\u0456\u0441\u0456'}
             </h1>
 
             <p style={{
@@ -210,7 +153,7 @@ export default function HomePage() {
               marginBottom: '1.5rem',
               maxWidth: '500px',
             }}>
-              \u0410\u043a\u0443\u0441\u0442\u0438\u0447\u043d\u0456 \u043a\u0430\u0431\u0456\u043d\u0438 \u0434\u043b\u044f \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0438\u0432\u043d\u043e\u0457 \u0440\u043e\u0431\u043e\u0442\u0438. \u0417\u0432\u0443\u043a\u043e\u0456\u0437\u043e\u043b\u044f\u0446\u0456\u044f \u0434\u043e 35 \u0434\u0411, \u043c\u043e\u043d\u0442\u0430\u0436 \u0432\u0456\u0434 60 \u0445\u0432\u0438\u043b\u0438\u043d.
+              {'\u0410\u043a\u0443\u0441\u0442\u0438\u0447\u043d\u0456 \u043a\u0430\u0431\u0456\u043d\u0438 \u0434\u043b\u044f \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0438\u0432\u043d\u043e\u0457 \u0440\u043e\u0431\u043e\u0442\u0438. \u0417\u0432\u0443\u043a\u043e\u0456\u0437\u043e\u043b\u044f\u0446\u0456\u044f \u0434\u043e 35 \u0434\u0411, \u043c\u043e\u043d\u0442\u0430\u0436 \u0432\u0456\u0434 60 \u0445\u0432\u0438\u043b\u0438\u043d.'}
             </p>
 
             {/* Trust badges */}
@@ -229,7 +172,7 @@ export default function HomePage() {
             {/* CTAs */}
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
               <Link href="/kataloh/" className="btn-primary">
-                \u041e\u0431\u0440\u0430\u0442\u0438 \u043c\u043e\u0434\u0435\u043b\u044c
+                {'\u041e\u0431\u0440\u0430\u0442\u0438 \u043c\u043e\u0434\u0435\u043b\u044c'}
               </Link>
               <Link
                 href="/zviazatysya/"
@@ -249,12 +192,12 @@ export default function HomePage() {
                   fontSize: '0.9375rem',
                 }}
               >
-                \u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0439 \u0430\u0443\u0434\u0438\u0442
+                {'\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0439 \u0430\u0443\u0434\u0438\u0442'}
               </Link>
             </div>
           </div>
 
-          {/* Right — animated gradient pattern */}
+          {/* Right -- animated gradient pattern */}
           <div style={{
             background: 'linear-gradient(135deg, rgba(26,86,50,0.3) 0%, rgba(200,121,65,0.15) 50%, rgba(26,86,50,0.2) 100%)',
             borderRadius: '1.5rem',
@@ -338,165 +281,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== 2. PRODUCT SHOWCASE (Tab Switcher) ===== */}
-      <section className="section" style={{ background: 'var(--color-bg)' }}>
-        <div className="container">
-          <h2 className="section-title">\u041c\u043e\u0434\u0435\u043b\u0456 SilentBox</h2>
-          <p className="section-subtitle">\u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043b\u0456\u043d\u0456\u0439\u043a\u0443 \u0442\u0430 \u043c\u043e\u0434\u0435\u043b\u044c, \u044f\u043a\u0430 \u043f\u0456\u0434\u0445\u043e\u0434\u0438\u0442\u044c \u0434\u043b\u044f \u0432\u0430\u0448\u043e\u0433\u043e \u043e\u0444\u0456\u0441\u0443</p>
-
-          {/* Line tabs */}
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
-            {lineTabs.map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => handleLineChange(tab.key)}
-                style={{
-                  padding: '0.625rem 1.5rem',
-                  borderRadius: '999px',
-                  border: activeLine === tab.key ? 'none' : '1.5px solid var(--color-border)',
-                  background: activeLine === tab.key ? lineColors[tab.key] : 'transparent',
-                  color: activeLine === tab.key ? '#fff' : 'var(--color-text)',
-                  fontWeight: 600,
-                  fontSize: '0.875rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  fontFamily: "'Inter', sans-serif",
-                }}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Model sub-tabs (if more than 1 model in line) */}
-          {lineModels.length > 1 && (
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
-              {lineModels.map((m, i) => (
-                <button
-                  key={m.slug}
-                  onClick={() => setActiveModelIndex(i)}
-                  style={{
-                    padding: '0.5rem 1.25rem',
-                    borderRadius: '0.375rem',
-                    border: activeModelIndex === i ? `2px solid ${lineColors[activeLine]}` : '1px solid var(--color-border)',
-                    background: activeModelIndex === i ? 'var(--color-accent-light)' : 'transparent',
-                    color: activeModelIndex === i ? lineColors[activeLine] : 'var(--color-text-light)',
-                    fontWeight: 500,
-                    fontSize: '0.8125rem',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    fontFamily: "'Inter', sans-serif",
-                  }}
-                >
-                  {m.name}
-                </button>
-              ))}
-            </div>
-          )}
-
-          {/* Active model card */}
-          {activeModel && (
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '0',
-              background: '#fff',
-              borderRadius: '1rem',
-              overflow: 'hidden',
-              boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
-              border: '1px solid var(--color-border)',
-            }}>
-              {/* Left — specs */}
-              <div style={{ padding: '2.5rem' }}>
-                <span style={{
-                  display: 'inline-block',
-                  background: lineColors[activeModel.line],
-                  color: '#fff',
-                  padding: '0.25rem 0.75rem',
-                  borderRadius: '999px',
-                  fontSize: '0.75rem',
-                  fontWeight: 600,
-                  marginBottom: '1rem',
-                }}>
-                  {activeModel.lineLabel}
-                </span>
-                <h3 style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: '1.75rem',
-                  fontWeight: 700,
-                  marginBottom: '0.5rem',
-                  color: 'var(--color-text)',
-                }}>
-                  {activeModel.fullName}
-                </h3>
-                <p style={{ color: 'var(--color-text-light)', fontSize: '0.9375rem', marginBottom: '1.5rem' }}>
-                  {activeModel.feature}
-                </p>
-
-                {/* Specs grid */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
-                  {[
-                    { label: '\u0417\u0432\u0443\u043a\u043e\u0456\u0437\u043e\u043b\u044f\u0446\u0456\u044f', value: activeModel.soundInsulation },
-                    { label: '\u041c\u0456\u0441\u0442\u043a\u0456\u0441\u0442\u044c', value: activeModel.capacity },
-                    { label: '\u0420\u043e\u0437\u043c\u0456\u0440\u0438', value: activeModel.dimensions },
-                    { label: '\u0412\u0430\u0433\u0430', value: activeModel.weight },
-                  ].map((spec) => (
-                    <div key={spec.label}>
-                      <div style={{ fontSize: '0.6875rem', textTransform: 'uppercase', color: 'var(--color-text-light)', letterSpacing: '0.08em', marginBottom: '0.25rem' }}>
-                        {spec.label}
-                      </div>
-                      <div style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--color-text)' }}>
-                        {spec.value}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                  <Link href={`/kataloh/${activeModel.slug}/`} className="btn-primary" style={{ display: 'inline-flex' }}>
-                    Детальніше
-                  </Link>
-                  <Link href="/zviazatysya/" style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.375rem',
-                    padding: '0.75rem 1.5rem',
-                    background: 'transparent',
-                    color: lineColors[activeModel.line],
-                    fontFamily: "'Inter', sans-serif",
-                    fontWeight: 600,
-                    borderRadius: '0.375rem',
-                    border: `1.5px solid ${lineColors[activeModel.line]}`,
-                    textDecoration: 'none',
-                    fontSize: '0.875rem',
-                  }}>
-                    Дізнатися ціну
-                  </Link>
-                </div>
-              </div>
-
-              {/* Right — decorative placeholder */}
-              <div style={{
-                background: `linear-gradient(135deg, ${lineColors[activeModel.line]}22 0%, ${lineColors[activeModel.line]}08 100%)`,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-              }}>
-                <div style={{
-                  fontSize: '3rem',
-                  fontFamily: "'Playfair Display', serif",
-                  fontWeight: 700,
-                  color: `${lineColors[activeModel.line]}25`,
-                  textAlign: 'center',
-                  lineHeight: 1.2,
-                }}>
-                  {activeModel.name}
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
+      <HomeProductShowcase />
 
       {/* ===== 3. PAIN POINTS ===== */}
       <section style={{ background: '#1a1a1a', color: '#fff', padding: '6rem 1rem' }}>
@@ -509,10 +294,10 @@ export default function HomePage() {
             marginBottom: '1rem',
             color: '#fff',
           }}>
-            \u0427\u043e\u043c\u0443 open-space \u0432\u0431\u0438\u0432\u0430\u0454 \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0438\u0432\u043d\u0456\u0441\u0442\u044c
+            {'\u0427\u043e\u043c\u0443 open-space \u0432\u0431\u0438\u0432\u0430\u0454 \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0438\u0432\u043d\u0456\u0441\u0442\u044c'}
           </h2>
           <p style={{ textAlign: 'center', color: '#8a8680', marginBottom: '3.5rem', maxWidth: '500px', margin: '0 auto 3.5rem' }}>
-            \u0414\u043e\u0441\u043b\u0456\u0434\u0436\u0435\u043d\u043d\u044f \u043f\u043e\u043a\u0430\u0437\u0443\u044e\u0442\u044c: \u0448\u0443\u043c \u0443 \u043e\u0444\u0456\u0441\u0456 \u043a\u043e\u0448\u0442\u0443\u0454 \u043a\u043e\u043c\u043f\u0430\u043d\u0456\u044f\u043c \u0442\u0438\u0441\u044f\u0447\u0456 \u0433\u043e\u0434\u0438\u043d \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0438\u0432\u043d\u043e\u0441\u0442\u0456
+            {'\u0414\u043e\u0441\u043b\u0456\u0434\u0436\u0435\u043d\u043d\u044f \u043f\u043e\u043a\u0430\u0437\u0443\u044e\u0442\u044c: \u0448\u0443\u043c \u0443 \u043e\u0444\u0456\u0441\u0456 \u043a\u043e\u0448\u0442\u0443\u0454 \u043a\u043e\u043c\u043f\u0430\u043d\u0456\u044f\u043c \u0442\u0438\u0441\u044f\u0447\u0456 \u0433\u043e\u0434\u0438\u043d \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0438\u0432\u043d\u043e\u0441\u0442\u0456'}
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>
@@ -523,10 +308,7 @@ export default function HomePage() {
                 padding: '2rem',
                 border: '1px solid rgba(255,255,255,0.08)',
                 transition: 'border-color 0.3s ease',
-              }}
-              onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(143,188,143,0.4)' }}
-              onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.08)' }}
-              >
+              }}>
                 <div style={{ color: 'var(--color-accent)', marginBottom: '1rem' }}>{p.icon}</div>
                 <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-cta)', marginBottom: '0.5rem', fontFamily: "'Playfair Display', serif" }}>
                   {p.stat}
@@ -546,8 +328,8 @@ export default function HomePage() {
       {/* ===== 4. TECHNOLOGY FEATURES ===== */}
       <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
         <div className="container">
-          <h2 className="section-title">\u0422\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0456\u044f SilentBox</h2>
-          <p className="section-subtitle">\u041a\u043e\u0436\u043d\u0430 \u043a\u0430\u0431\u0456\u043d\u0430 \u2014 \u0446\u0435 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442 \u0456\u043d\u0436\u0435\u043d\u0435\u0440\u043d\u0438\u0445 \u0440\u0456\u0448\u0435\u043d\u044c \u0442\u0430 \u043f\u0430\u0442\u0435\u043d\u0442\u043e\u0432\u0430\u043d\u0438\u0445 \u0442\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0456\u0439</p>
+          <h2 className="section-title">{'\u0422\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0456\u044f SilentBox'}</h2>
+          <p className="section-subtitle">{'\u041a\u043e\u0436\u043d\u0430 \u043a\u0430\u0431\u0456\u043d\u0430 \u2014 \u0446\u0435 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442 \u0456\u043d\u0436\u0435\u043d\u0435\u0440\u043d\u0438\u0445 \u0440\u0456\u0448\u0435\u043d\u044c \u0442\u0430 \u043f\u0430\u0442\u0435\u043d\u0442\u043e\u0432\u0430\u043d\u0438\u0445 \u0442\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0456\u0439'}</p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
             {techFeatures.map((f, idx) => (
@@ -628,7 +410,7 @@ export default function HomePage() {
       <section style={{ borderTop: '2px solid var(--color-border)', borderBottom: '2px solid var(--color-border)', padding: '3rem 1rem', background: 'var(--color-bg-alt)' }}>
         <div className="container">
           <p style={{ textAlign: 'center', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--color-text-light)', marginBottom: '1.25rem', fontWeight: 600 }}>
-            \u041d\u0430\u043c \u0434\u043e\u0432\u0456\u0440\u044f\u044e\u0442\u044c
+            {'\u041d\u0430\u043c \u0434\u043e\u0432\u0456\u0440\u044f\u044e\u0442\u044c'}
           </p>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2.5rem', flexWrap: 'wrap' }}>
             {logoCloud.map((name) => (
@@ -643,8 +425,8 @@ export default function HomePage() {
       {/* ===== 7. HOW IT WORKS ===== */}
       <section className="section" style={{ background: 'var(--color-bg)' }}>
         <div className="container">
-          <h2 className="section-title">\u042f\u043a \u0446\u0435 \u043f\u0440\u0430\u0446\u044e\u0454</h2>
-          <p className="section-subtitle">\u0412\u0456\u0434 \u043a\u043e\u043d\u0441\u0443\u043b\u044c\u0442\u0430\u0446\u0456\u0457 \u0434\u043e \u0433\u043e\u0442\u043e\u0432\u043e\u0457 \u043a\u0430\u0431\u0456\u043d\u0438 \u2014 4 \u043f\u0440\u043e\u0441\u0442\u0438\u0445 \u043a\u0440\u043e\u043a\u0438</p>
+          <h2 className="section-title">{'\u042f\u043a \u0446\u0435 \u043f\u0440\u0430\u0446\u044e\u0454'}</h2>
+          <p className="section-subtitle">{'\u0412\u0456\u0434 \u043a\u043e\u043d\u0441\u0443\u043b\u044c\u0442\u0430\u0446\u0456\u0457 \u0434\u043e \u0433\u043e\u0442\u043e\u0432\u043e\u0457 \u043a\u0430\u0431\u0456\u043d\u0438 \u2014 4 \u043f\u0440\u043e\u0441\u0442\u0438\u0445 \u043a\u0440\u043e\u043a\u0438'}</p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem' }}>
             {howItWorks.map((item) => (
@@ -680,8 +462,8 @@ export default function HomePage() {
       {/* ===== 8. TESTIMONIALS ===== */}
       <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
         <div className="container">
-          <h2 className="section-title">\u0412\u0456\u0434\u0433\u0443\u043a\u0438 \u043a\u043b\u0456\u0454\u043d\u0442\u0456\u0432</h2>
-          <p className="section-subtitle">\u0429\u043e \u043a\u0430\u0436\u0443\u0442\u044c \u043a\u043e\u043c\u043f\u0430\u043d\u0456\u0457, \u044f\u043a\u0456 \u0432\u0436\u0435 \u0432\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u043b\u0438 SilentBox</p>
+          <h2 className="section-title">{'\u0412\u0456\u0434\u0433\u0443\u043a\u0438 \u043a\u043b\u0456\u0454\u043d\u0442\u0456\u0432'}</h2>
+          <p className="section-subtitle">{'\u0429\u043e \u043a\u0430\u0436\u0443\u0442\u044c \u043a\u043e\u043c\u043f\u0430\u043d\u0456\u0457, \u044f\u043a\u0456 \u0432\u0436\u0435 \u0432\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u043b\u0438 SilentBox'}</p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>
             {testimonials.map((t) => (
@@ -718,62 +500,8 @@ export default function HomePage() {
         </div>
       </section>
 
-
       {/* ===== 10. FAQ ===== */}
-      <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
-        <div className="container" style={{ maxWidth: '800px' }}>
-          <h2 className="section-title">\u0427\u0430\u0441\u0442\u0456 \u043f\u0438\u0442\u0430\u043d\u043d\u044f</h2>
-          <p className="section-subtitle">\u0412\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0456 \u043d\u0430 \u043d\u0430\u0439\u0431\u0456\u043b\u044c\u0448 \u043f\u043e\u043f\u0443\u043b\u044f\u0440\u043d\u0456 \u043f\u0438\u0442\u0430\u043d\u043d\u044f \u043f\u0440\u043e \u0430\u043a\u0443\u0441\u0442\u0438\u0447\u043d\u0456 \u043a\u0430\u0431\u0456\u043d\u0438</p>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
-            {faqItems.map((item, i) => (
-              <div key={i} style={{ borderBottom: '1px solid var(--color-border)' }}>
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  style={{
-                    width: '100%',
-                    padding: '1.25rem 0',
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: '0.9375rem',
-                    fontWeight: 600,
-                    color: 'var(--color-text)',
-                    textAlign: 'left',
-                  }}
-                >
-                  <span>{item.q}</span>
-                  <span style={{
-                    fontSize: '1.25rem',
-                    fontWeight: 300,
-                    transition: 'transform 0.2s ease',
-                    transform: openFaq === i ? 'rotate(45deg)' : 'none',
-                    color: 'var(--color-text-light)',
-                    flexShrink: 0,
-                    marginLeft: '1rem',
-                  }}>
-                    +
-                  </span>
-                </button>
-                {openFaq === i && (
-                  <div style={{
-                    padding: '0 0 1.25rem',
-                    fontSize: '0.875rem',
-                    color: 'var(--color-text-light)',
-                    lineHeight: 1.7,
-                  }}>
-                    {item.a}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <HomeFAQ />
 
       {/* ===== 11. FINAL CTA ===== */}
       <section style={{
@@ -790,14 +518,14 @@ export default function HomePage() {
             marginBottom: '1rem',
             color: '#fff',
           }}>
-            \u0417\u0430\u043c\u043e\u0432\u0442\u0435 \u0431\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0439 \u0430\u0443\u0434\u0438\u0442 \u0432\u0430\u0448\u043e\u0433\u043e \u043e\u0444\u0456\u0441\u0443
+            {'\u0417\u0430\u043c\u043e\u0432\u0442\u0435 \u0431\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0439 \u0430\u0443\u0434\u0438\u0442 \u0432\u0430\u0448\u043e\u0433\u043e \u043e\u0444\u0456\u0441\u0443'}
           </h2>
           <p style={{ fontSize: '1.0625rem', color: '#b0ada8', marginBottom: '2.5rem', maxWidth: '500px', margin: '0 auto 2.5rem' }}>
-            \u041d\u0430\u0448 \u0441\u043f\u0435\u0446\u0456\u0430\u043b\u0456\u0441\u0442 \u043e\u0446\u0456\u043d\u0438\u0442\u044c \u0430\u043a\u0443\u0441\u0442\u0438\u043a\u0443, \u043f\u0456\u0434\u0431\u0435\u0440\u0435 \u043e\u043f\u0442\u0438\u043c\u0430\u043b\u044c\u043d\u0435 \u0440\u0456\u0448\u0435\u043d\u043d\u044f \u0442\u0430 \u0440\u043e\u0437\u0440\u0430\u0445\u0443\u0454 \u0432\u0430\u0440\u0442\u0456\u0441\u0442\u044c.
+            {'\u041d\u0430\u0448 \u0441\u043f\u0435\u0446\u0456\u0430\u043b\u0456\u0441\u0442 \u043e\u0446\u0456\u043d\u0438\u0442\u044c \u0430\u043a\u0443\u0441\u0442\u0438\u043a\u0443, \u043f\u0456\u0434\u0431\u0435\u0440\u0435 \u043e\u043f\u0442\u0438\u043c\u0430\u043b\u044c\u043d\u0435 \u0440\u0456\u0448\u0435\u043d\u043d\u044f \u0442\u0430 \u0440\u043e\u0437\u0440\u0430\u0445\u0443\u0454 \u0432\u0430\u0440\u0442\u0456\u0441\u0442\u044c.'}
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/zviazatysya/" className="btn-primary">
-              \u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0439 \u0430\u0443\u0434\u0438\u0442
+              {'\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0439 \u0430\u0443\u0434\u0438\u0442'}
             </Link>
             <Link
               href="/kataloh/"
@@ -817,7 +545,7 @@ export default function HomePage() {
                 fontSize: '0.9375rem',
               }}
             >
-              \u041a\u0430\u0442\u0430\u043b\u043e\u0433 \u043c\u043e\u0434\u0435\u043b\u0435\u0439
+              {'\u041a\u0430\u0442\u0430\u043b\u043e\u0433 \u043c\u043e\u0434\u0435\u043b\u0435\u0439'}
             </Link>
           </div>
         </div>
