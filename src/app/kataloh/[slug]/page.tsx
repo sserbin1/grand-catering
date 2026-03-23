@@ -78,32 +78,97 @@ export default async function ModelPage({ params }: PageProps) {
     },
   }
 
+  const assemblyTime = model.slug === 'solo' || model.slug === 'lite' ? '60 хв' :
+    model.slug === 'duet' || model.slug === 'duet-lite' ? '2-3 год' : '3-4 год'
+
   return (
-    <main className="max-w-4xl mx-auto px-4 py-16" style={{ background: 'var(--color-bg)' }}>
+    <main style={{ background: 'var(--color-bg)' }}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
       />
 
-      <nav className="mb-8 text-sm" style={{ color: 'var(--color-text-light)' }}>
-        <Link href="/kataloh/" className="hover:underline" style={{ color: 'var(--color-text-light)' }}>
-          Каталог кабін
-        </Link>
-        <span className="mx-2">/</span>
-        <span style={{ color: 'var(--color-primary)' }}>{model.fullName}</span>
-      </nav>
+      {/* Product Hero Banner */}
+      <section
+        className="pt-24 pb-12"
+        style={{ background: 'linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%)' }}
+      >
+        <div className="max-w-4xl mx-auto px-4">
+          <nav className="mb-6 text-sm">
+            <Link href="/kataloh/" className="hover:underline" style={{ color: 'rgba(255,255,255,0.5)' }}>
+              Каталог кабін
+            </Link>
+            <span className="mx-2" style={{ color: 'rgba(255,255,255,0.3)' }}>/</span>
+            <span style={{ color: 'rgba(255,255,255,0.8)' }}>{model.fullName}</span>
+          </nav>
 
-      <div className="flex items-center gap-3 mb-2">
-        <h1 className="text-3xl font-bold" style={{ fontFamily: "'Playfair Display', serif", color: 'var(--color-primary)' }}>{model.fullName}</h1>
-        <span
-          className="text-xs font-semibold px-3 py-1 rounded-full"
-          style={lineBadgeStyles[model.line]}
-        >
-          {model.lineLabel}
-        </span>
-      </div>
+          <div className="flex items-center gap-3 mb-3">
+            <h1 className="text-3xl md:text-4xl font-bold" style={{ fontFamily: "'Playfair Display', serif", color: '#ffffff' }}>
+              {model.fullName}
+            </h1>
+            <span
+              className="text-xs font-bold px-3 py-1.5 rounded-full"
+              style={{
+                background: model.line === 'premium' ? 'linear-gradient(135deg, #1a5632, #134425)' :
+                  model.line === 'lite' ? 'linear-gradient(135deg, #b8860b, #8b6914)' :
+                  'linear-gradient(135deg, #8b4513, #6b3410)',
+                color: '#ffffff',
+                fontFamily: "'Inter', sans-serif",
+              }}
+            >
+              {model.lineLabel}
+            </span>
+          </div>
 
-      <p className="text-lg mb-8" style={{ color: 'var(--color-text-light)' }}>{model.feature}</p>
+          <p className="text-lg mb-6" style={{ color: 'rgba(255,255,255,0.7)' }}>{model.feature}</p>
+
+          {/* Key stats row */}
+          <div className="flex flex-wrap gap-6 md:gap-10 mb-8">
+            {[
+              { label: 'Звукоізоляція', value: model.soundInsulation },
+              { label: 'Розміри', value: model.dimensions },
+              { label: 'Збірка', value: assemblyTime },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <div className="text-xs font-medium mb-1" style={{ color: 'rgba(255,255,255,0.5)', fontFamily: "'Inter', sans-serif" }}>
+                  {stat.label}
+                </div>
+                <div className="text-lg font-bold" style={{ color: '#c87941', fontFamily: "'Inter', sans-serif" }}>
+                  {stat.value}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Price + CTA */}
+          <div className="flex flex-wrap items-center gap-6">
+            {model.price && (
+              <div>
+                <div className="text-2xl font-extrabold" style={{ color: '#ffffff', fontFamily: "'Inter', sans-serif" }}>
+                  {model.price}
+                </div>
+                {model.priceNote && (
+                  <div className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: "'Inter', sans-serif" }}>
+                    {model.priceNote}
+                  </div>
+                )}
+              </div>
+            )}
+            <Link
+              href="/zviazatysya/"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-bold text-white transition-all"
+              style={{ background: '#c87941', fontFamily: "'Inter', sans-serif" }}
+            >
+              Замовити {model.name}
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <div className="max-w-4xl mx-auto px-4 py-10">
 
       {/* Product photo */}
       {modelImages[model.slug] && (
@@ -174,6 +239,27 @@ export default async function ModelPage({ params }: PageProps) {
         </ul>
       </section>
 
+      {/* Color Variants */}
+      <section className="mb-12 p-6 rounded-xl" style={{ background: 'var(--color-bg-alt)', border: '1px solid var(--color-border)' }}>
+        <h3 className="text-lg font-semibold mb-4" style={{ fontFamily: "'Playfair Display', serif", color: 'var(--color-primary)' }}>
+          Доступні кольори
+        </h3>
+        <div className="flex flex-wrap gap-3 mb-4">
+          {['Білий', 'Антрацит', 'Сірий', 'Дуб', 'Горіх'].map((color) => (
+            <span
+              key={color}
+              className="text-sm font-medium px-4 py-2 rounded-lg"
+              style={{ background: 'var(--color-bg)', border: '1px solid var(--color-border)', color: 'var(--color-text)', fontFamily: "'Inter', sans-serif" }}
+            >
+              {color}
+            </span>
+          ))}
+        </div>
+        <p className="text-sm" style={{ color: 'var(--color-text-light)', fontFamily: "'Inter', sans-serif" }}>
+          21 варіант зовнішніх панелей та 10+ дизайнерських варіантів внутрішнього оздоблення. Зв&#39;яжіться з нами для підбору ідеального кольору під ваш офіс.
+        </p>
+      </section>
+
       <div className="flex gap-4 mb-16">
         <Link
           href="/zviazatysya/"
@@ -208,6 +294,7 @@ export default async function ModelPage({ params }: PageProps) {
           ))}
         </div>
       </section>
+      </div>
     </main>
   )
 }

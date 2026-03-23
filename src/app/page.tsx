@@ -1,655 +1,843 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
+import { models, getModelsByLine, type ModelLine, type CabinModel } from '@/lib/models'
 
-const modelImages: Record<string, string> = {
-  solo: '/images/cabins/solo.png',
-  duet: '/images/cabins/duet.png',
-  quartet: '/images/cabins/quartet.png',
-  lite: '/images/cabins/solo-lite.png',
-  'duet-lite': '/images/cabins/duet-lite.png',
-  'quartet-lite': '/images/cabins/quartet-lite.png',
-  workpod: '/images/cabins/workpod.png',
+const lineColors: Record<ModelLine, string> = {
+  premium: '#1a5632',
+  lite: '#c87941',
+  pro: '#4a6fa5',
 }
 
-const models = [
+const lineTabs: { key: ModelLine; label: string }[] = [
+  { key: 'premium', label: 'Premium \u00b7 35 \u0434\u0411' },
+  { key: 'lite', label: 'Lite \u00b7 15-20 \u0434\u0411' },
+  { key: 'pro', label: 'Pro' },
+]
+
+const painPoints = [
   {
-    name: 'Solo',
-    slug: 'solo',
-    line: 'Premium',
-    capacity: '1 особа',
-    size: '105\u00d7110 см, h220 см',
-    price: '',
-    feature: 'Телефонна кабіна для open-space',
-    description: 'Преміальна акустична кабіна з шумоізоляцією 35 дБ (ISO 23351-1). Ідеальна для приватних дзвінків та відеоконференцій. Збірка за 60 хвилин.',
-    specs: ['35 дБ ізоляція', '250-300 м\u00b3/год вентиляція', 'Smart Electronics'],
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+    ),
+    stat: '~65 \u0434\u0411',
+    title: '\u0428\u0443\u043c \u0432 open-space',
+    desc: '\u0420\u0456\u0432\u0435\u043d\u044c \u0448\u0443\u043c\u0443 \u0443 \u0432\u0456\u0434\u043a\u0440\u0438\u0442\u043e\u043c\u0443 \u043e\u0444\u0456\u0441\u0456 \u043f\u0435\u0440\u0435\u0432\u0438\u0449\u0443\u0454 \u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0430\u0446\u0456\u0457 \u0412\u041e\u041e\u0417 \u0434\u043b\u044f \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0438\u0432\u043d\u043e\u0457 \u0440\u043e\u0431\u043e\u0442\u0438.',
   },
   {
-    name: 'Duet',
-    slug: 'duet',
-    line: 'Premium',
-    capacity: '2 особи',
-    size: '210\u00d7110 см, h220 см',
-    price: '',
-    feature: 'Переговорна кабіна для зустрічей тет-а-тет',
-    description: 'Два дивани та конференц-стіл. Панорамні скляні стіни. 35 дБ звукоізоляції для конфіденційних зустрічей з клієнтами.',
-    specs: ['35 дБ ізоляція', '550-600 м\u00b3/год вентиляція', 'Панорамне скло'],
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
+      </svg>
+    ),
+    stat: '23 \u0445\u0432',
+    title: '\u0412\u0442\u0440\u0430\u0447\u0435\u043d\u0438\u0439 \u0444\u043e\u043a\u0443\u0441',
+    desc: '\u0421\u0430\u043c\u0435 \u0441\u0442\u0456\u043b\u044c\u043a\u0438 \u0447\u0430\u0441\u0443 \u043f\u043e\u0442\u0440\u0456\u0431\u043d\u043e, \u0449\u043e\u0431 \u043f\u043e\u0432\u043d\u0456\u0441\u0442\u044e \u0437\u043e\u0441\u0435\u0440\u0435\u0434\u0438\u0442\u0438\u0441\u044f \u043f\u0456\u0441\u043b\u044f \u043a\u043e\u0436\u043d\u043e\u0433\u043e \u0432\u0456\u0434\u0432\u043e\u043b\u0456\u043a\u0430\u043d\u043d\u044f.',
   },
   {
-    name: 'Quartet',
-    slug: 'quartet',
-    line: 'Premium',
-    capacity: '4 особи',
-    size: '210\u00d7138 см, h220 см',
-    price: '',
-    feature: 'Міні-конференц-зал для командних нарад',
-    description: 'Повноцінна альтернатива переговорної кімнати. Датчик CO2, датчик присутності, 2 дивани 120\u00d770 см. Для нарад та брейнстормів.',
-    specs: ['35 дБ ізоляція', 'Датчик CO2', '2 дивани + стіл'],
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+      </svg>
+    ),
+    stat: '0',
+    title: '\u041d\u0435\u043c\u0430\u0454 \u043f\u0435\u0440\u0435\u0433\u043e\u0432\u043e\u0440\u043d\u0438\u0445',
+    desc: '\u0412 \u0431\u0456\u043b\u044c\u0448\u043e\u0441\u0442\u0456 \u043e\u0444\u0456\u0441\u0456\u0432 \u043d\u0435\u043c\u0430\u0454 \u043f\u0440\u0438\u0432\u0430\u0442\u043d\u043e\u0433\u043e \u043f\u0440\u043e\u0441\u0442\u043e\u0440\u0443 \u0434\u043b\u044f \u0437\u0443\u0441\u0442\u0440\u0456\u0447\u0435\u0439 \u0442\u0430 \u0434\u0437\u0432\u0456\u043d\u043a\u0456\u0432.',
   },
   {
-    name: 'Solo Lite',
-    slug: 'lite',
-    line: 'Lite',
-    capacity: '1 особа',
-    size: '105\u00d7107 см, h223 см',
-    price: '',
-    feature: 'Доступна телефонна кабіна для open-space',
-    description: 'Подвійна вентиляція 2\u00d7160 м\u00b3/год. 10 варіантів дизайну інтер\u2019єру. SMART сенсорне керування. Для дзвінків та відеозустрічей.',
-    specs: ['15-20 дБ ізоляція', 'Подвійна вентиляція', '10 варіантів дизайну'],
-  },
-  {
-    name: 'Duet Lite',
-    slug: 'duet-lite',
-    line: 'Lite',
-    capacity: '2 особи',
-    size: '213\u00d7105 см, h225 см',
-    price: '',
-    feature: 'Переговорна кабіна для 1-on-1 зустрічей',
-    description: 'Два дивани 90\u00d770 см. Задня стінка: тканина або дзеркало. USB/Type-C зарядка. Ідеальна для інтерв\'ю та коучінгу.',
-    specs: ['15-20 дБ ізоляція', '2 дивани', 'SMART керування'],
-  },
-  {
-    name: 'Quartet Lite',
-    slug: 'quartet-lite',
-    line: 'Lite',
-    capacity: '4 особи',
-    size: '213\u00d7123 см, h225 см',
-    price: '',
-    feature: 'Доступна переговорна на 4 особи',
-    description: 'Два дивани 120\u00d770 см. 10+ дизайнерських варіантів. SMART сенсорне керування. Для командних нарад та зустрічей.',
-    specs: ['15-20 дБ ізоляція', '2 дивани + стіл', '10+ варіантів'],
-  },
-  {
-    name: 'WorkPod',
-    slug: 'workpod',
-    line: 'Pro',
-    capacity: '1-2 особи',
-    size: '153\u00d7113 см, h225 см',
-    price: '',
-    feature: 'Окреме робоче місце для зосередженої роботи',
-    description: 'Ергономічний стіл з регулюванням висоти. Подвійна вентиляція. Для розробників, дизайнерів та аналітиків. Незабаром у продажу.',
-    specs: ['~25 дБ ізоляція', 'Регульований стіл', 'Скоро у продажу'],
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+      </svg>
+    ),
+    stat: '\u2191 40%',
+    title: '\u0421\u0442\u0440\u0435\u0441 \u0456 \u0432\u0438\u0433\u043e\u0440\u0430\u043d\u043d\u044f',
+    desc: '\u041f\u043e\u0441\u0442\u0456\u0439\u043d\u0438\u0439 \u0448\u0443\u043c \u043f\u0456\u0434\u0432\u0438\u0449\u0443\u0454 \u0440\u0456\u0432\u0435\u043d\u044c \u043a\u043e\u0440\u0442\u0438\u0437\u043e\u043b\u0443 \u0442\u0430 \u043f\u0440\u0438\u0437\u0432\u043e\u0434\u0438\u0442\u044c \u0434\u043e \u0432\u0438\u0433\u043e\u0440\u0430\u043d\u043d\u044f.',
   },
 ]
 
-const problems = [
+const techFeatures = [
   {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
-      </svg>
-    ),
-    title: 'Шум в open-space заважає працювати',
-    text: 'Розмови колег, дзвінки телефонів та шум обладнання створюють фоновий шум до 65 дБ. Акустична кабіна для офісу знижує його до рівня тихої бібліотеки (30 дБ), забезпечуючи повну зосередженість.',
+    title: '\u0417\u0432\u0443\u043a\u043e\u0456\u0437\u043e\u043b\u044f\u0446\u0456\u044f \u0434\u043e 35 \u0434\u0411',
+    desc: '\u0421\u0435\u0440\u0442\u0438\u0444\u0456\u043a\u043e\u0432\u0430\u043d\u043e \u0437\u0430 ISO 23351-1. \u041f\u0435\u0440\u0435\u0442\u0432\u043e\u0440\u044e\u0454 \u0433\u0443\u0447\u043d\u0438\u0439 open-space \u043d\u0430 \u0442\u0438\u0448\u0443 \u0431\u0456\u0431\u043b\u0456\u043e\u0442\u0435\u043a\u0438.',
   },
   {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
-      </svg>
-    ),
-    title: 'Брак переговорних кімнат',
-    text: 'Працівники шукають вільну переговорну по всьому офісу. Звукоізоляційна кабіна створює додаткову переговорну зону прямо в open-space без перебудови та ремонту.',
+    title: '\u0421\u0435\u043d\u0434\u0432\u0456\u0447-\u043f\u0430\u043d\u0435\u043b\u0456',
+    desc: '\u041a\u043e\u043c\u043f\u043e\u0437\u0438\u0442 + \u0444\u0430\u043d\u0435\u0440\u0430 + \u043c\u0456\u043d\u0432\u0430\u0442\u0430 + \u043f\u0435\u0440\u0444\u043e\u0440\u043e\u0432\u0430\u043d\u0438\u0439 MDF + \u0444\u0435\u0442\u0440 \u2014 \u043a\u043e\u0436\u0435\u043d \u0448\u0430\u0440 \u043f\u0440\u0430\u0446\u044e\u0454 \u043d\u0430 \u0437\u0432\u0443\u043a\u043e\u043f\u043e\u0433\u043b\u0438\u043d\u0430\u043d\u043d\u044f.',
   },
   {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-      </svg>
-    ),
-    title: 'Стрес та вигорання працівників',
-    text: 'Постійний шум open-space виснажує працівників, знижує концентрацію та продуктивність. Тиха кабіна дозволяє зосередитись, провести важливий дзвінок та відновити ресурс.',
-  },
-  {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-      </svg>
-    ),
-    title: 'Втрата концентрації та продуктивності',
-    text: 'Дослідження показують: після відволікання потрібно 23 хвилини, щоб повернутися до зосередженої роботи. Акустична кабіна усуває відволікання та підвищує ефективність команди.',
-  },
-]
-
-const advantages = [
-  {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 9.75L19.5 12m0 0l2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6l4.72-4.72a.75.75 0 011.28.531V19.94a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.506-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.395C2.806 8.757 3.63 8.25 4.51 8.25H6.75z" />
-      </svg>
-    ),
-    title: 'Звукоізоляція до 35 дБ',
-    text: 'Перетворює гучний open-space (~65 дБ) на тишу бібліотеки (~30 дБ). Сертифіковано за ISO 23351-1 -- ваші працівники отримують повну зосередженість.',
-  },
-  {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-    title: 'Сендвіч-панелі та триплекс',
-    text: 'Багатошарові стіни (композит + фанера + мінвата + перфорований MDF + фетр) та триплекс ударостійке скло. Естетичний дизайн для сучасних офісів.',
-  },
-  {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
-      </svg>
-    ),
     title: 'Smart Electronics',
-    text: 'Сенсорна панель керування, датчик присутності з автоввімкненням LED, датчик CO2. Працівники керують кабіною одним дотиком.',
+    desc: '\u0421\u0435\u043d\u0441\u043e\u0440\u043d\u0430 \u043f\u0430\u043d\u0435\u043b\u044c \u043a\u0435\u0440\u0443\u0432\u0430\u043d\u043d\u044f, \u0434\u0430\u0442\u0447\u0438\u043a\u0438 \u043f\u0440\u0438\u0441\u0443\u0442\u043d\u043e\u0441\u0442\u0456, CO\u2082 \u0442\u0430 \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u043d\u0435 \u043a\u0435\u0440\u0443\u0432\u0430\u043d\u043d\u044f.',
   },
   {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17l-5.384 3.18A1.106 1.106 0 014.5 17.28V6.72a1.106 1.106 0 011.536-1.07l5.384 3.18m0 0L16.92 5.65a1.106 1.106 0 011.536 1.07v10.56a1.106 1.106 0 01-1.536 1.07l-5.5-3.18z" />
-      </svg>
-    ),
-    title: 'Монтаж від 60 хвилин',
-    text: 'Модульна конструкція з патентованим дизайном. Збірка без будівельних робіт, пилу та інструментів. Жодних незручностей для працівників офісу.',
+    title: '\u041c\u043e\u0434\u0443\u043b\u044c\u043d\u0430 \u0437\u0431\u0456\u0440\u043a\u0430',
+    desc: '\u0412\u0456\u0434 60 \u0445\u0432\u0438\u043b\u0438\u043d, \u0431\u0435\u0437 \u0456\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u0456\u0432. \u041f\u0430\u0442\u0435\u043d\u0442\u043e\u0432\u0430\u043d\u0430 \u0441\u0438\u0441\u0442\u0435\u043c\u0430 \u043a\u0440\u0456\u043f\u043b\u0435\u043d\u043d\u044f.',
   },
   {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
-      </svg>
-    ),
-    title: 'Вентиляція до 600 м\u00b3/год',
-    text: 'Повне оновлення повітря кожні 2-3 хвилини. Шум вентилятора менше 30 дБ. Комфортний мікроклімат навіть при тривалих зустрічах.',
+    title: '\u0412\u0435\u043d\u0442\u0438\u043b\u044f\u0446\u0456\u044f',
+    desc: '\u0414\u043e 600 \u043c\u00b3/\u0433\u043e\u0434, \u0440\u0456\u0432\u0435\u043d\u044c \u0448\u0443\u043c\u0443 <30 \u0434\u0411. \u041f\u043e\u0432\u043d\u0435 \u043e\u043d\u043e\u0432\u043b\u0435\u043d\u043d\u044f \u043f\u043e\u0432\u0456\u0442\u0440\u044f \u043a\u043e\u0436\u043d\u0456 2-3 \u0445\u0432.',
   },
   {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
-      </svg>
-    ),
-    title: '21 колір та патентований дизайн',
-    text: '21 варіант кольорів зовнішніх панелей та 10+ дизайнерських варіантів інтер\'єру. Кабіна органічно впишеться у стиль будь-якого офісу чи коворкінгу.',
+    title: '21 \u043a\u043e\u043b\u0456\u0440 + \u0434\u0438\u0437\u0430\u0439\u043d',
+    desc: '\u041f\u0430\u0442\u0435\u043d\u0442\u043e\u0432\u0430\u043d\u0438\u0439 \u0434\u0438\u0437\u0430\u0439\u043d \u0437 21 \u0432\u0430\u0440\u0456\u0430\u043d\u0442\u043e\u043c \u043a\u043e\u043b\u044c\u043e\u0440\u0443 \u0434\u043b\u044f \u0431\u0443\u0434\u044c-\u044f\u043a\u043e\u0433\u043e \u0456\u043d\u0442\u0435\u0440\u2019\u0454\u0440\u0443.',
   },
 ]
 
-const steps = [
-  {
-    num: '01',
-    title: 'Консультація',
-    text: 'Безкоштовний аудит вашого офісу: оцінюємо рівень шуму, плануємо розміщення акустичної кабіни та підбираємо оптимальну модель.',
-  },
-  {
-    num: '02',
-    title: 'Тестування',
-    text: 'Організуємо демонстрацію кабіни у вашому офісі. Або запрошуємо до шоу-руму для особистого тестування.',
-  },
-  {
-    num: '03',
-    title: 'Замовлення',
-    text: 'Оформіть замовлення. Доставка 3-5 робочих днів по Україні та Європі (30+ країн). Кабіни застраховані на час транспортування.',
-  },
-  {
-    num: '04',
-    title: 'Встановлення',
-    text: 'Збірка від 60 хвилин (Solo) до 4 годин (Quartet) без будівельних робіт. Гарантія до 10 років. Працівники навіть не помітять монтажу.',
-  },
+const howItWorks = [
+  { step: 1, title: '\u041a\u043e\u043d\u0441\u0443\u043b\u044c\u0442\u0430\u0446\u0456\u044f', desc: '\u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0439 \u0430\u0443\u0434\u0438\u0442 \u0432\u0430\u0448\u043e\u0433\u043e \u043e\u0444\u0456\u0441\u0443 \u0442\u0430 \u043f\u0456\u0434\u0431\u0456\u0440 \u043e\u043f\u0442\u0438\u043c\u0430\u043b\u044c\u043d\u043e\u0457 \u043c\u043e\u0434\u0435\u043b\u0456.' },
+  { step: 2, title: '\u0422\u0435\u0441\u0442\u0443\u0432\u0430\u043d\u043d\u044f', desc: '\u0414\u0435\u043c\u043e\u043d\u0441\u0442\u0440\u0430\u0446\u0456\u044f \u0432 \u0448\u043e\u0443-\u0440\u0443\u043c\u0456 \u0430\u0431\u043e \u0443 \u0432\u0430\u0441 \u0432 \u043e\u0444\u0456\u0441\u0456.' },
+  { step: 3, title: '\u0417\u0430\u043c\u043e\u0432\u043b\u0435\u043d\u043d\u044f', desc: '\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 3\u20145 \u0440\u043e\u0431\u043e\u0447\u0438\u0445 \u0434\u043d\u0456\u0432 \u043f\u043e \u0423\u043a\u0440\u0430\u0457\u043d\u0456.' },
+  { step: 4, title: '\u041c\u043e\u043d\u0442\u0430\u0436', desc: '\u0417\u0431\u0456\u0440\u043a\u0430 \u0432\u0456\u0434 60 \u0445\u0432\u0438\u043b\u0438\u043d \u0431\u0435\u0437 \u043f\u0438\u043b\u0443 \u0442\u0430 \u0431\u0440\u0443\u0434\u0443.' },
 ]
 
-const reviews = [
+const testimonials = [
   {
-    name: 'Марина К.',
-    position: 'HR Director',
-    company: '',
-    city: '',
-    text: 'Встановили 3 кабіни Solo в open-space. Працівники нарешті можуть спокійно проводити дзвінки та відеоконференції. Кількість скарг на шум зменшилась на 90%.',
-    stars: 5,
+    name: '\u041c\u0430\u0440\u0438\u043d\u0430 \u041a.',
+    role: 'HR Director',
+    text: '\u0412\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u043b\u0438 3 \u043a\u0430\u0431\u0456\u043d\u0438 Solo \u0432 open-space. \u0421\u043a\u0430\u0440\u0433\u0438 \u043d\u0430 \u0448\u0443\u043c \u0437\u043c\u0435\u043d\u0448\u0438\u043b\u0438\u0441\u044c \u043d\u0430 90%.',
   },
   {
-    name: 'Дмитро С.',
-    position: 'Office Manager',
-    company: '',
-    city: '',
-    text: 'SilentBox Duet замінив нам переговорну кімнату. Зібрали за 3 години, без пилу та шуму. Тепер маємо додаткову зону для зустрічей з клієнтами.',
-    stars: 5,
+    name: '\u0414\u043c\u0438\u0442\u0440\u043e \u0421.',
+    role: 'Office Manager',
+    text: 'SilentBox Duet \u0437\u0430\u043c\u0456\u043d\u0438\u0432 \u043d\u0430\u043c \u043f\u0435\u0440\u0435\u0433\u043e\u0432\u043e\u0440\u043d\u0443. \u0417\u0456\u0431\u0440\u0430\u043b\u0438 \u0437\u0430 3 \u0433\u043e\u0434\u0438\u043d\u0438, \u0431\u0435\u0437 \u043f\u0438\u043b\u0443.',
   },
   {
-    name: 'Олексій В.',
-    position: 'IT Lead',
-    company: '',
-    city: '',
-    text: 'Як тімлід, постійно проводжу 1-on-1 з командою. Кабіна Duet Lite -- ідеальне рішення. Розмови конфіденційні, не заважаємо колегам.',
-    stars: 5,
+    name: '\u041e\u043b\u0435\u043a\u0441\u0456\u0439 \u041f.',
+    role: 'IT Lead',
+    text: '\u041a\u0430\u0431\u0456\u043d\u0430 Duet Lite \u2014 \u0456\u0434\u0435\u0430\u043b\u044c\u043d\u0435 \u0440\u0456\u0448\u0435\u043d\u043d\u044f \u0434\u043b\u044f 1-on-1. \u0420\u043e\u0437\u043c\u043e\u0432\u0438 \u043a\u043e\u043d\u0444\u0456\u0434\u0435\u043d\u0446\u0456\u0439\u043d\u0456.',
   },
 ]
 
 const faqItems = [
   {
-    q: 'Який рівень звукоізоляції забезпечують кабіни SilentBox в офісі?',
-    a: 'Кабіни Premium лінійки (Solo, Duet, Quartet) забезпечують звукоізоляцію до 35 дБ за стандартом ISO 23351-1. Це різниця між гучним open-space (~65 дБ) та тихою бібліотекою (~30 дБ). Кабіни Lite лінійки забезпечують 15-20 дБ зниження шуму.',
+    q: '\u042f\u043a\u0438\u0439 \u0440\u0456\u0432\u0435\u043d\u044c \u0437\u0432\u0443\u043a\u043e\u0456\u0437\u043e\u043b\u044f\u0446\u0456\u0457?',
+    a: '\u041b\u0456\u043d\u0456\u044f Premium \u0437\u0430\u0431\u0435\u0437\u043f\u0435\u0447\u0443\u0454 35 \u0434\u0411 \u0437\u0432\u0443\u043a\u043e\u0456\u0437\u043e\u043b\u044f\u0446\u0456\u0457 (\u0441\u0435\u0440\u0442\u0438\u0444\u0456\u043a\u043e\u0432\u0430\u043d\u043e ISO 23351-1), \u043b\u0456\u043d\u0456\u044f Lite \u2014 15\u201320 \u0434\u0411. \u0426\u0435 \u043f\u0435\u0440\u0435\u0442\u0432\u043e\u0440\u044e\u0454 \u0433\u0443\u0447\u043d\u0438\u0439 open-space (~65 \u0434\u0411) \u043d\u0430 \u0442\u0438\u0445\u0443 \u0437\u043e\u043d\u0443 (~30 \u0434\u0411).',
   },
   {
-    q: 'Як створити переговорну зону в open-space за допомогою SilentBox?',
-    a: 'Моделі Duet та Quartet ідеально підходять для створення переговорних зон. Панорамні скляні стіни зберігають візуальний зв\'язок з офісом, а звукоізоляція 35 дБ забезпечує повну конфіденційність для зустрічей.',
+    q: '\u042f\u043a \u0441\u0442\u0432\u043e\u0440\u0438\u0442\u0438 \u043f\u0435\u0440\u0435\u0433\u043e\u0432\u043e\u0440\u043d\u0443 \u0432 open-space?',
+    a: '\u041c\u043e\u0434\u0435\u043b\u0456 Duet (\u043d\u0430 2 \u043e\u0441\u043e\u0431\u0438) \u0442\u0430 Quartet (\u043d\u0430 4 \u043e\u0441\u043e\u0431\u0438) \u0437\u0430\u043c\u0456\u043d\u044e\u044e\u0442\u044c \u043f\u043e\u0432\u043d\u043e\u0446\u0456\u043d\u043d\u0443 \u043f\u0435\u0440\u0435\u0433\u043e\u0432\u043e\u0440\u043d\u0443 \u043a\u0456\u043c\u043d\u0430\u0442\u0443 \u0431\u0435\u0437 \u043f\u0435\u0440\u0435\u043f\u043b\u0430\u043d\u0443\u0432\u0430\u043d\u043d\u044f. \u0412\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u044e\u044e\u0442\u044c\u0441\u044f \u0437\u0430 \u043a\u0456\u043b\u044c\u043a\u0430 \u0433\u043e\u0434\u0438\u043d.',
   },
   {
-    q: 'Чи підійде акустична кабіна для невеликого офісу?',
-    a: 'Так, найкомпактніша модель Solo займає лише 1.2 м\u00b2. Модульна конструкція дозволяє встановити кабіну навіть у невеликому офісі. Кабіну можна переміщувати за потреби без будівельних робіт.',
+    q: '\u0427\u0438 \u043f\u0456\u0434\u0456\u0439\u0434\u0435 \u0434\u043b\u044f \u043c\u0430\u043b\u043e\u0433\u043e \u043e\u0444\u0456\u0441\u0443?',
+    a: 'SilentBox Solo \u0437\u0430\u0439\u043c\u0430\u0454 \u043b\u0438\u0448\u0435 1.2 \u043c\u00b2 \u2014 \u043c\u0435\u043d\u0448\u0435 \u0437\u0430 \u043e\u0434\u043d\u0435 \u0440\u043e\u0431\u043e\u0447\u0435 \u043c\u0456\u0441\u0446\u0435. \u0406\u0434\u0435\u0430\u043b\u044c\u043d\u043e \u043d\u0430\u0432\u0456\u0442\u044c \u0434\u043b\u044f \u043a\u043e\u043c\u043f\u0430\u043a\u0442\u043d\u0438\u0445 \u043e\u0444\u0456\u0441\u0456\u0432.',
   },
   {
-    q: 'Як працює вентиляція в акустичній кабіні?',
-    a: 'Кабіни оснащені примусовою вентиляцією з фільтрацією повітря. Premium модель Solo має продуктивність 250-300 м\u00b3/год з повним оновленням повітря кожні 2-3 хвилини. Рівень шуму вентилятора менше 30 дБ.',
+    q: '\u042f\u043a \u043f\u0440\u0430\u0446\u044e\u0454 \u0432\u0435\u043d\u0442\u0438\u043b\u044f\u0446\u0456\u044f?',
+    a: '\u041f\u0440\u0438\u043c\u0443\u0441\u043e\u0432\u0430 \u0432\u0435\u043d\u0442\u0438\u043b\u044f\u0446\u0456\u044f 250\u2013600 \u043c\u00b3/\u0433\u043e\u0434 (\u0437\u0430\u043b\u0435\u0436\u043d\u043e \u0432\u0456\u0434 \u043c\u043e\u0434\u0435\u043b\u0456), \u0440\u0456\u0432\u0435\u043d\u044c \u0448\u0443\u043c\u0443 <30 \u0434\u0411. \u041f\u043e\u0432\u043d\u0435 \u043e\u043d\u043e\u0432\u043b\u0435\u043d\u043d\u044f \u043f\u043e\u0432\u0456\u0442\u0440\u044f \u043a\u043e\u0436\u043d\u0456 2\u20133 \u0445\u0432\u0438\u043b\u0438\u043d\u0438.',
   },
   {
-    q: 'Скільки часу займає монтаж кабіни в офісі?',
-    a: 'SilentBox Solo збирається за 60 хвилин без жодних інструментів. Duet та Quartet збираються за 2-4 години. Не потрібні будівельні роботи, пил чи спеціальне обладнання -- ваш офіс працює у звичному режимі.',
+    q: '\u0421\u043a\u0456\u043b\u044c\u043a\u0438 \u0447\u0430\u0441\u0443 \u0437\u0430\u0439\u043c\u0430\u0454 \u043c\u043e\u043d\u0442\u0430\u0436?',
+    a: 'Solo \u2014 60 \u0445\u0432\u0438\u043b\u0438\u043d, Duet \u2014 2\u20134 \u0433\u043e\u0434\u0438\u043d\u0438, Quartet \u2014 \u0434\u043e 4 \u0433\u043e\u0434\u0438\u043d. \u0411\u0435\u0437 \u0456\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u0456\u0432, \u0431\u0435\u0437 \u043f\u0438\u043b\u0443 \u0442\u0430 \u0431\u0440\u0443\u0434\u0443.',
   },
   {
-    q: 'Яка гарантія на звукоізоляційні кабіни?',
-    a: 'Гарантія на конструкцію кабіни -- до 10 років. Окрема гарантія на електроніку та вентиляцію. Сервісне обслуговування по всій Україні.',
+    q: '\u042f\u043a\u0430 \u0433\u0430\u0440\u0430\u043d\u0442\u0456\u044f?',
+    a: '\u0414\u043e 10 \u0440\u043e\u043a\u0456\u0432 \u0433\u0430\u0440\u0430\u043d\u0442\u0456\u0457 \u043d\u0430 \u043a\u043e\u043d\u0441\u0442\u0440\u0443\u043a\u0446\u0456\u044e. \u0421\u0435\u0440\u0432\u0456\u0441\u043d\u0435 \u043e\u0431\u0441\u043b\u0443\u0433\u043e\u0432\u0443\u0432\u0430\u043d\u043d\u044f \u043f\u043e \u0432\u0441\u0456\u0439 \u0423\u043a\u0440\u0430\u0457\u043d\u0456.',
   },
   {
-    q: 'Чи можна орендувати акустичну кабіну для офісу?',
-    a: 'Так, ми пропонуємо оренду акустичних кабін від 3 місяців. Це зручне рішення для компаній, які хочуть протестувати кабіну перед покупкою або мають тимчасовий офіс.',
-  },
-  {
-    q: 'Чим відрізняються лінійки Premium та Lite?',
-    a: 'Premium лінійка (Solo, Duet, Quartet) забезпечує максимальну звукоізоляцію 35 дБ завдяки сендвіч-панелям та триплекс скло. Lite лінійка забезпечує 15-20 дБ з м\'якими акустичними панелями та SMART керуванням -- оптимальне рішення для стартапів та невеликих офісів.',
-  },
-  {
-    q: 'Яке рішення підходить для коворкінгу?',
-    a: 'Для коворкінгів рекомендуємо комбінацію Solo (телефонні кабіни для дзвінків) та Duet Lite (переговорні зони). Lite лінійка з SMART керуванням та 10+ варіантами дизайну оптимально поєднує ціну та функціональність.',
+    q: '\u0427\u0438\u043c \u0432\u0456\u0434\u0440\u0456\u0437\u043d\u044f\u044e\u0442\u044c\u0441\u044f Premium \u0442\u0430 Lite?',
+    a: 'Premium \u2014 35 \u0434\u0411 \u0456\u0437\u043e\u043b\u044f\u0446\u0456\u0457, \u0441\u0435\u043d\u0434\u0432\u0456\u0447-\u043f\u0430\u043d\u0435\u043b\u0456, Smart Electronics. Lite \u2014 15\u201320 \u0434\u0411, \u0430\u043a\u0443\u0441\u0442\u0438\u0447\u043d\u0456 \u043f\u0430\u043d\u0435\u043b\u0456, SMART \u0435\u043a\u0440\u0430\u043d. Lite \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u0456\u0448\u0430 \u0437\u0430 \u0446\u0456\u043d\u043e\u044e \u043f\u0440\u0438 \u0433\u0430\u0440\u043d\u0456\u0439 \u044f\u043a\u043e\u0441\u0442\u0456.',
   },
 ]
 
-const faqJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqItems.map((item) => ({
-    '@type': 'Question',
-    name: item.q,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: item.a,
-    },
-  })),
-}
-
-function FAQItem({ question, answer }: { question: string; answer: string }) {
-  const [open, setOpen] = useState(false)
-  return (
-    <div className="border-b" style={{ borderColor: 'var(--color-border)' }}>
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between py-5 text-left cursor-pointer bg-transparent border-none"
-      >
-        <span className="text-lg font-semibold pr-4" style={{ color: 'var(--color-primary)', fontFamily: "'Playfair Display', serif" }}>{question}</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className={`w-5 h-5 flex-shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="#1a5632"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      <div
-        className={`overflow-hidden transition-all duration-300 ${open ? 'max-h-96 pb-5' : 'max-h-0'}`}
-      >
-        <p className="leading-relaxed" style={{ color: 'var(--color-text-light)' }}>{answer}</p>
-      </div>
-    </div>
-  )
-}
+const logoCloud = ['Monobank', 'MHP', "L'Or\u00e9al", 'Siemens', 'PwC', 'MARS', '\u041d\u043e\u0432\u0430 \u041f\u043e\u0448\u0442\u0430', 'UN']
 
 export default function HomePage() {
+  const [activeLine, setActiveLine] = useState<ModelLine>('premium')
+  const [activeModelIndex, setActiveModelIndex] = useState(0)
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+
+  const lineModels = getModelsByLine(activeLine)
+  const activeModel: CabinModel | undefined = lineModels[activeModelIndex]
+
+  function handleLineChange(line: ModelLine) {
+    setActiveLine(line)
+    setActiveModelIndex(0)
+  }
+
   return (
-    <main>
-      {/* Schema.org FAQ JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-
-      {/* ===== HERO ===== */}
-      <section className="relative overflow-hidden" style={{ background: '#1a1a1a' }}>
-        {/* Subtle geometric pattern */}
-        <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c87941' fill-opacity='0.3'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }} />
-        <div className="container relative z-10 py-20 md:py-28">
-          {/* Badge */}
-          <div className="flex justify-center mb-6">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium" style={{ background: 'rgba(200, 121, 65, 0.15)', color: '#c87941' }}>
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
-              </svg>
-              Офіційний дилер в Україні
+    <>
+      {/* ===== 1. HERO ===== */}
+      <section style={{ background: '#1a1a1a', color: '#fff', position: 'relative', overflow: 'hidden' }}>
+        <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'center', minHeight: '85vh', paddingTop: '4rem', paddingBottom: '4rem' }}>
+          {/* Left */}
+          <div>
+            <span style={{
+              display: 'inline-block',
+              background: 'var(--color-accent)',
+              color: '#fff',
+              padding: '0.375rem 1rem',
+              borderRadius: '999px',
+              fontSize: '0.8125rem',
+              fontWeight: 600,
+              marginBottom: '1.5rem',
+              letterSpacing: '0.02em',
+            }}>
+              \u041e\u0444\u0456\u0446\u0456\u0439\u043d\u0438\u0439 \u0434\u0438\u043b\u0435\u0440 SilentBox \u0432 \u0423\u043a\u0440\u0430\u0457\u043d\u0456
             </span>
-          </div>
 
-          {/* Heading */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-center leading-tight mb-6" style={{ color: '#fffcf8', fontFamily: "'Playfair Display', serif" }}>
-            Тиша у вашому офісі
-          </h1>
+            <h1 style={{
+              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+              fontWeight: 700,
+              lineHeight: 1.1,
+              marginBottom: '1.25rem',
+              letterSpacing: '-0.02em',
+            }}>
+              \u0422\u0438\u0448\u0430 \u0443 \u0432\u0430\u0448\u043e\u043c\u0443 \u043e\u0444\u0456\u0441\u0456
+            </h1>
 
-          {/* Subtitle */}
-          <p className="text-lg md:text-xl text-center max-w-3xl mx-auto mb-10" style={{ color: 'rgba(255, 252, 248, 0.7)', fontFamily: "'Inter', sans-serif" }}>
-            Акустичні кабіни SilentBox для продуктивної роботи. Переговорні зони, телефонні кабіни та простори для зосередженої роботи в open-space. Звукоізоляція до 35 дБ, монтаж від 60 хвилин.
-          </p>
+            <p style={{
+              fontSize: '1.125rem',
+              color: '#b0ada8',
+              lineHeight: 1.7,
+              marginBottom: '1.5rem',
+              maxWidth: '500px',
+            }}>
+              \u0410\u043a\u0443\u0441\u0442\u0438\u0447\u043d\u0456 \u043a\u0430\u0431\u0456\u043d\u0438 \u0434\u043b\u044f \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0438\u0432\u043d\u043e\u0457 \u0440\u043e\u0431\u043e\u0442\u0438. \u0417\u0432\u0443\u043a\u043e\u0456\u0437\u043e\u043b\u044f\u0446\u0456\u044f \u0434\u043e 35 \u0434\u0411, \u043c\u043e\u043d\u0442\u0430\u0436 \u0432\u0456\u0434 60 \u0445\u0432\u0438\u043b\u0438\u043d.
+            </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            <Link href="/kataloh/" className="btn-primary text-lg px-8 py-4">
-              Обрати модель
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-            </Link>
-            <Link href="/zviazatysya/" className="inline-flex items-center gap-2 px-8 py-4 rounded-lg text-lg font-semibold border-2 transition-all no-underline" style={{ color: '#fffcf8', borderColor: 'rgba(255, 252, 248, 0.3)' }}>
-              Безкоштовний аудит офісу
-            </Link>
-          </div>
-
-          {/* Stat Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            {[
-              { value: '35 дБ', label: 'звукоізоляція (ISO 23351-1)' },
-              { value: 'від 60 хв', label: 'монтаж без інструментів' },
-              { value: '10 років', label: 'гарантія на конструкцію' },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center rounded-xl py-6 px-4" style={{ background: 'rgba(26, 86, 50, 0.15)', backdropFilter: 'blur(10px)' }}>
-                <div className="text-3xl font-extrabold mb-1" style={{ color: '#c87941', fontFamily: "'Playfair Display', serif" }}>{stat.value}</div>
-                <div className="text-sm uppercase tracking-wider" style={{ color: 'rgba(255, 252, 248, 0.6)' }}>{stat.label}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Photos gallery */}
-          <div className="grid grid-cols-3 gap-4 mt-14 max-w-4xl mx-auto">
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
-              <Image src="/images/cabins/office-solo.jpg" alt="Акустична кабіна SilentBox в офісі open-space" fill className="object-cover" sizes="33vw" />
-            </div>
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
-              <Image src="/images/cabins/office-duet.jpg" alt="Переговорна кабіна SilentBox в сучасному офісі" fill className="object-cover" sizes="33vw" />
-            </div>
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden">
-              <Image src="/images/cabins/office-quartet.jpg" alt="Міні-конференц-зал SilentBox в коворкінгу" fill className="object-cover" sizes="33vw" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== WHY OFFICES NEED SOUND INSULATION ===== */}
-      <section id="problemy" className="section">
-        <div className="container">
-          <h2 className="section-title">Чому офісам потрібна звукоізоляція</h2>
-          <p className="section-subtitle">
-            Шум в open-space -- головна причина втрати продуктивності та вигорання працівників. Акустична кабіна вирішує обидві проблеми.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {problems.map((p) => (
-              <div key={p.title} className="flex gap-5 p-6 rounded-xl hover:shadow-lg transition-shadow" style={{ border: '1px solid var(--color-border)', background: 'var(--color-bg)' }}>
-                <div className="flex-shrink-0 w-14 h-14 rounded-lg flex items-center justify-center" style={{ background: '#e8f5ee', color: '#1a5632' }}>
-                  {p.icon}
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--color-primary)', fontFamily: "'Playfair Display', serif" }}>{p.title}</h3>
-                  <p className="leading-relaxed" style={{ color: 'var(--color-text-light)' }}>{p.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== ADVANTAGES ===== */}
-      <section id="perevagy" className="section-alt">
-        <div className="container">
-          <h2 className="section-title">Переваги SilentBox для офісу</h2>
-          <p className="section-subtitle">
-            Патентована технологія сендвіч-панелей, сертифікація ISO 23351-1 та Smart Electronics -- все для продуктивності вашої команди.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {advantages.map((adv) => (
-              <div key={adv.title} className="text-center p-8 rounded-xl hover:shadow-lg transition-shadow" style={{ border: '1px solid var(--color-border)', background: '#fffcf8' }}>
-                <div className="w-14 h-14 mx-auto mb-5 rounded-xl flex items-center justify-center" style={{ background: '#e8f5ee', color: '#1a5632' }}>
-                  {adv.icon}
-                </div>
-                <h3 className="text-lg font-bold mb-3" style={{ color: 'var(--color-primary)', fontFamily: "'Playfair Display', serif" }}>{adv.title}</h3>
-                <p className="leading-relaxed" style={{ color: 'var(--color-text-light)' }}>{adv.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== MODELS ===== */}
-      <section id="modeli" className="section">
-        <div className="container">
-          <h2 className="section-title">Оберіть акустичну кабіну для вашого офісу</h2>
-          <p className="section-subtitle">
-            7 моделей у трьох лінійках: Premium (35 дБ), Lite (15-20 дБ) та Pro. Від компактної телефонної кабіни до повноцінної переговорної.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {models.map((model) => {
-              const lineBadgeColors: Record<string, { bg: string; text: string }> = {
-                Premium: { bg: '#e8f5ee', text: '#1a5632' },
-                Lite: { bg: '#fdf6e3', text: '#9a7b2e' },
-                Pro: { bg: '#fbeee5', text: '#8b4513' },
-              }
-              const badge = lineBadgeColors[model.line] || lineBadgeColors.Premium
-
-              return (
-                <div key={model.slug} className="rounded-xl overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1 flex flex-col" style={{ background: '#fffcf8', border: '1px solid var(--color-border)' }}>
-                  {/* Product render */}
-                  {modelImages[model.slug] && (
-                    <div className="relative w-full aspect-[4/3]" style={{ background: '#f7f3ee' }}>
-                      <Image
-                        src={modelImages[model.slug]}
-                        alt={`Акустична кабіна SilentBox ${model.name} для офісу`}
-                        fill
-                        className="object-contain p-4"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      />
-                    </div>
-                  )}
-                  {/* Card header */}
-                  <div className="p-6 pb-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-xl font-bold" style={{ color: 'var(--color-primary)', fontFamily: "'Playfair Display', serif" }}>SilentBox {model.name}</h3>
-                      <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ background: badge.bg, color: badge.text }}>
-                        {model.line}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-3 mb-1">
-                      <span className="text-sm" style={{ color: 'var(--color-text-light)' }}>{model.capacity}</span>
-                    </div>
-                    <p className="text-sm mb-1" style={{ color: 'var(--color-text-light)' }}>{model.size}</p>
-                    <p className="mt-3 leading-relaxed" style={{ color: 'var(--color-text)' }}>{model.description}</p>
-                  </div>
-                  {/* Specs */}
-                  <div className="px-6 pb-4 mt-auto">
-                    <div className="flex flex-wrap gap-2 mb-5">
-                      {model.specs.map((spec) => (
-                        <span key={spec} className="text-xs font-medium px-3 py-1.5 rounded-full" style={{ background: 'var(--color-bg-alt)', color: 'var(--color-text-light)' }}>
-                          {spec}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="flex gap-3">
-                      <Link href="/zviazatysya/" className="btn-primary text-sm px-4 py-2.5 flex-1 justify-center">
-                        Замовити
-                      </Link>
-                      <Link href={`/kataloh/${model.slug}/`} className="btn-outline text-sm px-4 py-2.5">
-                        Детальніше
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== PROCESS ===== */}
-      <section id="process" className="section-alt">
-        <div className="container">
-          <h2 className="section-title">Як замовити акустичну кабіну для офісу</h2>
-          <p className="section-subtitle">
-            Чотири простих кроки від консультації до готової акустичної кабіни у вашому офісі.
-          </p>
-          <div className="relative max-w-4xl mx-auto">
-            {/* Connecting line (desktop) */}
-            <div className="hidden md:block absolute top-12 left-[calc(12.5%+28px)] right-[calc(12.5%+28px)] h-0.5" style={{ background: 'var(--color-border)' }} />
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              {steps.map((step) => (
-                <div key={step.num} className="relative text-center">
-                  <div className="w-14 h-14 mx-auto mb-5 rounded-full flex items-center justify-center text-white font-bold text-lg relative z-10" style={{ background: '#1a5632' }}>
-                    {step.num}
-                  </div>
-                  <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--color-primary)', fontFamily: "'Playfair Display', serif" }}>{step.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-light)' }}>{step.text}</p>
-                </div>
+            {/* Trust badges */}
+            <div style={{ display: 'flex', gap: '1.25rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
+              {['\u2713 ISO 23351-1', '\u2713 10 \u0440\u043e\u043a\u0456\u0432 \u0433\u0430\u0440\u0430\u043d\u0442\u0456\u044f', '\u2713 30+ \u043a\u0440\u0430\u0457\u043d'].map((badge) => (
+                <span key={badge} style={{ fontSize: '0.8125rem', color: '#8fbc8f', fontWeight: 500 }}>
+                  {badge}
+                </span>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ===== REVIEWS ===== */}
-      <section className="section">
-        <div className="container">
-          <h2 className="section-title">Що кажуть офіси та компанії</h2>
-          <p className="section-subtitle">
-            Реальні відгуки працівників та менеджерів, які обрали акустичні кабіни SilentBox для своїх офісів.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {reviews.map((review) => (
-              <div key={review.name} className="p-8 rounded-xl hover:shadow-lg transition-shadow flex flex-col" style={{ border: '1px solid var(--color-border)', background: '#fffcf8' }}>
-                {/* Stars */}
-                <div className="flex gap-1 mb-4">
-                  {Array.from({ length: review.stars }).map((_, i) => (
-                    <svg key={i} xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="#c87941" stroke="none">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                    </svg>
-                  ))}
-                </div>
-                {/* Text */}
-                <p className="leading-relaxed mb-6 flex-1" style={{ color: 'var(--color-text)' }}>&laquo;{review.text}&raquo;</p>
-                {/* Author */}
-                <div className="pt-4" style={{ borderTop: '1px solid var(--color-border)' }}>
-                  <div className="font-semibold" style={{ color: 'var(--color-primary)' }}>{review.name}</div>
-                  <div className="text-sm" style={{ color: 'var(--color-text-light)' }}>{review.position}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== FAQ ===== */}
-      <section id="faq" className="section-alt">
-        <div className="container">
-          <h2 className="section-title">Часті запитання</h2>
-          <p className="section-subtitle">
-            Відповіді на найпоширеніші питання про акустичні кабіни SilentBox для офісу та open-space.
-          </p>
-          <div className="max-w-3xl mx-auto">
-            {faqItems.map((item) => (
-              <FAQItem key={item.q} question={item.q} answer={item.a} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ===== ABOUT GRAND CATERING ===== */}
-      <section className="section" style={{ background: 'var(--color-warm)' }}>
-        <div className="container" style={{ maxWidth: '900px' }}>
-          <div className="text-center mb-10">
-            <span
-              className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold mb-5"
-              style={{ background: 'var(--color-accent-light)', color: 'var(--color-accent)', fontFamily: "'Inter', sans-serif" }}
-            >
-              Про Grand Catering
-            </span>
-            <h2 className="section-title">Кейтеринг, який цінує тишу</h2>
-          </div>
-          <div
-            className="rounded-2xl p-8 md:p-12"
-            style={{ background: 'var(--color-bg)', border: '1px solid var(--color-border)' }}
-          >
-            <p className="text-lg leading-relaxed mb-6" style={{ color: 'var(--color-text)' }}>
-              <strong>Grand Catering</strong> — це кейтеринг-сервіс та офіційний дилер акустичних кабін SilentBox в Україні.
-              Організовуючи заходи для бізнесу, ми знаємо з власного досвіду: успішні переговори потребують тиші, а продуктивна робота — комфортного середовища.
-            </p>
-            <p className="text-base leading-relaxed mb-6" style={{ color: 'var(--color-text-light)' }}>
-              Саме тому ми стали дилером SilentBox — ми бачимо, як наші клієнти з ресторанів, готелів та офісів страждають від шуму.
-              Тепер ми допомагаємо їм вирішити цю проблему: від аудиту приміщення до монтажу акустичної кабіни.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6" style={{ borderTop: '1px solid var(--color-border)' }}>
-              <div className="text-center">
-                <div className="text-2xl font-bold mb-1" style={{ color: 'var(--color-accent)', fontFamily: "'Playfair Display', serif" }}>Кейтеринг</div>
-                <div className="text-sm" style={{ color: 'var(--color-text-light)' }}>Організація заходів для бізнесу</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold mb-1" style={{ color: 'var(--color-cta)', fontFamily: "'Playfair Display', serif" }}>Дилер SilentBox</div>
-                <div className="text-sm" style={{ color: 'var(--color-text-light)' }}>Офіційний представник в Україні</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold mb-1" style={{ color: 'var(--color-accent)', fontFamily: "'Playfair Display', serif" }}>Під ключ</div>
-                <div className="text-sm" style={{ color: 'var(--color-text-light)' }}>Аудит, доставка, монтаж, сервіс</div>
-              </div>
+            {/* CTAs */}
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <Link href="/kataloh/" className="btn-primary">
+                \u041e\u0431\u0440\u0430\u0442\u0438 \u043c\u043e\u0434\u0435\u043b\u044c
+              </Link>
+              <Link
+                href="/zviazatysya/"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.875rem 2rem',
+                  background: 'transparent',
+                  color: '#fff',
+                  fontFamily: "'Inter', sans-serif",
+                  fontWeight: 600,
+                  borderRadius: '0.375rem',
+                  border: '1.5px solid rgba(255,255,255,0.3)',
+                  transition: 'all 0.25s ease',
+                  textDecoration: 'none',
+                  fontSize: '0.9375rem',
+                }}
+              >
+                \u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0439 \u0430\u0443\u0434\u0438\u0442
+              </Link>
             </div>
           </div>
+
+          {/* Right — decorative placeholder */}
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(26,86,50,0.3) 0%, rgba(200,121,65,0.15) 100%)',
+            borderRadius: '1.5rem',
+            minHeight: '450px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'relative',
+            overflow: 'hidden',
+          }}>
+            <div style={{
+              width: '200px',
+              height: '300px',
+              border: '2px solid rgba(255,255,255,0.15)',
+              borderRadius: '1rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column',
+              gap: '0.5rem',
+            }}>
+              <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(26,86,50,0.5)' }} />
+              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.875rem', fontWeight: 500 }}>SilentBox</span>
+            </div>
+            {/* decorative circles */}
+            <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '200px', height: '200px', borderRadius: '50%', background: 'rgba(26,86,50,0.15)' }} />
+            <div style={{ position: 'absolute', bottom: '-30px', left: '-30px', width: '150px', height: '150px', borderRadius: '50%', background: 'rgba(200,121,65,0.1)' }} />
+          </div>
+        </div>
+
+        {/* Stats row */}
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', background: 'rgba(0,0,0,0.2)' }}>
+          <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', padding: '2rem 1rem' }}>
+            {[
+              { value: '35 \u0434\u0411', label: '\u0417\u0432\u0443\u043a\u043e\u0456\u0437\u043e\u043b\u044f\u0446\u0456\u044f' },
+              { value: '\u0432\u0456\u0434 60 \u0445\u0432', label: '\u041c\u043e\u043d\u0442\u0430\u0436' },
+              { value: '10 \u0440\u043e\u043a\u0456\u0432', label: '\u0413\u0430\u0440\u0430\u043d\u0442\u0456\u044f' },
+              { value: '30+', label: '\u041a\u0440\u0430\u0457\u043d \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0438' },
+            ].map((s) => (
+              <div key={s.label} style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#fff' }}>{s.value}</div>
+                <div style={{ fontSize: '0.8125rem', color: '#8a8680', marginTop: '0.25rem' }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ===== CTA BLOCK ===== */}
-      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #1a5632 0%, #0d3a1f 100%)' }}>
-        <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E")`,
-        }} />
-        <div className="container relative z-10 py-20 text-center">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
-            Замовте безкоштовний аудит вашого офісу
+      {/* ===== 2. PRODUCT SHOWCASE (Tab Switcher) ===== */}
+      <section className="section" style={{ background: 'var(--color-bg)' }}>
+        <div className="container">
+          <h2 className="section-title">\u041c\u043e\u0434\u0435\u043b\u0456 SilentBox</h2>
+          <p className="section-subtitle">\u041e\u0431\u0435\u0440\u0456\u0442\u044c \u043b\u0456\u043d\u0456\u0439\u043a\u0443 \u0442\u0430 \u043c\u043e\u0434\u0435\u043b\u044c, \u044f\u043a\u0430 \u043f\u0456\u0434\u0445\u043e\u0434\u0438\u0442\u044c \u0434\u043b\u044f \u0432\u0430\u0448\u043e\u0433\u043e \u043e\u0444\u0456\u0441\u0443</p>
+
+          {/* Line tabs */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
+            {lineTabs.map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => handleLineChange(tab.key)}
+                style={{
+                  padding: '0.625rem 1.5rem',
+                  borderRadius: '999px',
+                  border: activeLine === tab.key ? 'none' : '1.5px solid var(--color-border)',
+                  background: activeLine === tab.key ? lineColors[tab.key] : 'transparent',
+                  color: activeLine === tab.key ? '#fff' : 'var(--color-text)',
+                  fontWeight: 600,
+                  fontSize: '0.875rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  fontFamily: "'Inter', sans-serif",
+                }}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Model sub-tabs (if more than 1 model in line) */}
+          {lineModels.length > 1 && (
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
+              {lineModels.map((m, i) => (
+                <button
+                  key={m.slug}
+                  onClick={() => setActiveModelIndex(i)}
+                  style={{
+                    padding: '0.5rem 1.25rem',
+                    borderRadius: '0.375rem',
+                    border: activeModelIndex === i ? `2px solid ${lineColors[activeLine]}` : '1px solid var(--color-border)',
+                    background: activeModelIndex === i ? 'var(--color-accent-light)' : 'transparent',
+                    color: activeModelIndex === i ? lineColors[activeLine] : 'var(--color-text-light)',
+                    fontWeight: 500,
+                    fontSize: '0.8125rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    fontFamily: "'Inter', sans-serif",
+                  }}
+                >
+                  {m.name}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Active model card */}
+          {activeModel && (
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '0',
+              background: '#fff',
+              borderRadius: '1rem',
+              overflow: 'hidden',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
+              border: '1px solid var(--color-border)',
+            }}>
+              {/* Left — specs */}
+              <div style={{ padding: '2.5rem' }}>
+                <span style={{
+                  display: 'inline-block',
+                  background: lineColors[activeModel.line],
+                  color: '#fff',
+                  padding: '0.25rem 0.75rem',
+                  borderRadius: '999px',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  marginBottom: '1rem',
+                }}>
+                  {activeModel.lineLabel}
+                </span>
+                <h3 style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: '1.75rem',
+                  fontWeight: 700,
+                  marginBottom: '0.5rem',
+                  color: 'var(--color-text)',
+                }}>
+                  {activeModel.fullName}
+                </h3>
+                <p style={{ color: 'var(--color-text-light)', fontSize: '0.9375rem', marginBottom: '1.5rem' }}>
+                  {activeModel.feature}
+                </p>
+
+                {/* Specs grid */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
+                  {[
+                    { label: '\u0417\u0432\u0443\u043a\u043e\u0456\u0437\u043e\u043b\u044f\u0446\u0456\u044f', value: activeModel.soundInsulation },
+                    { label: '\u041c\u0456\u0441\u0442\u043a\u0456\u0441\u0442\u044c', value: activeModel.capacity },
+                    { label: '\u0420\u043e\u0437\u043c\u0456\u0440\u0438', value: activeModel.dimensions },
+                    { label: '\u0412\u0430\u0433\u0430', value: activeModel.weight },
+                  ].map((spec) => (
+                    <div key={spec.label}>
+                      <div style={{ fontSize: '0.6875rem', textTransform: 'uppercase', color: 'var(--color-text-light)', letterSpacing: '0.08em', marginBottom: '0.25rem' }}>
+                        {spec.label}
+                      </div>
+                      <div style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--color-text)' }}>
+                        {spec.value}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {activeModel.price && (
+                  <div style={{ fontSize: '1.5rem', fontWeight: 700, color: lineColors[activeModel.line], marginBottom: '1.5rem' }}>
+                    {activeModel.price}
+                  </div>
+                )}
+
+                <Link href={`/kataloh/${activeModel.slug}/`} className="btn-primary" style={{ display: 'inline-flex' }}>
+                  \u0414\u0435\u0442\u0430\u043b\u044c\u043d\u0456\u0448\u0435
+                </Link>
+              </div>
+
+              {/* Right — decorative placeholder */}
+              <div style={{
+                background: `linear-gradient(135deg, ${lineColors[activeModel.line]}22 0%, ${lineColors[activeModel.line]}08 100%)`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+              }}>
+                <div style={{
+                  fontSize: '3rem',
+                  fontFamily: "'Playfair Display', serif",
+                  fontWeight: 700,
+                  color: `${lineColors[activeModel.line]}25`,
+                  textAlign: 'center',
+                  lineHeight: 1.2,
+                }}>
+                  {activeModel.name}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ===== 3. PAIN POINTS ===== */}
+      <section style={{ background: '#1a1a1a', color: '#fff', padding: '6rem 1rem' }}>
+        <div className="container">
+          <h2 style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: '2.25rem',
+            fontWeight: 700,
+            textAlign: 'center',
+            marginBottom: '1rem',
+            color: '#fff',
+          }}>
+            \u0427\u043e\u043c\u0443 open-space \u0432\u0431\u0438\u0432\u0430\u0454 \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0438\u0432\u043d\u0456\u0441\u0442\u044c
           </h2>
-          <p className="text-lg max-w-2xl mx-auto mb-10" style={{ color: 'rgba(255,255,255,0.7)' }}>
-            Наші спеціалісти оцінять рівень шуму, запропонують оптимальну модель акустичної кабіни для вашого офісу та організують безкоштовне тестування.
+          <p style={{ textAlign: 'center', color: '#8a8680', marginBottom: '3.5rem', maxWidth: '500px', margin: '0 auto 3.5rem' }}>
+            \u0414\u043e\u0441\u043b\u0456\u0434\u0436\u0435\u043d\u043d\u044f \u043f\u043e\u043a\u0430\u0437\u0443\u044e\u0442\u044c: \u0448\u0443\u043c \u0443 \u043e\u0444\u0456\u0441\u0456 \u043a\u043e\u0448\u0442\u0443\u0454 \u043a\u043e\u043c\u043f\u0430\u043d\u0456\u044f\u043c \u0442\u0438\u0441\u044f\u0447\u0456 \u0433\u043e\u0434\u0438\u043d \u043f\u0440\u043e\u0434\u0443\u043a\u0442\u0438\u0432\u043d\u043e\u0441\u0442\u0456
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/zviazatysya/" className="btn-primary text-lg px-8 py-4">
-              Безкоштовний аудит
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>
+            {painPoints.map((p) => (
+              <div key={p.title} style={{
+                background: 'rgba(255,255,255,0.05)',
+                borderRadius: '0.75rem',
+                padding: '2rem',
+                border: '1px solid rgba(255,255,255,0.08)',
+              }}>
+                <div style={{ color: 'var(--color-accent)', marginBottom: '1rem' }}>{p.icon}</div>
+                <div style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-cta)', marginBottom: '0.5rem', fontFamily: "'Playfair Display', serif" }}>
+                  {p.stat}
+                </div>
+                <h3 style={{ fontSize: '1.125rem', fontWeight: 600, marginBottom: '0.5rem', fontFamily: "'Inter', sans-serif", color: '#fff' }}>
+                  {p.title}
+                </h3>
+                <p style={{ fontSize: '0.875rem', color: '#8a8680', lineHeight: 1.6 }}>
+                  {p.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 4. TECHNOLOGY FEATURES ===== */}
+      <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
+        <div className="container">
+          <h2 className="section-title">\u0422\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0456\u044f SilentBox</h2>
+          <p className="section-subtitle">\u041a\u043e\u0436\u043d\u0430 \u043a\u0430\u0431\u0456\u043d\u0430 \u2014 \u0446\u0435 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442 \u0456\u043d\u0436\u0435\u043d\u0435\u0440\u043d\u0438\u0445 \u0440\u0456\u0448\u0435\u043d\u044c \u0442\u0430 \u043f\u0430\u0442\u0435\u043d\u0442\u043e\u0432\u0430\u043d\u0438\u0445 \u0442\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0456\u0439</p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+            {techFeatures.map((f) => (
+              <div key={f.title} style={{
+                background: '#fff',
+                borderRadius: '0.75rem',
+                padding: '2rem',
+                border: '1px solid var(--color-border)',
+              }}>
+                <div style={{
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: '0.5rem',
+                  background: '#1a1a1a',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '1.25rem',
+                }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8fbc8f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: '1.0625rem', fontWeight: 600, marginBottom: '0.5rem', fontFamily: "'Inter', sans-serif", color: 'var(--color-text)' }}>
+                  {f.title}
+                </h3>
+                <p style={{ fontSize: '0.875rem', color: 'var(--color-text-light)', lineHeight: 1.6 }}>
+                  {f.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 5. STATS SECTION ===== */}
+      <section style={{ background: 'var(--color-accent)', color: '#fff', padding: '5rem 1rem' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem', textAlign: 'center' }}>
+            {[
+              { value: '35 \u0434\u0411', label: '\u0417\u0432\u0443\u043a\u043e\u0456\u0437\u043e\u043b\u044f\u0446\u0456\u044f' },
+              { value: '60 \u0445\u0432', label: '\u0417\u0431\u0456\u0440\u043a\u0430 Solo' },
+              { value: '10 \u0440\u043e\u043a\u0456\u0432', label: '\u0413\u0430\u0440\u0430\u043d\u0442\u0456\u044f' },
+              { value: '30+', label: '\u041a\u0440\u0430\u0457\u043d \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0438' },
+            ].map((s) => (
+              <div key={s.label}>
+                <div style={{
+                  fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
+                  fontWeight: 800,
+                  fontFamily: "'Playfair Display', serif",
+                  lineHeight: 1,
+                  marginBottom: '0.5rem',
+                }}>
+                  {s.value}
+                </div>
+                <div style={{ fontSize: '0.875rem', opacity: 0.75, fontWeight: 500 }}>{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 6. LOGO CLOUD ===== */}
+      <section style={{ borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', padding: '2.5rem 1rem', background: 'var(--color-bg)' }}>
+        <div className="container">
+          <p style={{ textAlign: 'center', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--color-text-light)', marginBottom: '1.25rem', fontWeight: 600 }}>
+            \u041d\u0430\u043c \u0434\u043e\u0432\u0456\u0440\u044f\u044e\u0442\u044c
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2.5rem', flexWrap: 'wrap' }}>
+            {logoCloud.map((name) => (
+              <span key={name} style={{ fontSize: '0.9375rem', color: '#999', fontWeight: 600, letterSpacing: '0.02em' }}>
+                {name}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 7. HOW IT WORKS ===== */}
+      <section className="section" style={{ background: 'var(--color-bg)' }}>
+        <div className="container">
+          <h2 className="section-title">\u042f\u043a \u0446\u0435 \u043f\u0440\u0430\u0446\u044e\u0454</h2>
+          <p className="section-subtitle">\u0412\u0456\u0434 \u043a\u043e\u043d\u0441\u0443\u043b\u044c\u0442\u0430\u0446\u0456\u0457 \u0434\u043e \u0433\u043e\u0442\u043e\u0432\u043e\u0457 \u043a\u0430\u0431\u0456\u043d\u0438 \u2014 4 \u043f\u0440\u043e\u0441\u0442\u0438\u0445 \u043a\u0440\u043e\u043a\u0438</p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem' }}>
+            {howItWorks.map((item) => (
+              <div key={item.step} style={{ textAlign: 'center' }}>
+                <div style={{
+                  width: '56px',
+                  height: '56px',
+                  borderRadius: '50%',
+                  background: 'var(--color-cta)',
+                  color: '#fff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 700,
+                  fontSize: '1.25rem',
+                  margin: '0 auto 1.25rem',
+                  fontFamily: "'Playfair Display', serif",
+                }}>
+                  {item.step}
+                </div>
+                <h3 style={{ fontSize: '1.0625rem', fontWeight: 600, marginBottom: '0.5rem', fontFamily: "'Inter', sans-serif", color: 'var(--color-text)' }}>
+                  {item.title}
+                </h3>
+                <p style={{ fontSize: '0.875rem', color: 'var(--color-text-light)', lineHeight: 1.6 }}>
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 8. TESTIMONIALS ===== */}
+      <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
+        <div className="container">
+          <h2 className="section-title">\u0412\u0456\u0434\u0433\u0443\u043a\u0438 \u043a\u043b\u0456\u0454\u043d\u0442\u0456\u0432</h2>
+          <p className="section-subtitle">\u0429\u043e \u043a\u0430\u0436\u0443\u0442\u044c \u043a\u043e\u043c\u043f\u0430\u043d\u0456\u0457, \u044f\u043a\u0456 \u0432\u0436\u0435 \u0432\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u043b\u0438 SilentBox</p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>
+            {testimonials.map((t) => (
+              <div key={t.name} style={{
+                background: '#fff',
+                borderRadius: '0.75rem',
+                padding: '2rem',
+                border: '1px solid var(--color-border)',
+                position: 'relative',
+              }}>
+                {/* Decorative quote */}
+                <div style={{
+                  position: 'absolute',
+                  top: '1.25rem',
+                  right: '1.5rem',
+                  fontSize: '3rem',
+                  lineHeight: 1,
+                  color: 'var(--color-accent-light)',
+                  fontFamily: "'Playfair Display', serif",
+                  fontWeight: 700,
+                }}>
+                  &ldquo;
+                </div>
+                <p style={{ fontSize: '0.9375rem', lineHeight: 1.7, color: 'var(--color-text)', marginBottom: '1.25rem', paddingRight: '2rem' }}>
+                  &ldquo;{t.text}&rdquo;
+                </p>
+                <div>
+                  <div style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--color-text)' }}>{t.name}</div>
+                  <div style={{ fontSize: '0.8125rem', color: 'var(--color-text-light)' }}>{t.role}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 9. PACKAGE DEALS ===== */}
+      <section className="section" style={{ background: 'var(--color-bg)' }}>
+        <div className="container">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '1rem' }}>
+            <h2 className="section-title" style={{ marginBottom: 0 }}>\u041f\u0430\u043a\u0435\u0442\u043d\u0456 \u043f\u0440\u043e\u043f\u043e\u0437\u0438\u0446\u0456\u0457</h2>
+            <span style={{
+              background: 'var(--color-cta)',
+              color: '#fff',
+              padding: '0.25rem 0.75rem',
+              borderRadius: '999px',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              whiteSpace: 'nowrap',
+            }}>
+              \u0417\u043d\u0438\u0436\u043a\u0430 10%
+            </span>
+          </div>
+          <p className="section-subtitle">\u0417\u0430\u043c\u043e\u0432\u0442\u0435 \u043a\u043e\u043c\u043f\u043b\u0435\u043a\u0442 \u0442\u0430 \u0437\u0435\u043a\u043e\u043d\u043e\u043c\u0442\u0435</p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>
+            {/* Hybrid Set */}
+            <div style={{
+              background: '#fff',
+              borderRadius: '0.75rem',
+              padding: '2.5rem',
+              border: '2px solid var(--color-cta)',
+              position: 'relative',
+            }}>
+              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--color-text)' }}>
+                Hybrid Set
+              </h3>
+              <p style={{ color: 'var(--color-text-light)', fontSize: '0.9375rem', marginBottom: '1.5rem' }}>
+                Solo + Duet \u2014 \u0456\u0434\u0435\u0430\u043b\u044c\u043d\u0438\u0439 \u0441\u0442\u0430\u0440\u0442\u043e\u0432\u0438\u0439 \u043a\u043e\u043c\u043f\u043b\u0435\u043a\u0442
+              </p>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-accent)', fontFamily: "'Playfair Display', serif" }}>
+                  &euro;14,290
+                </span>
+                <span style={{ fontSize: '1rem', color: '#999', textDecoration: 'line-through' }}>
+                  &euro;15,880
+                </span>
+              </div>
+              <p style={{ fontSize: '0.8125rem', color: 'var(--color-cta)', fontWeight: 600, marginBottom: '1.5rem' }}>
+                \u0415\u043a\u043e\u043d\u043e\u043c\u0456\u044f: &euro;1,590
+              </p>
+              <Link href="/zviazatysya/" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+                \u0417\u0430\u043c\u043e\u0432\u0438\u0442\u0438
+              </Link>
+            </div>
+
+            {/* Team Hub */}
+            <div style={{
+              background: '#fff',
+              borderRadius: '0.75rem',
+              padding: '2.5rem',
+              border: '2px solid var(--color-accent)',
+              position: 'relative',
+            }}>
+              <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--color-text)' }}>
+                Team Hub
+              </h3>
+              <p style={{ color: 'var(--color-text-light)', fontSize: '0.9375rem', marginBottom: '1.5rem' }}>
+                Duet + WorkPod \u2014 \u043f\u0435\u0440\u0435\u0433\u043e\u0432\u043e\u0440\u043d\u0430 + \u0440\u043e\u0431\u043e\u0447\u0435 \u043c\u0456\u0441\u0446\u0435
+              </p>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                <span style={{ fontSize: '2rem', fontWeight: 700, color: 'var(--color-accent)', fontFamily: "'Playfair Display', serif" }}>
+                  ~&euro;14,560
+                </span>
+                <span style={{ fontSize: '1rem', color: '#999', textDecoration: 'line-through' }}>
+                  ~&euro;16,180
+                </span>
+              </div>
+              <p style={{ fontSize: '0.8125rem', color: 'var(--color-cta)', fontWeight: 600, marginBottom: '1.5rem' }}>
+                \u0415\u043a\u043e\u043d\u043e\u043c\u0456\u044f: ~&euro;1,620
+              </p>
+              <Link href="/zviazatysya/" className="btn-green" style={{ width: '100%', justifyContent: 'center' }}>
+                \u0417\u0430\u043c\u043e\u0432\u0438\u0442\u0438
+              </Link>
+            </div>
+          </div>
+
+          <p style={{ textAlign: 'center', fontSize: '0.8125rem', color: 'var(--color-text-light)', marginTop: '1.5rem' }}>
+            \u0414\u0456\u0454 \u0434\u043e 31 \u0442\u0440\u0430\u0432\u043d\u044f 2026. \u0426\u0456\u043d\u0438 \u0431\u0435\u0437 \u041f\u0414\u0412 \u0442\u0430 \u0434\u043e\u0441\u0442\u0430\u0432\u043a\u0438.
+          </p>
+        </div>
+      </section>
+
+      {/* ===== 10. FAQ ===== */}
+      <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
+        <div className="container" style={{ maxWidth: '800px' }}>
+          <h2 className="section-title">\u0427\u0430\u0441\u0442\u0456 \u043f\u0438\u0442\u0430\u043d\u043d\u044f</h2>
+          <p className="section-subtitle">\u0412\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0456 \u043d\u0430 \u043d\u0430\u0439\u0431\u0456\u043b\u044c\u0448 \u043f\u043e\u043f\u0443\u043b\u044f\u0440\u043d\u0456 \u043f\u0438\u0442\u0430\u043d\u043d\u044f \u043f\u0440\u043e \u0430\u043a\u0443\u0441\u0442\u0438\u0447\u043d\u0456 \u043a\u0430\u0431\u0456\u043d\u0438</p>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+            {faqItems.map((item, i) => (
+              <div key={i} style={{ borderBottom: '1px solid var(--color-border)' }}>
+                <button
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  style={{
+                    width: '100%',
+                    padding: '1.25rem 0',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '0.9375rem',
+                    fontWeight: 600,
+                    color: 'var(--color-text)',
+                    textAlign: 'left',
+                  }}
+                >
+                  <span>{item.q}</span>
+                  <span style={{
+                    fontSize: '1.25rem',
+                    fontWeight: 300,
+                    transition: 'transform 0.2s ease',
+                    transform: openFaq === i ? 'rotate(45deg)' : 'none',
+                    color: 'var(--color-text-light)',
+                    flexShrink: 0,
+                    marginLeft: '1rem',
+                  }}>
+                    +
+                  </span>
+                </button>
+                {openFaq === i && (
+                  <div style={{
+                    padding: '0 0 1.25rem',
+                    fontSize: '0.875rem',
+                    color: 'var(--color-text-light)',
+                    lineHeight: 1.7,
+                  }}>
+                    {item.a}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 11. FINAL CTA ===== */}
+      <section style={{
+        background: 'linear-gradient(135deg, #1a1a1a 0%, #1a5632 100%)',
+        color: '#fff',
+        padding: '6rem 1rem',
+        textAlign: 'center',
+      }}>
+        <div className="container">
+          <h2 style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)',
+            fontWeight: 700,
+            marginBottom: '1rem',
+            color: '#fff',
+          }}>
+            \u0417\u0430\u043c\u043e\u0432\u0442\u0435 \u0431\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0439 \u0430\u0443\u0434\u0438\u0442 \u0432\u0430\u0448\u043e\u0433\u043e \u043e\u0444\u0456\u0441\u0443
+          </h2>
+          <p style={{ fontSize: '1.0625rem', color: '#b0ada8', marginBottom: '2.5rem', maxWidth: '500px', margin: '0 auto 2.5rem' }}>
+            \u041d\u0430\u0448 \u0441\u043f\u0435\u0446\u0456\u0430\u043b\u0456\u0441\u0442 \u043e\u0446\u0456\u043d\u0438\u0442\u044c \u0430\u043a\u0443\u0441\u0442\u0438\u043a\u0443, \u043f\u0456\u0434\u0431\u0435\u0440\u0435 \u043e\u043f\u0442\u0438\u043c\u0430\u043b\u044c\u043d\u0435 \u0440\u0456\u0448\u0435\u043d\u043d\u044f \u0442\u0430 \u0440\u043e\u0437\u0440\u0430\u0445\u0443\u0454 \u0432\u0430\u0440\u0442\u0456\u0441\u0442\u044c.
+          </p>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link href="/zviazatysya/" className="btn-primary">
+              \u0411\u0435\u0437\u043a\u043e\u0448\u0442\u043e\u0432\u043d\u0438\u0439 \u0430\u0443\u0434\u0438\u0442
             </Link>
-            <Link href="/kataloh/" className="inline-flex items-center gap-2 px-8 py-4 rounded-lg text-lg font-semibold text-white border-2 border-white/30 hover:bg-white/10 transition-all no-underline">
-              Переглянути каталог
+            <Link
+              href="/kataloh/"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.875rem 2rem',
+                background: 'transparent',
+                color: '#fff',
+                fontFamily: "'Inter', sans-serif",
+                fontWeight: 600,
+                borderRadius: '0.375rem',
+                border: '1.5px solid rgba(255,255,255,0.3)',
+                transition: 'all 0.25s ease',
+                textDecoration: 'none',
+                fontSize: '0.9375rem',
+              }}
+            >
+              \u041a\u0430\u0442\u0430\u043b\u043e\u0433 \u043c\u043e\u0434\u0435\u043b\u0435\u0439
             </Link>
           </div>
         </div>
       </section>
-    </main>
+
+      {/* Responsive overrides */}
+      <style>{`
+        @media (max-width: 768px) {
+          section > div[class="container"] > div[style*="gridTemplateColumns: repeat(4"] {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+      `}</style>
+    </>
   )
 }

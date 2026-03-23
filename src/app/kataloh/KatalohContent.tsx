@@ -290,6 +290,75 @@ export default function KatalohContent() {
         <LineSection line="lite" models={liteModels} />
         <LineSection line="pro" models={proModels} />
 
+        {/* Comparison Table */}
+        <section className="mb-20">
+          <h2
+            className="text-2xl md:text-3xl font-bold text-center mb-3"
+            style={{ color: 'var(--color-text, #1a1a1a)', fontFamily: "'Playfair Display', serif" }}
+          >
+            Порівняння всіх моделей
+          </h2>
+          <p
+            className="text-center mb-8 max-w-xl mx-auto"
+            style={{ color: 'var(--color-text-light, #6b6560)', fontFamily: "'Inter', sans-serif" }}
+          >
+            Оберіть модель, яка найкраще відповідає потребам вашого офісу
+          </p>
+          <div className="overflow-x-auto rounded-xl" style={{ border: '1px solid var(--color-border, #e8e2db)' }}>
+            <table className="w-full border-collapse min-w-[700px]" style={{ fontFamily: "'Inter', sans-serif" }}>
+              <thead>
+                <tr style={{ background: '#1a1a1a' }}>
+                  <th className="text-left py-3.5 px-4 text-sm font-semibold" style={{ color: '#ffffff', borderBottom: '2px solid #333' }}>
+                    Характеристика
+                  </th>
+                  {['Solo', 'Duet', 'Quartet', 'Solo Lite', 'Duet Lite', 'Quartet Lite', 'WorkPod'].map((name) => (
+                    <th key={name} className="text-center py-3.5 px-3 text-sm font-semibold" style={{ color: '#ffffff', borderBottom: '2px solid #333' }}>
+                      {name}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { label: 'Лінійка', values: ['Premium', 'Premium', 'Premium', 'Lite', 'Lite', 'Lite', 'Pro'] },
+                  { label: 'Місткість', values: ['1', '2', '4', '1', '2', '4', '1-2'] },
+                  { label: 'Звукоізоляція', values: ['35 дБ', '35 дБ', '35 дБ', '15-20', '15-20', '15-20', '~25'] },
+                  { label: 'Розміри (Ш\u00d7Г)', values: ['105\u00d7110', '210\u00d7110', '210\u00d7138', '105\u00d7107', '213\u00d7105', '213\u00d7123', '153\u00d7113'] },
+                  { label: 'Вага', values: ['350 кг', '520 кг', '680 кг', '220 кг', '380 кг', '480 кг', '450 кг'] },
+                  { label: 'Ціна', values: ['\u20ac5,690', '\u20ac10,190', '\u20ac11,290', '~\u20ac4,200', '\u20ac7,190', '\u20ac8,590', '\u20ac5,990'] },
+                ].map((row, rowIdx) => (
+                  <tr
+                    key={row.label}
+                    style={{
+                      background: rowIdx % 2 === 0 ? 'var(--color-bg, #fffcf8)' : 'var(--color-bg-alt, #f7f3ee)',
+                      borderBottom: '1px solid var(--color-border, #e8e2db)',
+                    }}
+                  >
+                    <td className="py-3 px-4 text-sm font-medium" style={{ color: 'var(--color-text, #1a1a1a)' }}>
+                      {row.label}
+                    </td>
+                    {row.values.map((val, i) => (
+                      <td
+                        key={i}
+                        className="text-center py-3 px-3 text-sm"
+                        style={{
+                          color: row.label === 'Ціна' ? '#c87941' : 'var(--color-text, #1a1a1a)',
+                          fontWeight: row.label === 'Ціна' ? 700 : 400,
+                        }}
+                      >
+                        {val}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-center mt-3 text-xs" style={{ color: 'var(--color-text-light, #6b6560)', fontFamily: "'Inter', sans-serif" }}>
+            * Ціни вказані без ПДВ та доставки. Розміри у сантиметрах.
+          </p>
+        </section>
+
         {/* Bottom CTA */}
         <section className="text-center rounded-lg p-10 md:p-16" style={{ background: 'linear-gradient(135deg, #1a5632, #0d3b1f)', color: '#ffffff' }}>
           <h2

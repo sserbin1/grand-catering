@@ -4,7 +4,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'Переваги акустичних кабін SilentBox для офісу | Чому обирають SilentBox',
   description:
-    'Чому компанії обирають акустичні кабіни SilentBox для офісу: звукоізоляція 35 дБ, збірка за 60 хвилин, 10 років гарантії. Порівняння SilentBox vs ремонт переговорної кімнати.',
+    'Чому компанії обирають акустичні кабіни SilentBox для офісу: звукоізоляція 35 дБ, збірка за 60 хвилин, 10 років гарантії. Сертифікація CE, ISO 9001, ISO 11957, ISO 23351-1.',
 }
 
 const advantages = [
@@ -64,13 +64,49 @@ const advantages = [
   },
 ]
 
+const certifications = [
+  {
+    badge: 'CE',
+    title: 'CE Marking',
+    description: 'Відповідність директивам Європейського Союзу щодо безпеки, здоров\'я та захисту довкілля. Кабіни SilentBox відповідають вимогам ЄС для продажу у 30+ країнах.',
+  },
+  {
+    badge: 'ISO 9001',
+    title: 'ISO 9001',
+    description: 'Система управління якістю. Виробництво SilentBox сертифіковане за міжнародним стандартом менеджменту якості -- кожна кабіна проходить багатоетапний контроль.',
+  },
+  {
+    badge: 'ISO 11957',
+    title: 'ISO 11957',
+    description: 'Стандарт акустичних вимірювань звукоізоляції кабін. Методика тестування підтверджує заявлені 35 дБ звукоізоляції незалежними лабораторіями.',
+  },
+  {
+    badge: 'ISO 23351-1',
+    title: 'ISO 23351-1',
+    description: 'Спеціалізований стандарт для тестування офісних подів. Всі моделі Premium лінійки SilentBox сертифіковані саме за цим стандартом -- 35 дБ звукоізоляції.',
+  },
+]
+
+const patents = [
+  'EU RCD 015018000-0001',
+  'EU RCD 015018000-0002',
+  'EU RCD 015018000-0003',
+  'Патент UA',
+]
+
+const trustedBy = [
+  'Google', 'Meta', 'PwC', 'Deloitte', 'KPMG', 'EY',
+  'ING Bank', 'Raiffeisen', 'OTP Bank', 'Vodafone',
+  'Orange', 'T-Mobile', 'Samsung', 'Huawei',
+]
+
 const comparisonRows = [
-  { criteria: 'Вартість', silentbox: 'Фіксована ціна кабіни', renovation: 'Непередбачувана (будматеріали, робота, простій)' },
-  { criteria: 'Час встановлення', silentbox: '60 хв -- 4 години', renovation: '2-6 тижнів' },
+  { criteria: 'Вартість', silentbox: 'від \u20ac5,690 (фіксована)', renovation: 'від \u20ac15,000 (непередбачувана)' },
+  { criteria: 'Строки', silentbox: '3-5 днів доставка + 60 хв збірка', renovation: '2-4 тижні ремонту' },
+  { criteria: 'Мобільність', silentbox: 'Переміщується при переїзді', renovation: 'Стаціонарно -- залишається у приміщенні' },
+  { criteria: 'Звукоізоляція', silentbox: '35 дБ (сертифіковано ISO)', renovation: '20-25 дБ (залежить від підрядника)' },
+  { criteria: 'Дозволи', silentbox: 'Не потрібні', renovation: 'БТІ, пожежна інспекція' },
   { criteria: 'Вплив на офіс', silentbox: 'Нульовий -- без пилу та шуму', renovation: 'Шум, пил, обмеження доступу' },
-  { criteria: 'Мобільність', silentbox: 'Можна переміщувати при переїзді', renovation: 'Залишається у приміщенні' },
-  { criteria: 'Вентиляція', silentbox: 'Вбудована, до 600 м\u00b3/год', renovation: 'Потрібно окреме проектування' },
-  { criteria: 'Сертифікація', silentbox: 'ISO 23351-1', renovation: 'Залежить від підрядника' },
   { criteria: 'Масштабування', silentbox: 'Додати кабіну за 1 день', renovation: 'Новий ремонт за тижні' },
 ]
 
@@ -85,10 +121,19 @@ export default function PerevahyPage() {
   return (
     <main>
       {/* Hero */}
-      <section className="section" style={{ background: 'var(--color-bg-alt)' }}>
+      <section
+        className="section"
+        style={{ background: 'linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-alt) 100%)' }}
+      >
         <div className="container">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" style={{ background: '#e8f5ee', color: '#1a5632' }}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+            </svg>
+            <span className="text-sm font-semibold" style={{ fontFamily: "'Inter', sans-serif" }}>Сертифіковано ISO 23351-1</span>
+          </div>
           <h1 className="section-title" style={{ textAlign: 'left', marginBottom: '1.5rem' }}>
-            Чому компанії обирають SilentBox
+            Чому обирають SilentBox
           </h1>
           <p className="max-w-3xl" style={{ fontSize: '1.125rem', lineHeight: '1.8', color: 'var(--color-text-light)' }}>
             Акустичні кабіни SilentBox -- це найшвидший та найефективніший спосіб створити переговорні зони, телефонні кабіни
@@ -118,38 +163,125 @@ export default function PerevahyPage() {
         </div>
       </section>
 
-      {/* Comparison Table */}
+      {/* Certifications */}
+      <section className="section-alt">
+        <div className="container">
+          <h2 className="section-title">Сертифікація та стандарти</h2>
+          <p className="section-subtitle">
+            SilentBox відповідає найвищим міжнародним стандартам якості, безпеки та акустичних вимірювань
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {certifications.map((cert) => (
+              <div
+                key={cert.badge}
+                className="rounded-xl p-6 text-center hover:shadow-lg transition-shadow"
+                style={{ background: 'var(--color-bg)', border: '1px solid var(--color-border)' }}
+              >
+                <div
+                  className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-lg font-extrabold"
+                  style={{
+                    background: 'linear-gradient(135deg, #1a5632, #134425)',
+                    color: '#ffffff',
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: cert.badge.length > 4 ? '0.65rem' : '0.875rem',
+                    letterSpacing: '0.02em',
+                  }}
+                >
+                  {cert.badge}
+                </div>
+                <h3 className="text-base font-bold mb-2" style={{ color: 'var(--color-primary)', fontFamily: "'Playfair Display', serif" }}>
+                  {cert.title}
+                </h3>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-light)' }}>
+                  {cert.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Patents */}
+          <div className="mt-10 text-center">
+            <h3 className="text-lg font-bold mb-4" style={{ color: 'var(--color-primary)', fontFamily: "'Playfair Display', serif" }}>
+              Патенти на дизайн
+            </h3>
+            <div className="flex flex-wrap justify-center gap-3">
+              {patents.map((patent) => (
+                <span
+                  key={patent}
+                  className="text-sm font-medium px-4 py-2 rounded-full"
+                  style={{ background: '#e8f5ee', color: '#1a5632', fontFamily: "'Inter', sans-serif" }}
+                >
+                  {patent}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Logo Cloud - Trusted By */}
+      <section className="section">
+        <div className="container">
+          <h2 className="section-title">Нам довіряють</h2>
+          <p className="section-subtitle">
+            SilentBox встановлені в офісах провідних міжнародних компаній
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
+            {trustedBy.map((company) => (
+              <div
+                key={company}
+                className="px-6 py-3 rounded-lg text-sm font-semibold"
+                style={{
+                  background: 'var(--color-bg-alt)',
+                  color: 'var(--color-text-light)',
+                  border: '1px solid var(--color-border)',
+                  fontFamily: "'Inter', sans-serif",
+                }}
+              >
+                {company}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Comparison Table: SilentBox vs Renovation */}
       <section className="section-alt">
         <div className="container">
           <h2 className="section-title">SilentBox vs ремонт переговорної</h2>
           <p className="section-subtitle">
-            Порівняння акустичної кабіни SilentBox з традиційним ремонтом переговорної кімнати в офісі.
+            Порівняння акустичної кабіни SilentBox з традиційним ремонтом переговорної кімнати в офісі
           </p>
-          <div className="max-w-4xl mx-auto overflow-x-auto">
-            <table className="w-full border-collapse">
+          <div className="max-w-4xl mx-auto overflow-x-auto rounded-xl" style={{ border: '1px solid var(--color-border)' }}>
+            <table className="w-full border-collapse" style={{ fontFamily: "'Inter', sans-serif" }}>
               <thead>
-                <tr>
-                  <th className="text-left py-4 px-4 text-sm font-semibold" style={{ color: 'var(--color-text-light)', fontFamily: "'Inter', sans-serif", borderBottom: '2px solid var(--color-border)' }}>
-                    Критерій
+                <tr style={{ background: '#1a1a1a' }}>
+                  <th className="text-left py-4 px-5 text-sm font-semibold" style={{ color: '#ffffff' }}>
                   </th>
-                  <th className="text-left py-4 px-4 text-sm font-semibold" style={{ color: '#1a5632', fontFamily: "'Inter', sans-serif", borderBottom: '2px solid #1a5632' }}>
+                  <th className="text-left py-4 px-5 text-sm font-semibold" style={{ color: '#c87941' }}>
                     SilentBox
                   </th>
-                  <th className="text-left py-4 px-4 text-sm font-semibold" style={{ color: 'var(--color-text-light)', fontFamily: "'Inter', sans-serif", borderBottom: '2px solid var(--color-border)' }}>
-                    Ремонт переговорної
+                  <th className="text-left py-4 px-5 text-sm font-semibold" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                    Ремонт
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {comparisonRows.map((row) => (
-                  <tr key={row.criteria}>
-                    <td className="py-3 px-4 text-sm font-medium" style={{ color: 'var(--color-text)', borderBottom: '1px solid var(--color-border)' }}>
+                {comparisonRows.map((row, idx) => (
+                  <tr
+                    key={row.criteria}
+                    style={{
+                      background: idx % 2 === 0 ? 'var(--color-bg)' : 'var(--color-bg-alt)',
+                      borderBottom: '1px solid var(--color-border)',
+                    }}
+                  >
+                    <td className="py-3.5 px-5 text-sm font-medium" style={{ color: 'var(--color-text)' }}>
                       {row.criteria}
                     </td>
-                    <td className="py-3 px-4 text-sm" style={{ color: '#1a5632', fontWeight: 500, borderBottom: '1px solid var(--color-border)' }}>
+                    <td className="py-3.5 px-5 text-sm font-medium" style={{ color: '#1a5632' }}>
                       {row.silentbox}
                     </td>
-                    <td className="py-3 px-4 text-sm" style={{ color: 'var(--color-text-light)', borderBottom: '1px solid var(--color-border)' }}>
+                    <td className="py-3.5 px-5 text-sm" style={{ color: 'var(--color-text-light)' }}>
                       {row.renovation}
                     </td>
                   </tr>
